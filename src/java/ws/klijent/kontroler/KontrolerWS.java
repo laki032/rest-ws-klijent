@@ -52,4 +52,9 @@ public class KontrolerWS {
         return la;
     }
 
+    public void sacuvajNoviAvion(Avion novi) {
+        wsAvio.create(novi, null);
+    }
+
+
 }
