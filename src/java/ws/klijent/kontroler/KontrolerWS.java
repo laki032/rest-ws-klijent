@@ -18,6 +18,7 @@ public class KontrolerWS {
     private static KontrolerWS instance;
     private WSAvioni wsAvio;
     private WSZaposleni wsZap;
+    private List<Tipaviona> tipovi;
 
     private KontrolerWS() {
         wsAvio = new WSAvioni();
@@ -34,8 +35,8 @@ public class KontrolerWS {
     public List<Tipaviona> vratiTipove() {
         GenericType<List<Tipaviona>> gtListaTipova = new GenericType<List<Tipaviona>>() {
         };
-        List<Tipaviona> lt = wsAvio.findAllTypes(gtListaTipova);
-        return lt;
+        tipovi = wsAvio.findAllTypes(gtListaTipova);
+        return tipovi;
     }
 
     public List<Zaposleni> vratiZaposlene() {
@@ -53,8 +54,20 @@ public class KontrolerWS {
     }
 
     public void sacuvajNoviAvion(Avion novi) {
-        wsAvio.create(novi, null);
+        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
+        };
+        //ovde puca i zato vraca da nije uspeo da unese avion,
+        //problem pravi ovaj Boolean klasa, a dobija boolean kao prost tip za odgovor
+        wsAvio.create(novi, odgovor);
     }
 
+    public Tipaviona vratiTipPoID(int id) {
+        for (Tipaviona t : tipovi) {
+            if (t.getTipID() == id) {
+                return t;
+            }
+        }
+        return null;
+    }
 
 }
