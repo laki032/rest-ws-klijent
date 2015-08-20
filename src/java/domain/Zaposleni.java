@@ -15,6 +15,9 @@ public class Zaposleni implements Serializable {
     private Aviomehanicar aviomehanicar;
 
     public Zaposleni() {
+        jmbg = "0000000000000";
+        imePrezime = "N/A";
+        godinaRodjenja = 1950;
     }
 
     public Zaposleni(String jmbg) {

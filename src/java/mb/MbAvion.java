@@ -18,6 +18,8 @@ import ws.klijent.kontroler.KontrolerWS;
 @RequestScoped
 public class MbAvion {
 
+    //unos aviona i izmena mozda zezaju jer je mb request scoped, probaj sa view scopeom
+    
     List<Avion> avioni;
     List<Tipaviona> tipovi;
     Avion novi;

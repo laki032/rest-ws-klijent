@@ -15,44 +15,44 @@
 
                 <h:form id="prikazAviona">
 
-                    Unesite kriterijum pretrage: <h:inputText id="kritPretrage" value="#{mbAvion.krit}" onkeyup=""/>
-                    <h:commandButton action="#{mbAvion.pretraga()}" value="Pretrazi"/>
+                    <p:outputLabel style="width: 25%; padding: 10px">Unesite kriterijum pretrage: </p:outputLabel>
+                    <p:inputText style="margin-right: 10px;" id="kritPretrage" value="#{mbAvion.krit}" onkeyup=""/>
 
-                    <h:dataTable border="1" value="#{mbAvion.avioni}" var="a" >
-                    <!--    <p:row rendered="#{!mbAvion.pretraga(a)}">
-                        -->    
-                        <h:column>
+                    <p:commandButton action="#{mbAvion.pretraga()}" value="Pretrazi" style="margin: 10px;" ajax="false"/>
+
+                    <p:dataTable value="#{mbAvion.avioni}" var="a" >
+                        <!--<p:row rendered="#{mbAvion.pretraga(a)}"></p:row>
+                        -->
+                        <p:column style="width: 25%">
                             <f:facet name="header">Oznaka</f:facet>
                                 #{a.oznaka}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column style="width: 10%">
                             <f:facet name="header">Godina proizvodnje</f:facet>
                                 #{a.godProizvodnje}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">Broj putnika</f:facet>
                                 #{a.brojPutnika}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">Nosivost</f:facet>
                                 #{a.nosivost}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">Tip</f:facet>
                                 #{a.tipID.naziv}
-                        </h:column>
-                        <h:column rendered="#{mbAdmin.ulogovan}">
+                        </p:column>
+                        <p:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Obrisi</f:facet>
-                            <h:commandButton value="-" action="#{mbAvion.obrisi(a)}"/>
-                        </h:column>
-                        <h:column rendered="#{mbAdmin.ulogovan}">
+                            <p:commandButton icon="ui-icon-minus" action="#{mbAvion.obrisi(a)}" ajax="false"/>
+                        </p:column>
+                        <p:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Izmeni</f:facet>
-                            <h:commandButton value="Izmeni" action="#{mbAvion.pokreniIzmenu(a)}"/>
-                        </h:column>
+                            <p:commandButton value="Izmeni" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
+                        </p:column>
 
-                        <!--</p:row>
-                        -->
-                    </h:dataTable>
+                    </p:dataTable>
                 </h:form>
 
             </ui:define>
