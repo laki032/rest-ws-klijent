@@ -70,4 +70,24 @@ public class KontrolerWS {
         return null;
     }
 
+    public void sacuvajIzmenuAviona(Avion a) {
+        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
+        };
+        wsAvio.edit(a, odgovor, a.getAvionID() + "");
+    }
+
+    public void obrisiAvion(Avion a) {
+        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
+        };
+        wsAvio.remove(odgovor, a.getAvionID() + "");
+    }
+
+    public void login(String ime, String pass) {
+//napravi adminWS i na njemu nekako resi login i out
+    }
+
+    public void logout(String ime, String pass) {
+
+    }
+
 }

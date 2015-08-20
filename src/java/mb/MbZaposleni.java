@@ -4,7 +4,7 @@ import domain.Zaposleni;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import ws.klijent.kontroler.KontrolerWS;
 
 /**
@@ -12,7 +12,7 @@ import ws.klijent.kontroler.KontrolerWS;
  * @author Lazar Vujadinovic
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class MbZaposleni {
 
     List<Zaposleni> zaposleni;

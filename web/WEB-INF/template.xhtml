@@ -2,7 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -16,26 +19,61 @@
         <div id="top" >
             <ui:insert name="top">
                 <a href="/RESTAvioKompanijaWebKlijent" >
-                    <img src="‪./resources/images/top.jpg" alt="Slika i link za vracanje na pocetnu" />
+                    <img src="‪WEB-INF/resources/images/top.jpg" alt="Slika i link za vracanje na pocetnu" />
                 </a>
             </ui:insert>
         </div>
         <div>
             <div id="left">
                 <ui:insert name="left">
-                    <a href="#" >AVIONI<img src="./resources/images/a.jpg" /></a><br/>
-                    <a href="/RESTAvioKompanijaWebKlijent/faces/unosAviona.xhtml" >--Unos</a><br/>
-                    <a href="/RESTAvioKompanijaWebKlijent/faces/pretragaAviona.xhtml" >--Pretraga</a><br/><br/>
-                    
-                    <a href="#" >ZAPOSLENI<img src="./resources/images/z.jpg" /></a><br/>
-                    <a href="/RESTAvioKompanijaWebKlijent/faces/unosZaposlenih.xhtml" >--Unos</a><br/>
-                    <a href="/RESTAvioKompanijaWebKlijent/faces/pretragaZaposlenih.xhtml" >--Pretraga</a><br/>
-                    
+                    <h:form style="width: 95%">
+                        <p:menu style="width: 99%">
+                            <p:submenu label="AVIONI" >
+                                <p:menuitem value="Unos" action="unosAviona.xhtml" ajax="false" />
+                                <p:menuitem value="Pretraga" action="pretragaAviona.xhtml" ajax="false" />
+                            </p:submenu>
+                            <p:submenu label="ZAPOSLENI">
+                                <p:menuitem value="Unos" action="unosZaposlenih.xhtml" ajax="false" />
+                                <p:menuitem value="Pretraga" action="pretragaZaposlenih.xhtml" ajax="false" />
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+
                 </ui:insert>
             </div>
             <div>
                 <div id="right">
-                    <ui:insert name="right">Admin deo</ui:insert>
+                    <ui:insert name="right">
+                        <c:if test="#{mbAdmin.ulogovan}">
+                            <h:form id="logout">
+                                <p:panel id="panel" header="Ulogovan admin" style="margin-bottom:10px;">
+                                    <p:outputLabel><h1>#{mbAdmin.ime.toUpperCase()}</h1> </p:outputLabel><br/><br/>
+                                    <p:outputLabel>Vreme logovanja:</p:outputLabel><br/><br/>
+                                    <p:clock mode="client" pattern="#{mbAdmin.vremeLogovanja}" ></p:clock> <br/><br/>
+                                    <p:outputLabel>Trenutno vreme:</p:outputLabel><br/><br/>
+                                    <p:clock mode="client" pattern="h:mm:ss"></p:clock><br/><br/>
+                                    <p:commandButton value="LOGOUT" action="#{mbAdmin.logout()}" ajax="false" /><br/>
+                                </p:panel>
+                            </h:form>
+                        </c:if>
+                        <c:if test="#{!mbAdmin.ulogovan}">
+                            <h:form id="login" >
+                                <p:panel id="panel" header="Admin login" style="margin-bottom:10px;">
+                                    <p:outputLabel>Username:</p:outputLabel> 
+                                    <p:inputText id="txtIme" value="#{mbAdmin.ime}" style="width: 90%;">
+                                        <f:validateLength maximum="15" />
+                                    </p:inputText><br/><br/>
+                                    <p:outputLabel>Password:</p:outputLabel> 
+                                    <p:password id="txtPass" value="#{mbAdmin.pass}" style="width: 90%;">
+                                        <f:validateLength maximum="15" />
+                                    </p:password><br/><br/>
+                                    <p:commandButton value="LOGIN" action="#{mbAdmin.login()}" style="width: 95%" ajax="false"/><br/>
+                                </p:panel>
+                            </h:form>
+                        </c:if>
+
+
+                    </ui:insert>
                 </div>
                 <div id="content" class="right_content">
                     <ui:insert name="content">Content</ui:insert>

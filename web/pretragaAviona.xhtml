@@ -3,17 +3,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
         <ui:composition template="./WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                pretraga aviona
 
                 <h:form id="prikazAviona">
+
+                    Unesite kriterijum pretrage: <h:inputText id="kritPretrage" value="#{mbAvion.krit}" onkeyup=""/>
+                    <h:commandButton action="#{mbAvion.pretraga()}" value="Pretrazi"/>
+
                     <h:dataTable border="1" value="#{mbAvion.avioni}" var="a" >
+                    <!--    <p:row rendered="#{!mbAvion.pretraga(a)}">
+                        -->    
                         <h:column>
                             <f:facet name="header">Oznaka</f:facet>
                                 #{a.oznaka}
@@ -34,14 +41,17 @@
                             <f:facet name="header">Tip</f:facet>
                                 #{a.tipID.naziv}
                         </h:column>
-                        <h:column>
+                        <h:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Obrisi</f:facet>
-                            <h:commandButton value="Obrisi" action="#{mbAvion.obrisi(a)}"/>
+                            <h:commandButton value="-" action="#{mbAvion.obrisi(a)}"/>
                         </h:column>
-                        <h:column>
+                        <h:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Izmeni</f:facet>
                             <h:commandButton value="Izmeni" action="#{mbAvion.pokreniIzmenu(a)}"/>
                         </h:column>
+
+                        <!--</p:row>
+                        -->
                     </h:dataTable>
                 </h:form>
 

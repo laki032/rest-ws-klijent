@@ -4,7 +4,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:laki="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -12,39 +14,48 @@
 
             <ui:define name="content">
                 <h:form id="unosAviona">
-                    <h:messages globalOnly="true" style="width: 70%;background-color: cyan;font-weight: bold;font-size: x-large"  infoStyle="color:blue;" errorStyle="color:red" showDetail="true" />
+                    <p:messages globalOnly="true" style="width: 70%;background-color: cyan;font-weight: bold;font-size: x-large" showDetail="true" />
 
                     <h:panelGrid columns="3" >
-                        <h:outputLabel value="Oznaka:" />
-                        <h:inputText id="txtOznaka" value="#{mbAvion.novi.oznaka}" >
-                            <f:validateLength maximum="30" />
-                        </h:inputText>
+                        <p:outputLabel value="Oznaka:" />
+                        <p:inputText id="txtOznaka" value="#{mbAvion.novi.oznaka}" title="Oznaka moze sadrzati najvise 30 karaktera" validatorMessage="Oznaka moze sadrzati najvise 30 karaktera">
+                            <f:validateLength maximum="30" /> 
+                        </p:inputText>
                         <h:message for="txtOznaka" errorStyle="color:red;" />
 
-                        <h:outputLabel value="Godina proizvodnje:" />
-                        <h:inputText id="txtGodPr" value="#{mbAvion.novi.godProizvodnje}" >
+                        <p:outputLabel for="txtGodPr" value="Godina proizvodnje:" />
+                        <p:spinner id="txtGodPr" value="#{mbAvion.novi.godProizvodnje}" title="Godina proizvodnje mora biti izmedju 1990 i 2020" validatorMessage="Godina proizvodnje mora biti izmedju 1990 i 2020" >
                             <f:validateLongRange maximum="2020" minimum="1990" />
-                        </h:inputText>
-                        <h:message for="txtGodPr" />
+                        </p:spinner>
+                        <p:message for="txtGodPr" />                        
 
-                        <h:outputLabel value="Broj putnika:" />
-                        <h:inputText id="txtBrput" value="#{mbAvion.novi.brojPutnika}"  >
+                        <p:outputLabel for="txtBrput" value="Broj putnika:" />
+                        <p:spinner id="txtBrput" value="#{mbAvion.novi.brojPutnika}" title="Broj putnika mora biti izmedju 0 i 1000" validatorMessage="Broj putnika mora biti izmedju 0 i 1000" >
                             <f:validateLongRange maximum="1000" minimum="0" />
-                        </h:inputText>
+                        </p:spinner>
                         <h:message for="txtBrput" />
 
-                        <h:outputLabel value="Nosivost:" />
-                        <h:inputText id="txtNosivost" value="#{mbAvion.novi.nosivost}"  >
+                        <p:outputLabel for="txtNosivost" value="Nosivost:" />
+                        <p:spinner id="txtNosivost" value="#{mbAvion.novi.nosivost}" title="Nosivost mora biti izmedju 1 i 500" validatorMessage="Nosivost mora biti izmedju 1 i 500" >
                             <f:validateLongRange maximum="500" minimum="1" />
-                        </h:inputText>
+                        </p:spinner>
                         <h:message for="txtNosivost" />
 
-                        <h:outputLabel value="Tip aviona:" />
-                        <h:selectOneMenu id="cmbTip" value="#{mbAvion.novi.tipID}" converter="tipCNV" >
+                        <p:outputLabel for="cmbTip" value="Tip aviona:"/>
+                        <p:selectOneMenu id="cmbTip" title="Odaberi tip aviona" value="#{mbAvion.novi.tipID}" converter="tipCNV" style="width: 100%">
                             <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
-                            <h:commandButton value="Sacuvaj" action="#{mbAvion.sacuvajNoviAvion()}" style="float: right"/>
-                        </h:selectOneMenu>
+                        </p:selectOneMenu>
+
+                        <!--Ovaj komentar ne sluzi nicemu, izuzev da dugme prebaci u novi red-->
+
+                        <br/>
                         
+                        <c:if test="#{!mbAvion.izmena}">
+                            <p:commandButton value="Sacuvaj novi avion" title="Klik za cuvanje aviona" action="#{mbAvion.sacuvajNoviAvion()}" style="float: right" ajax="false"/>
+                        </c:if>
+                        <c:if test="#{mbAvion.izmena}">
+                            <p:commandButton value="Sacuvaj izmenu aviona" title="Klik za cuvanje izmena aviona" action="#{mbAvion.sacuvajIzmenuAviona()}" style="float: right" ajax="false"/>
+                        </c:if>
 
                     </h:panelGrid>
 

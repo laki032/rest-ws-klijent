@@ -1,14 +1,64 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
         <ui:composition template="./WEB-INF/template.xhtml">
 
             <ui:define name="content">
-                unos zaposlenih
+                <div>
+                    <h:form id="unosZaposlenih">
+               <!--         <h:messages globalOnly="true" style="width: 70%;background-color: cyan;font-weight: bold;font-size: x-large"  infoStyle="color:blue;" errorStyle="color:red" showDetail="true" />
+
+                        <h:panelGrid columns="3" >
+                            <h:outputLabel value="Oznaka:" />
+                            <h:inputText id="txtOznaka" value="#{mbAvion.novi.oznaka}" >
+                                <f:validateLength maximum="30" />
+                            </h:inputText>
+                            <h:message for="txtOznaka" errorStyle="color:red;" />
+
+                            <h:outputLabel value="Godina proizvodnje:" />
+                            <h:inputText id="txtGodPr" value="#{mbAvion.novi.godProizvodnje}" >
+                                <f:validateLongRange maximum="2020" minimum="1990" />
+                            </h:inputText>
+                            <h:message for="txtGodPr" />
+
+                            <h:outputLabel value="Broj putnika:" />
+                            <h:inputText id="txtBrput" value="#{mbAvion.novi.brojPutnika}"  >
+                                <f:validateLongRange maximum="1000" minimum="0" />
+                            </h:inputText>
+                            <h:message for="txtBrput" />
+
+                            <h:outputLabel value="Nosivost:" />
+                            <h:inputText id="txtNosivost" value="#{mbAvion.novi.nosivost}"  >
+                                <f:validateLongRange maximum="500" minimum="1" />
+                            </h:inputText>
+                            <h:message for="txtNosivost" />
+
+                            <h:outputLabel value="Tip aviona:" />
+                            <h:selectOneMenu id="cmbTip" value="#{mbAvion.novi.tipID}" converter="tipCNV" >
+                                <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
+                                <c:if test="#{!mbAvion.izmena}">
+                                    <h:commandButton value="Sacuvaj novi avion" action="#{mbAvion.sacuvajNoviAvion()}" style="float: right"/>
+                                </c:if>
+                                <c:if test="#{mbAvion.izmena}">
+                                    <h:commandButton value="Sacuvaj izmenu aviona" action="#{mbAvion.sacuvajIzmenuAviona()}" style="float: right"/>
+                                </c:if>
+                            </h:selectOneMenu>
+
+
+                        </h:panelGrid>
+
+            -->        </h:form>
+                </div>
+                <div>
+                    tabela unetih i dugme sacuvaj sve da bude kao transakcija
+                </div>
             </ui:define>
 
         </ui:composition>

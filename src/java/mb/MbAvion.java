@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import ws.klijent.kontroler.KontrolerWS;
 
@@ -15,13 +15,14 @@ import ws.klijent.kontroler.KontrolerWS;
  * @author Lazar Vujadinovic
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class MbAvion {
 
     List<Avion> avioni;
     List<Tipaviona> tipovi;
-    Avion odabraniAvion;
     Avion novi;
+    boolean izmena = false;
+    String krit;
 
     /**
      * Creates a new instance of MbAvion
@@ -34,6 +35,7 @@ public class MbAvion {
     public void inicijalizujPodatke() {
         avioni = KontrolerWS.getInstance().vratiAvione();
         tipovi = KontrolerWS.getInstance().vratiTipove();
+        krit = "";
     }
 
     public List<Avion> getAvioni() {
@@ -52,20 +54,28 @@ public class MbAvion {
         this.tipovi = tipovi;
     }
 
-    public Avion getOdabraniAvion() {
-        return odabraniAvion;
-    }
-
-    public void setOdabraniAvion(Avion odabraniAvion) {
-        this.odabraniAvion = odabraniAvion;
-    }
-
     public Avion getNovi() {
         return novi;
     }
 
     public void setNovi(Avion novi) {
         this.novi = novi;
+    }
+
+    public boolean isIzmena() {
+        return izmena;
+    }
+
+    public void setIzmena(boolean izmena) {
+        this.izmena = izmena;
+    }
+
+    public String getKrit() {
+        return krit;
+    }
+
+    public void setKrit(String krit) {
+        this.krit = krit;
     }
 
     public String sacuvajNoviAvion() {
@@ -79,4 +89,50 @@ public class MbAvion {
         return null;
     }
 
+    public String sacuvajIzmenuAviona() {
+        try {
+            System.out.println("Izmena aviona: " + novi.getOznaka());
+            KontrolerWS.getInstance().sacuvajIzmenuAviona(novi);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
+        }
+        novi = new Avion();
+        return "unosAviona";
+    }
+
+    public String pokreniIzmenu(Avion a) {
+        novi = a;
+        izmena = true;
+        return "unosAviona";
+    }
+
+    public String obrisi(Avion a) {
+        try {
+            System.out.println("Brisanje aviona: " + a.getOznaka());
+            KontrolerWS.getInstance().obrisiAvion(a);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan avion!!!", "Avion je obrisan iz baze podataka"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije obrisan!!!", ex.getMessage()));
+        }
+        return "pretragaAviona";
+    }
+
+    public String pretraga() {
+        return "pretragaAviona";
+    }
+
+    //metoda vraca da li avion odgovara unetom kriterijumu za pretragu
+    public boolean pretraga(Avion a) {
+        if (a == null) {
+            return true;
+        }
+        if (krit.isEmpty() || krit == null || krit.equals("")) {
+            return true;
+        }
+        if (a.getOznaka().startsWith(krit)) {
+            return true;
+        }
+        return false;
+    }
 }

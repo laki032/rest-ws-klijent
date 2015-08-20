@@ -19,6 +19,11 @@ public class Avion implements Serializable {
     private List<Uloga> ulogaList;
 
     public Avion() {
+        oznaka = "N/A";
+        avionID = 0;
+        godProizvodnje = 1990;
+        brojPutnika = 0;
+        nosivost = 1;
     }
 
     public Avion(int avionID) {

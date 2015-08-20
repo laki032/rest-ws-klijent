@@ -18,6 +18,7 @@ import javax.ws.rs.core.GenericType;
  * @author Lazar Vujadinovic
  */
 public class WSAvioni {
+
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
@@ -34,7 +35,7 @@ public class WSAvioni {
     }
 
     public <T> T edit(Object requestEntity, GenericType<T> responseType, String id) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("edit/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+        return webTarget.path(java.text.MessageFormat.format("edit/{0}", new Object[]{Integer.parseInt(id)})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
     public <T> T find(GenericType<T> responseType, String id) throws ClientErrorException {
@@ -54,7 +55,7 @@ public class WSAvioni {
 
     public <T> T remove(GenericType<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("delete/{0}", new Object[]{id}));
+        resource = resource.path(java.text.MessageFormat.format("delete/{0}", new Object[]{Integer.parseInt(id)}));
         return resource.request().get(responseType);
     }
 

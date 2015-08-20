@@ -60,11 +60,3 @@
     font-weight : bold;
     text-decoration : underline;
 }
-
-#left a img { 
-    display:none; 
-}
-
-#left a:hover img { 
-    display:block; 
-}
