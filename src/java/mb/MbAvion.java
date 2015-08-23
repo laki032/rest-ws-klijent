@@ -19,8 +19,6 @@ import ws.klijent.kontroler.KontrolerWS;
 @RequestScoped
 public class MbAvion {
 
-    //unos aviona i izmena mozda zezaju jer je mb request scoped, probaj sa view scopeom
-    
     List<Avion> avioni;
     List<Tipaviona> tipovi;
     Avion novi;
@@ -92,10 +90,10 @@ public class MbAvion {
         return null;
     }
 
-    public String sacuvajIzmenuAviona() {
+    public String sacuvajIzmenuAviona(Avion a) {
+        System.out.println("Izmena aviona: " + a.getOznaka());
         try {
-            System.out.println("Izmena aviona: " + novi.getOznaka());
-            KontrolerWS.getInstance().sacuvajIzmenuAviona(novi);
+            KontrolerWS.getInstance().sacuvajIzmenuAviona(a);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));

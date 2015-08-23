@@ -10,23 +10,29 @@ import java.util.List;
  */
 public class Pilot extends Zaposleni implements Serializable {
 
-    private String jmbg;
     private boolean ocenaStanja;
     private Date datumPregleda;
     private List<Uloga> ulogaList;
-    private Zaposleni zaposleni;
 
     public Pilot() {
     }
 
     public Pilot(String jmbg) {
-        this.jmbg = jmbg;
+        super(jmbg);
+    }
+    
+    public Pilot(Zaposleni z) {
+        jmbg = z.getJmbg();
+        imePrezime = z.getImePrezime();
+        godinaRodjenja = z.getGodinaRodjenja();
     }
 
+    @Override
     public String getJmbg() {
         return jmbg;
     }
 
+    @Override
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
     }
@@ -55,17 +61,8 @@ public class Pilot extends Zaposleni implements Serializable {
         this.ulogaList = ulogaList;
     }
 
-    public Zaposleni getZaposleni() {
-        return zaposleni;
-    }
-
-    public void setZaposleni(Zaposleni zaposleni) {
-        this.zaposleni = zaposleni;
-    }
-
     @Override
     public String toString() {
         return "pilot[" + jmbg + "] " + getImePrezime();
     }
-
 }

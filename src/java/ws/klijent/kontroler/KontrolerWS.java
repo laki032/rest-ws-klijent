@@ -54,11 +54,7 @@ public class KontrolerWS {
     }
 
     public void sacuvajNoviAvion(Avion novi) {
-        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
-        };
-        //ovde puca i zato vraca da nije uspeo da unese avion,
-        //problem pravi ovaj Boolean klasa, a dobija boolean kao prost tip za odgovor
-        wsAvio.create(novi, odgovor);
+        wsAvio.create(novi);
     }
 
     public Tipaviona vratiTipPoID(int id) {
@@ -71,15 +67,11 @@ public class KontrolerWS {
     }
 
     public void sacuvajIzmenuAviona(Avion a) {
-        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
-        };
-        wsAvio.edit(a, odgovor, a.getAvionID() + "");
+        wsAvio.edit(a, a.getAvionID() + "");
     }
 
     public void obrisiAvion(Avion a) {
-        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
-        };
-        wsAvio.remove(odgovor, a.getAvionID() + "");
+        wsAvio.remove(a.getAvionID() + "");
     }
 
     public void login(String ime, String pass) {
@@ -91,9 +83,11 @@ public class KontrolerWS {
     }
 
     public void obrisiZaposlenog(Zaposleni zap) {
-        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
-        };
-        wsZap.remove(odgovor, zap.getJmbg());
+        wsZap.remove(zap.getJmbg());
+    }
+
+    public void sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) {
+        wsZap.createAll(dodatiZaposleni);
     }
 
 }

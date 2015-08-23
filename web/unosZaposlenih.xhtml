@@ -43,19 +43,19 @@
                                     <c:if test="#{mbZaposleni.noviJePilot()}">
                                         <h:panelGrid columns="2">
                                             <p:outputLabel value="Ocena stanja:" />
-                                            <p:selectOneRadio id="comboZdrav" value="#{mbZaposleni.novi.pilot.ocenaStanja}" required="true" >
-                                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbZaposleni.novi.pilot.ocenaStanja = true}"  />
-                                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbZaposleni.novi.pilot.ocenaStanja = false}" />
+                                            <p:selectOneRadio id="comboZdrav" value="#{mbZaposleni.ocenaStanjaNovog}" required="true" >
+                                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbZaposleni.ocenaStanjaNovog = true}"  />
+                                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbZaposleni.ocenaStanjaNovog = false}" />
                                             </p:selectOneRadio>
 
                                             <p:outputLabel value="Datum pregleda" />
-                                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.pilot.datumPregleda}"/>
+                                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.datumNovog}"/>
                                         </h:panelGrid>
                                     </c:if>
                                     <c:if test="#{mbZaposleni.noviJeMehanicar()}">
                                         <h:panelGrid columns="2">
                                             <p:outputLabel value="Tip mehanicara" />
-                                            <p:inputText value="#{mbZaposleni.novi.aviomehanicar.tipMehanicara}" />
+                                            <p:inputText value="#{mbZaposleni.tipNovogMehanicara}" />
                                         </h:panelGrid>
                                     </c:if>
                                 </p:panel>
@@ -89,17 +89,7 @@
                                         #{zap.godinaRodjenja}
                                     </p:column>
                                     <p:column headerText="Podaci">
-                                        <c:if test="#{zap.pilot.datumPregleda == null}">
-                                            #{zap.aviomehanicar.tipMehanicara}
-                                        </c:if>
-                                        <c:if test="#{zap.aviomehanicar.tipMehanicara == null}">
-                                            <h:outputText value="#{zap.pilot.datumPregleda}" >
-                                                <f:convertDateTime pattern="dd/MM/yyyy" />
-                                            </h:outputText>
-                                            <br/>
-                                            <c:if test="#{zap.pilot.ocenaStanja}" >ocenjen kao sposoban</c:if>
-                                            <c:if test="#{!zap.pilot.ocenaStanja}" >ocenjen kao nesposoban</c:if>
-                                        </c:if>
+                                        <h:outputText value="#{mbZaposleni.vratiOstalePodatkeOZaposlenom(zap)}" />
                                     </p:column>
 
                                 </p:dataTable>

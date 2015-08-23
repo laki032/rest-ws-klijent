@@ -9,19 +9,22 @@ import java.util.List;
  */
 public class Aviomehanicar extends Zaposleni implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private String jmbg;
     private String tipMehanicara;
-    private Zaposleni zaposleni;
     private List<Licenca> licencaList;
 
     public Aviomehanicar() {
     }
 
     public Aviomehanicar(String jmbg) {
-        this.jmbg = jmbg;
+        super(jmbg);
     }
 
+    public Aviomehanicar(Zaposleni z) {
+        jmbg = z.getJmbg();
+        imePrezime = z.getImePrezime();
+        godinaRodjenja = z.getGodinaRodjenja();
+    }
+    
     @Override
     public String getJmbg() {
         return jmbg;
@@ -38,14 +41,6 @@ public class Aviomehanicar extends Zaposleni implements Serializable {
 
     public void setTipMehanicara(String tipMehanicara) {
         this.tipMehanicara = tipMehanicara;
-    }
-
-    public Zaposleni getZaposleni() {
-        return zaposleni;
-    }
-
-    public void setZaposleni(Zaposleni zaposleni) {
-        this.zaposleni = zaposleni;
     }
 
     public List<Licenca> getLicencaList() {

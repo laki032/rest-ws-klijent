@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class Avion implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private int avionID;
     private String oznaka;
     private int godProizvodnje;

@@ -7,10 +7,10 @@ import java.io.Serializable;
  * @author Lazar Vujadinovic
  */
 public class Zaposleni implements Serializable {
-    
-    private String jmbg;
-    private String imePrezime;
-    private int godinaRodjenja;
+
+    String jmbg;
+    String imePrezime;
+    int godinaRodjenja;
     private Pilot pilot;
     private Aviomehanicar aviomehanicar;
 
@@ -68,5 +68,5 @@ public class Zaposleni implements Serializable {
     public String toString() {
         return "[" + jmbg + "] " + getImePrezime();
     }
-    
+
 }

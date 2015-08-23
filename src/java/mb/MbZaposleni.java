@@ -3,7 +3,9 @@ package mb;
 import domain.Aviomehanicar;
 import domain.Pilot;
 import domain.Zaposleni;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -24,9 +26,11 @@ public class MbZaposleni {
     List<Zaposleni> zaposleni; //lista zaposlenih u bazi
     List<Zaposleni> dodatiZaposleni; //lista dodatih zap. koji treba da se sacuvaju u bazi
     Zaposleni novi;
-    String tip; //tip zaposlenog  koji se unosi
+    String tip; //tip zaposlenog koji se unosi
+    String tipNovogMehanicara;
+    boolean ocenaStanjaNovog;
+    Date datumNovog;
     Zaposleni odabraniZaposleni; // selektovani zap.
-    String krit;
     boolean izmena = false;
 
     /**
@@ -38,8 +42,6 @@ public class MbZaposleni {
     @PostConstruct
     public void inicijalizujPodatke() {
         novi = new Zaposleni();
-        novi.setPilot(new Pilot());
-        novi.setAviomehanicar(new Aviomehanicar());
         zaposleni = KontrolerWS.getInstance().vratiZaposlene();
         dodatiZaposleni = new ArrayList<>();
     }
@@ -80,16 +82,40 @@ public class MbZaposleni {
         return tip;
     }
 
+    public Date getDatumNovog() {
+        return datumNovog;
+    }
+
+    public String getTipNovogMehanicara() {
+        return tipNovogMehanicara;
+    }
+
+    public boolean isOcenaStanjaNovog() {
+        return ocenaStanjaNovog;
+    }
+
+    public void setDatumNovog(Date datumNovog) {
+        this.datumNovog = datumNovog;
+    }
+
+    public void setOcenaStanjaNovog(boolean ocenaStanjaNovog) {
+        this.ocenaStanjaNovog = ocenaStanjaNovog;
+    }
+
+    public void setTipNovogMehanicara(String tipNovogMehanicara) {
+        this.tipNovogMehanicara = tipNovogMehanicara;
+    }
+
     public void setTip(String tip) {
         this.tip = tip;
-    }
-
-    public String getKrit() {
-        return krit;
-    }
-
-    public void setKrit(String krit) {
-        this.krit = krit;
+        if (tip.equals("Pilot")) {
+            novi = new Pilot(novi);
+            ocenaStanjaNovog = false;
+            datumNovog = new Date();
+        } else {
+            novi = new Aviomehanicar(novi);
+            tipNovogMehanicara = "";
+        }
     }
 
     public boolean isIzmena() {
@@ -101,17 +127,14 @@ public class MbZaposleni {
     }
 
     public void dodajNovog() {
-        Zaposleni z = null;
         if (tip.equals("Pilot")) {
-            z = new Pilot(novi.getJmbg());
-            z.setPilot(novi.getPilot());
+            ((Pilot) novi).setDatumPregleda(datumNovog);
+            ((Pilot) novi).setOcenaStanja(ocenaStanjaNovog);
         } else {
-            z = new Aviomehanicar(novi.getJmbg());
-            z.setAviomehanicar(novi.getAviomehanicar());
+            ((Aviomehanicar) novi).setTipMehanicara(tipNovogMehanicara);
         }
-        z.setGodinaRodjenja(novi.getGodinaRodjenja());
-        z.setImePrezime(novi.getImePrezime());
-        dodatiZaposleni.add(z);
+        dodatiZaposleni.add(novi);
+        setTip("");
         novi = new Zaposleni();
     }
 
@@ -119,26 +142,25 @@ public class MbZaposleni {
         if (tip == null) {
             return false;
         }
-        if (tip.equals("Avio mehanicar") || tip.equals("Avio-mehanicar")) {
-            novi.setAviomehanicar(new Aviomehanicar());
-            return true;
-        }
-        return false;
+        return tip.equals("Avio mehanicar") || tip.equals("Avio-mehanicar");
     }
 
     public boolean noviJePilot() {
         if (tip == null) {
             return false;
         }
-        if (tip.equals("Pilot")) {
-            novi.setPilot(new Pilot());
-            return true;
-        }
-        return false;
+        return tip.equals("Pilot");
     }
 
-    public void sacuvajSve() {
-        //metoda cuva sve iz liste unetih i prikazuje rezultat na ekranu
+    public String sacuvajSve() {
+        try {
+            System.out.println("Cuvanje liste zaposlenih");
+            KontrolerWS.getInstance().sacuvajSveZaposlene(dodatiZaposleni);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", "Zaposleni su sacuvani u bazi podataka"));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
+        }
+        return "unosZaposlenih";
     }
 
     public String pokreniIzmenu(Zaposleni zap) {
@@ -166,6 +188,16 @@ public class MbZaposleni {
 
     public void obrisiSelektovaniRed() {
         dodatiZaposleni.remove(odabraniZaposleni);
+    }
+
+    public String vratiOstalePodatkeOZaposlenom(Zaposleni z) {
+        if (z instanceof Pilot) {
+            String datum = new SimpleDateFormat("dd/MM/yyyy").format(((Pilot) z).getDatumPregleda());
+            String ocena = ((Pilot) z).getOcenaStanja() ? "sposoban" : "nesposoban";
+            return datum + " ocenjen kao " + ocena;
+        } else {
+            return ((Aviomehanicar) z).getTipMehanicara();
+        }
     }
 
 }

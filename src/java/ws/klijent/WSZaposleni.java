@@ -19,7 +19,6 @@ import javax.ws.rs.core.GenericType;
  * @author Lazar Vujadinovic
  */
 public class WSZaposleni {
-
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
@@ -29,14 +28,28 @@ public class WSZaposleni {
         webTarget = client.target(BASE_URI).path("zaposleni");
     }
 
-    public <T> T findAll(GenericType<T> responseType) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
-    }
-
     public <T> T findAllPilot(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path("piloti");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String edit(Object requestEntity, String id) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("edit/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    }
+
+    public <T> T find(GenericType<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public String createAll(Object requestEntity) throws ClientErrorException {
+        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    }
+
+    public <T> T findAll(GenericType<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -46,28 +59,14 @@ public class WSZaposleni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public <T> T find(GenericType<T> responseType, String id) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path(java.text.MessageFormat.format("{0}", new Object[]{id}));
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
-    }
-
-    public <T> T create(Object requestEntity, GenericType<T> responseType) throws ClientErrorException {
-        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
-    }
-
-    public <T> T edit(Object requestEntity, GenericType<T> responseType, String id) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("edit/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
-    }
-
-    public <T> T remove(GenericType<T> responseType, String id) throws ClientErrorException {
+    public String remove(String id) throws ClientErrorException {
         WebTarget resource = webTarget;
         resource = resource.path(java.text.MessageFormat.format("delete/{0}", new Object[]{id}));
-        return resource.request().get(responseType);
+        return resource.request().get(String.class);
     }
 
     public void close() {
         client.close();
     }
-
+    
 }
