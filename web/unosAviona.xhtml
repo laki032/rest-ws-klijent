@@ -2,10 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:laki="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:laki="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
@@ -15,40 +15,29 @@
             <ui:define name="content">
                 <h:form id="unosAviona">
                     <p:growl id="grwPoruke" />
-                    <p:messages globalOnly="true" style="width: 70%;background-color: cyan;font-weight: bold;font-size: x-large" showDetail="true" />
 
-                    <h:panelGrid columns="3" >
+                    <h:panelGrid columns="2" >
                         <p:outputLabel value="Oznaka:" />
                         <p:inputText id="txtOznaka" value="#{mbAvion.novi.oznaka}" title="Oznaka moze sadrzati najvise 30 karaktera" validatorMessage="Oznaka moze sadrzati najvise 30 karaktera">
                             <f:validateLength maximum="30" /> 
                         </p:inputText>
-                        <h:message for="txtOznaka" errorStyle="color:red;" />
 
                         <p:outputLabel for="txtGodPr" value="Godina proizvodnje:" />
                         <p:spinner id="txtGodPr" value="#{mbAvion.novi.godProizvodnje}" title="Godina proizvodnje mora biti izmedju 1990 i 2020" validatorMessage="Godina proizvodnje mora biti izmedju 1990 i 2020" >
                             <f:validateLongRange maximum="2020" minimum="1990" />
                         </p:spinner>
-                        <p:message for="txtGodPr" />                        
 
                         <p:outputLabel for="txtBrput" value="Broj putnika:" />
                         <p:spinner id="txtBrput" value="#{mbAvion.novi.brojPutnika}" title="Broj putnika mora biti izmedju 0 i 1000" validatorMessage="Broj putnika mora biti izmedju 0 i 1000" >
                             <f:validateLongRange maximum="1000" minimum="0" />
                         </p:spinner>
-                        <h:message for="txtBrput" />
 
                         <p:outputLabel for="txtNosivost" value="Nosivost:" />
                         <p:spinner id="txtNosivost" value="#{mbAvion.novi.nosivost}" title="Nosivost mora biti izmedju 1 i 500" validatorMessage="Nosivost mora biti izmedju 1 i 500" >
                             <f:validateLongRange maximum="500" minimum="1" />
                         </p:spinner>
-                        <h:message for="txtNosivost" />
 
-                        <p:outputLabel for="cmbTip" value="Tip aviona:"/>
-                        <p:selectOneMenu id="cmbTip" title="Odaberi tip aviona" value="#{mbAvion.novi.tipID}" converter="tipCNV" style="width: 100%">
-                            <f:selectItem itemValue="" itemLabel="Izaberi tip aviona" />
-                            <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
-                        </p:selectOneMenu>
-
-                        <!--Ovaj komentar ne sluzi nicemu, izuzev da dugme prebaci u novi red-->
+                        <laki:combotipovi />
 
                         <br/>
 

@@ -55,7 +55,7 @@ public class Tipaviona implements Serializable {
 
     @Override
     public String toString() {
-        return naziv + " [" + tipID + "]";
+        return naziv;
     }
 
 }

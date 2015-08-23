@@ -5,83 +5,112 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" >
 
     <body>
         <ui:composition template="./WEB-INF/template.xhtml">
             <ui:define name="content">
-                    <div align="center">
-                        <div align="left" style="float: left;width: 35%; margin-right: 1%">
-                            <h:form id="frmZaposleni">  
-                                <p:growl id="grwPoruke" />
-                                <p:panel header="Unos Zaposlenih">
-                                    <h:panelGrid id="pnlgZap" columns="2">
-                                        <p:outputLabel value="JMBG:" />
-                                        <p:inputText id="txtJMBG" value="#{mbZaposleni.novi.jmbg}" title="Unesite broj od 13 cifara" validatorMessage="JMBG zaposlenog mora imati 13 cifara">
-                                            <f:validateLength minimum="13" maximum="13" />
-                                        </p:inputText>
+                <div align="center">
+                    <div align="left" style="float: left;width: 35%; margin-right: 1%">
+                        <h:form id="frmZaposleni">  
+                            <p:growl id="grwPoruke" />
+                            <p:panel header="Unos Zaposlenih">
+                                <h:panelGrid id="pnlgZap" columns="2">
+                                    <p:outputLabel value="JMBG:" />
+                                    <p:inputText id="txtJMBG" value="#{mbZaposleni.novi.jmbg}" title="Unesite broj od 13 cifara" validatorMessage="JMBG zaposlenog mora imati 13 cifara">
+                                        <f:validateLength minimum="13" maximum="13" />
+                                    </p:inputText>
 
-                                        <p:outputLabel value="Ime i prezime:" />
-                                        <p:inputText id="txtImepr" value="#{mbZaposleni.novi.imePrezime}" title="Unesite ime i prezime zaposlenog" validatorMessage="Morate uneti ime i prezime" >
-                                            <f:validateLength minimum="2" />
-                                        </p:inputText>
+                                    <p:outputLabel value="Ime i prezime:" />
+                                    <p:inputText id="txtImepr" value="#{mbZaposleni.novi.imePrezime}" title="Unesite ime i prezime zaposlenog" validatorMessage="Morate uneti ime i prezime" >
+                                        <f:validateLength minimum="2" />
+                                    </p:inputText>
 
-                                        <p:outputLabel value="Godina rodjenja:" />
-                                        <p:spinner id="txtGodRod" value="#{mbZaposleni.novi.godinaRodjenja}" validatorMessage="Godina rodjenja mora biti broj izmedju 1950 i 2010" >
-                                            <f:validateLongRange minimum="1950" maximum="2010" />
-                                        </p:spinner>
+                                    <p:outputLabel value="Godina rodjenja:" />
+                                    <p:spinner id="txtGodRod" value="#{mbZaposleni.novi.godinaRodjenja}" validatorMessage="Godina rodjenja mora biti broj izmedju 1950 i 2010" >
+                                        <f:validateLongRange minimum="1950" maximum="2010" />
+                                    </p:spinner>
 
-                                        <!-- ovaj komentar ne sluzi nicemu, sem da pomeri dugme desno ispod polja za unos  -->
-                                        <p:commandButton value="Dodaj novog" icon="ui-icon-plus" ajax="false" action="#{mbZaposleni.dodajNovog()}" style="width: 92%"/>
-                                    </h:panelGrid>
+                                    <p:outputLabel value="Tip zaposlenog:" />
+                                    <p:selectOneRadio id="comboTip" value="#{mbZaposleni.tip}" required="true" validatorMessage="Morate odabrati tip zaposlenog!" >
+                                        <f:selectItem itemLabel="Avio-mehanicar" itemValue="Avio mehanicar"  />
+                                        <f:selectItem itemLabel="Pilot" itemValue="Pilot" />
+                                        <f:ajax execute="@this" render="tip" />
+                                    </p:selectOneRadio>
+
+                                </h:panelGrid>
+                                <p:panel id="tip" header="#{mbZaposleni.tip}" visible="#{mbZaposleni.tip!=null}" >
+                                    <c:if test="#{mbZaposleni.noviJePilot()}">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Ocena stanja:" />
+                                            <p:selectOneRadio id="comboZdrav" value="#{mbZaposleni.novi.pilot.ocenaStanja}" required="true" >
+                                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbZaposleni.novi.pilot.ocenaStanja = true}"  />
+                                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbZaposleni.novi.pilot.ocenaStanja = false}" />
+                                            </p:selectOneRadio>
+
+                                            <p:outputLabel value="Datum pregleda" />
+                                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.pilot.datumPregleda}"/>
+                                        </h:panelGrid>
+                                    </c:if>
+                                    <c:if test="#{mbZaposleni.noviJeMehanicar()}">
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="Tip mehanicara" />
+                                            <p:inputText value="#{mbZaposleni.novi.aviomehanicar.tipMehanicara}" />
+                                        </h:panelGrid>
+                                    </c:if>
                                 </p:panel>
-                            </h:form>
-                        </div>
 
-                        <h:form id="frmUnetiZaposleni">
-                            <p:growl id="poruke" />
-                            <div align="left" style="float: left;width: 64%;" >
-                                
-                                <p:panel header="Tabela dodatih zaposlenih">
+                                <br/>
+                                <p:commandButton value="Dodaj novog" icon="ui-icon-plus" ajax="false" action="#{mbZaposleni.dodajNovog()}" />
 
-                                    <p:dataTable id="tblTabZap" value="#{mbZaposleni.dodatiZaposleni}" var="zap" selectionMode="single" 
-                                                 selection="#{mbZaposleni.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
-
-                                        <p:column headerText="Tip">
-                                            <c:if test="#{zap.pilot == null}">
-                                                Avio-mehanicar
-                                            </c:if>
-                                            <c:if test="#{zap.aviomehanicar == null}">
-                                                Pilot
-                                            </c:if>
-                                        </p:column>
-                                        <p:column headerText="JMBG">
-                                            #{zap.jmbg}
-                                        </p:column>
-                                        <p:column headerText="Ime i prezime">
-                                            #{zap.imePrezime}
-                                        </p:column>
-                                        <p:column headerText="Godina rodjenja">
-                                            #{zap.godinaRodjenja}
-                                        </p:column>
-                                        <p:column headerText="Podaci">
-                                            <c:if test="#{zap.pilot == null}">
-                                                #{zap.aviomehanicar.tipMehanicara}
-                                            </c:if>
-                                            <c:if test="#{zap.aviomehanicar == null}">
-                                                #{zap.pilot.datumPregleda}<br/>
-                                                #{zap.pilot.ocenaStanja}
-                                            </c:if>
-                                        </p:column>
-
-                                    </p:dataTable>
-
-                                    <p:commandButton value="Sacuvaj sve" action="#{mbZaposleni.sacuvajSve()}" style="width: 40%; margin-top: 2%; margin-left: 60%" ajax="false"/>
-
-                                </p:panel>
-                            </div>
+                            </p:panel>
                         </h:form>
-                    </div> 
+                    </div>
+
+                    <h:form id="frmUnetiZaposleni">
+                        <p:growl id="poruke" />
+                        <div align="left" style="float: left;width: 64%;" >
+
+                            <p:panel header="Tabela dodatih zaposlenih">
+
+                                <p:dataTable id="tblTabZap" value="#{mbZaposleni.dodatiZaposleni}" var="zap" selectionMode="single" 
+                                             selection="#{mbZaposleni.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
+
+                                    <p:column headerText="Tip">
+                                        #{zap.class.simpleName}
+                                    </p:column>
+                                    <p:column headerText="JMBG">
+                                        #{zap.jmbg}
+                                    </p:column>
+                                    <p:column headerText="Ime i prezime">
+                                        #{zap.imePrezime}
+                                    </p:column>
+                                    <p:column headerText="Godina rodjenja">
+                                        #{zap.godinaRodjenja}
+                                    </p:column>
+                                    <p:column headerText="Podaci">
+                                        <c:if test="#{zap.pilot.datumPregleda == null}">
+                                            #{zap.aviomehanicar.tipMehanicara}
+                                        </c:if>
+                                        <c:if test="#{zap.aviomehanicar.tipMehanicara == null}">
+                                            <h:outputText value="#{zap.pilot.datumPregleda}" >
+                                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                            </h:outputText>
+                                            <br/>
+                                            <c:if test="#{zap.pilot.ocenaStanja}" >ocenjen kao sposoban</c:if>
+                                            <c:if test="#{!zap.pilot.ocenaStanja}" >ocenjen kao nesposoban</c:if>
+                                        </c:if>
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <p:commandButton value="Obrisi" action="#{mbZaposleni.obrisiSelektovaniRed()}" style="width: 40%; margin-top: 2%" ajax="false"/>
+                                <p:commandButton value="Sacuvaj sve" action="#{mbZaposleni.sacuvajSve()}" style="width: 40%; margin-top: 2%; margin-left: 19%" ajax="false"/>
+
+                            </p:panel>
+                        </div>
+                    </h:form>
+                </div> 
             </ui:define>
 
         </ui:composition>

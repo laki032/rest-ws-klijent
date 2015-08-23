@@ -22,10 +22,12 @@ public class Aviomehanicar extends Zaposleni implements Serializable {
         this.jmbg = jmbg;
     }
 
+    @Override
     public String getJmbg() {
         return jmbg;
     }
 
+    @Override
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
     }

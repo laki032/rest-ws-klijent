@@ -90,4 +90,10 @@ public class KontrolerWS {
 
     }
 
+    public void obrisiZaposlenog(Zaposleni zap) {
+        GenericType<Boolean> odgovor = new GenericType<Boolean>() {
+        };
+        wsZap.remove(odgovor, zap.getJmbg());
+    }
+
 }

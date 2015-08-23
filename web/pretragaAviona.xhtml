@@ -4,7 +4,6 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
@@ -14,42 +13,39 @@
             <ui:define name="content">
 
                 <h:form id="prikazAviona">
+                    <p:growl id="msgs" showDetail="true" />
 
-                    <p:outputLabel style="width: 25%; padding: 10px">Unesite kriterijum pretrage: </p:outputLabel>
-                    <p:inputText style="margin-right: 10px;" id="kritPretrage" value="#{mbAvion.krit}" onkeyup=""/>
+                    <p:dataTable value="#{mbAvion.avioni}" var="a" rows="10" paginator="true" widgetVar="tabela"
+                                 selectionMode="single" selection="#{mbAvion.novi}" rowKey="#{a.avionID}" >
+                        <p:ajax event="rowSelect" listener="#{mbAvion.avionJeOdabran}" update=":prikazAviona:msgs" />
 
-                    <p:commandButton action="#{mbAvion.pretraga()}" value="Pretrazi" style="margin: 10px;" ajax="false"/>
-
-                    <p:dataTable value="#{mbAvion.avioni}" var="a" >
-                        <!--<p:row rendered="#{mbAvion.pretraga(a)}"></p:row>
-                        -->
-                        <p:column style="width: 25%">
-                            <f:facet name="header">Oznaka</f:facet>
-                                #{a.oznaka}
+                        <p:column style="width: 22%" headerText="Oznaka" sortBy="#{a.oznaka}" filterBy="#{a.oznaka}" footerText="Kriterijum pretrage: sadrzi" filterMatchMode="contains">
+                            <p:outputLabel value="#{a.oznaka}"/>
                         </p:column>
-                        <p:column style="width: 10%">
-                            <f:facet name="header">Godina proizvodnje</f:facet>
-                                #{a.godProizvodnje}
+                        <p:column headerText="Godina proizvodnje" sortBy="#{a.godProizvodnje}" >
+                            <p:outputLabel value="#{a.godProizvodnje}"/>    
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">Broj putnika</f:facet>
-                                #{a.brojPutnika}
+                        <p:column headerText="Broj putnika" sortBy="#{a.brojPutnika}" >
+                            <p:outputLabel value="#{a.brojPutnika}"/>   
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">Nosivost</f:facet>
-                                #{a.nosivost}
+                        <p:column headerText="Nosivost" sortBy="#{a.nosivost}" >
+                            <p:outputLabel value="#{a.nosivost}"/>   
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">Tip</f:facet>
-                                #{a.tipID.naziv}
+                        <p:column headerText="Tip" filterBy="#{a.tipID.naziv}" sortBy="#{a.tipID.naziv}" filterMatchMode="in">
+                            <f:facet name="filter">
+                                <p:selectCheckboxMenu label="Izaberite tip(ove)" onchange="PF('tabela').filter()" panelStyle="width:125px" scrollHeight="150">
+                                    <f:selectItems value="#{mbAvion.tipovi}" />
+                                </p:selectCheckboxMenu>
+                            </f:facet>
+                            <p:outputLabel value="#{a.tipID.naziv}"/>    
                         </p:column>
                         <p:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Obrisi</f:facet>
-                            <p:commandButton icon="ui-icon-minus" action="#{mbAvion.obrisi(a)}" ajax="false"/>
+                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" ajax="false"/>
                         </p:column>
                         <p:column rendered="#{mbAdmin.ulogovan}">
                             <f:facet name="header">Izmeni</f:facet>
-                            <p:commandButton value="Izmeni" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
+                            <p:commandButton value="Izmeni" style="width: 100%" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
                         </p:column>
 
                     </p:dataTable>

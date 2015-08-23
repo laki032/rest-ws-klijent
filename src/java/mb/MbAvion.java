@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
 import ws.klijent.kontroler.KontrolerWS;
 
 /**
@@ -120,21 +121,8 @@ public class MbAvion {
         return "pretragaAviona";
     }
 
-    public String pretraga() {
-        return "pretragaAviona";
-    }
-
-    //metoda vraca da li avion odgovara unetom kriterijumu za pretragu
-    public boolean pretraga(Avion a) {
-        if (a == null) {
-            return true;
-        }
-        if (krit.isEmpty() || krit == null || krit.equals("")) {
-            return true;
-        }
-        if (a.getOznaka().startsWith(krit)) {
-            return true;
-        }
-        return false;
+    public void avionJeOdabran(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Odabran je avion", "[" + ((Avion) event.getObject()).getAvionID()+ "] " + ((Avion) event.getObject()).getOznaka());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

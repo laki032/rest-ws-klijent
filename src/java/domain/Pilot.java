@@ -67,4 +67,5 @@ public class Pilot extends Zaposleni implements Serializable {
     public String toString() {
         return "pilot[" + jmbg + "] " + getImePrezime();
     }
+
 }
