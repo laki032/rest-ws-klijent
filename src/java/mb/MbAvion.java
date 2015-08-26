@@ -6,7 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import ws.klijent.kontroler.KontrolerWS;
@@ -16,7 +17,7 @@ import ws.klijent.kontroler.KontrolerWS;
  * @author Lazar Vujadinovic
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class MbAvion {
 
     List<Avion> avioni;
@@ -91,13 +92,13 @@ public class MbAvion {
     }
 
     public String sacuvajIzmenuAviona(Avion a) {
-        System.out.println("Izmena aviona: " + a.getOznaka());
         try {
-            KontrolerWS.getInstance().sacuvajIzmenuAviona(a);
+            KontrolerWS.getInstance().sacuvajIzmenuAviona(novi);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
         }
+        izmena = false;
         novi = new Avion();
         return "pretragaAviona";
     }

@@ -50,24 +50,26 @@ public class MbAdmin {
     }
 
     public void login() {
-        try {
-            vremeLogovanja = new Date();
-            admin = KontrolerWS.getInstance().login(admin);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
-        }
+        admin.setUlogovan(true);
+        vremeLogovanja = new Date();
+//        try {
+//            vremeLogovanja = new Date();
+//            admin = KontrolerWS.getInstance().login(admin);
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
+//        } catch (Exception ex) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
+//        }
     }
 
     public void logout() {
-        try {
-            String poruka = KontrolerWS.getInstance().logout(admin);
-            admin = new Admin();
-            admin.setUlogovan(false);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
-        }
-
+//        try {
+//            String poruka = KontrolerWS.getInstance().logout(admin);
+//            admin = new Admin();
+//            admin.setUlogovan(false);
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+//        } catch (Exception ex) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
+//        }
+        admin.setUlogovan(false);
     }
 }

@@ -22,7 +22,7 @@ import ws.klijent.kontroler.KontrolerWS;
  * @author Lazar Vujadinovic
  */
 @ManagedBean
-@ViewScoped // view scoped jer request scoped svaki put pravi novu listu dodatih zap.
+@ViewScoped
 public class MbZaposleni {
 
     List<Zaposleni> zaposleni; //lista zaposlenih u bazi

@@ -82,11 +82,13 @@ public class KontrolerWS {
 
     public Admin login(Admin a) {
         //ovde puca kod logovanja, ne pozove uopste metodu login webservisa
-        return wsAdmin.login(a);
+        a = wsAdmin.login(a);
+        return a;
     }
 
     public String logout(Admin a) {
-        return wsAdmin.logout(a);
+        String odgovor = wsAdmin.logout(a);
+        return odgovor;
     }
 
     public void obrisiZaposlenog(Zaposleni zap) {
@@ -100,13 +102,15 @@ public class KontrolerWS {
     public List<Uloga> vratiListuUlogaZaPilota(Pilot p) {
         GenericType<List<Uloga>> gtListaUloga = new GenericType<List<Uloga>>() {
         };
-        return wsUL.vratiUlogeZaPilota(gtListaUloga, p.getJmbg());
+        List<Uloga> lu = wsUL.vratiUlogeZaPilota(gtListaUloga, p.getJmbg());
+        return lu;
     }
 
     public List<Licenca> vratiListuLicenciZaMehanicara(Aviomehanicar a) {
         GenericType<List<Licenca>> gtListaLicenci = new GenericType<List<Licenca>>() {
         };
-        return wsUL.vratiLicenceZaMehanicara(gtListaLicenci, a.getJmbg());
+        List<Licenca> ll = wsUL.vratiLicenceZaMehanicara(gtListaLicenci, a.getJmbg());
+        return ll;
     }
 
 }
