@@ -46,7 +46,7 @@
                         <p:outputLabel value="Tip aviona: " style="margin-left: 3px"/>
                         <p:outputLabel value="#{mbAvion.novi.tipID.naziv}" style="margin-left: 7%; margin-bottom: 2%" />
                         <br/>
-                        <p:commandButton value="Sacuvaj izmenu aviona" title="Klik za cuvanje izmena aviona" action="${mbAvion.sacuvajIzmenuAviona(novi)}" style="width: 35%" ajax="false"/>
+                        <p:commandButton value="Sacuvaj izmenu aviona" title="Klik za cuvanje izmena aviona" action="#{mbAvion.sacuvajIzmenuAviona(novi)}" style="width: 35%" ajax="false"/>
                     </c:if>
                 </h:form>
             </ui:define>

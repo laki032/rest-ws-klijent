@@ -5,19 +5,25 @@
  */
 package ws.klijent.kontroler;
 
+import domain.Admin;
+import domain.Aviomehanicar;
 import domain.Avion;
+import domain.Licenca;
+import domain.Pilot;
 import domain.Tipaviona;
+import domain.Uloga;
 import domain.Zaposleni;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
-import ws.klijent.WSAvioni;
-import ws.klijent.WSZaposleni;
+import ws.klijent.*;
 
 public class KontrolerWS {
 
     private static KontrolerWS instance;
     private WSAvioni wsAvio;
     private WSZaposleni wsZap;
+    private WSAdmin wsAdmin;
+    private WSUlogeLicence wsUL;
     private List<Tipaviona> tipovi;
 
     private KontrolerWS() {
@@ -74,12 +80,13 @@ public class KontrolerWS {
         wsAvio.remove(a.getAvionID() + "");
     }
 
-    public void login(String ime, String pass) {
-//napravi adminWS i na njemu nekako resi login i out
+    public Admin login(Admin a) {
+        //ovde puca kod logovanja, ne pozove uopste metodu login webservisa
+        return wsAdmin.login(a);
     }
 
-    public void logout(String ime, String pass) {
-
+    public String logout(Admin a) {
+        return wsAdmin.logout(a);
     }
 
     public void obrisiZaposlenog(Zaposleni zap) {
@@ -88,6 +95,18 @@ public class KontrolerWS {
 
     public void sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) {
         wsZap.createAll(dodatiZaposleni);
+    }
+
+    public List<Uloga> vratiListuUlogaZaPilota(Pilot p) {
+        GenericType<List<Uloga>> gtListaUloga = new GenericType<List<Uloga>>() {
+        };
+        return wsUL.vratiUlogeZaPilota(gtListaUloga, p.getJmbg());
+    }
+
+    public List<Licenca> vratiListuLicenciZaMehanicara(Aviomehanicar a) {
+        GenericType<List<Licenca>> gtListaLicenci = new GenericType<List<Licenca>>() {
+        };
+        return wsUL.vratiLicenceZaMehanicara(gtListaLicenci, a.getJmbg());
     }
 
 }

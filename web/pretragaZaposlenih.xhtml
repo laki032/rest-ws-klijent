@@ -17,8 +17,7 @@
 
                     <p:dataTable value="#{mbZaposleni.zaposleni}" var="zap" rows="10" paginator="true" widgetVar="tabela"
                                  selectionMode="single" selection="#{mbZaposleni.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
-                        <p:ajax event="rowSelect" listener="#{mbZaposleni.zaposleniJeOdabran}" update=":prikazZaposlenih:msgs" />
-
+                        <p:ajax event="rowSelect" listener="#{mbZaposleni.zaposleniJeOdabran}" update=":prikazZaposlenih:dlgPnl" oncomplete="PF('dlg').show()" />
                         <p:column headerText="JMBG" style="width: 20%" sortBy="#{zap.jmbg}" filterBy="#{zap.jmbg}" footerText="Kriterijum pretrage: sadrzi" filterMatchMode="contains">
                             <p:outputLabel value="#{zap.jmbg}" />
                         </p:column>
@@ -38,15 +37,23 @@
                             </f:facet>
                             <p:outputLabel value="#{zap.class.simpleName}" /> 
                         </p:column>
-                        <p:column rendered="#{mbAdmin.ulogovan}"  style="width: 5%">
+                        <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 5%">
                             <f:facet name="header">Obrisi</f:facet>
                             <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbZaposleni.obrisi(zap)}" ajax="false"/>
                         </p:column>
-                        <p:column rendered="#{mbAdmin.ulogovan}"  style="width: 9%">
+                        <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 9%">
                             <f:facet name="header">Izmeni</f:facet>
                             <p:commandButton value="Izmeni" style="width: 100%" action="#{mbZaposleni.pokreniIzmenu(zap)}" ajax="false"/>
                         </p:column>
                     </p:dataTable>
+
+                    <p:dialog header="Pregled angazovanja za zaposlenog" widgetVar="dlg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="dlgPnl" style="text-align:center;">
+                            <p:panelGrid rendered="#{not empty mbZaposleni.odabraniZaposleni}" >
+                                <h:outputText value="#{mbZaposleni.vratiUlogeLicence()}" />
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
                 </h:form>
 
 

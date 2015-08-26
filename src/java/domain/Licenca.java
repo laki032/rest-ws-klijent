@@ -1,6 +1,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -58,4 +59,11 @@ public class Licenca implements Serializable {
         this.tipaviona = tipaviona;
     }
 
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return "Datuma: " + sdf.format(datumDobijanja) + ", mehanicar: " + aviomehanicar.getImePrezime() 
+                + ", \ndobio je licencu za " + tipaviona.getNaziv()+ " tip aviona";
+    }
+    
 }

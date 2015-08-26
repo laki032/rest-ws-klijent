@@ -44,10 +44,10 @@
             <div>
                 <div id="right">
                     <ui:insert name="right">
-                        <c:if test="#{mbAdmin.ulogovan}">
+                        <c:if test="#{mbAdmin.admin.ulogovan}">
                             <h:form id="logout">
                                 <p:panel id="panel" header="Ulogovan admin" style="margin-bottom:10px;">
-                                    <p:outputLabel><h1>#{mbAdmin.ime.toUpperCase()}</h1> </p:outputLabel><br/><br/>
+                                    <p:outputLabel><h1>#{mbAdmin.admin.username.toUpperCase()}</h1> </p:outputLabel><br/><br/>
                                     <p:outputLabel>Vreme logovanja:</p:outputLabel><br/><br/>
                                     <p:clock mode="client" pattern="#{mbAdmin.vremeLogovanja}" ></p:clock> <br/><br/>
                                     <p:outputLabel>Trenutno vreme:</p:outputLabel><br/><br/>
@@ -56,15 +56,15 @@
                                 </p:panel>
                             </h:form>
                         </c:if>
-                        <c:if test="#{!mbAdmin.ulogovan}">
+                        <c:if test="#{!mbAdmin.admin.ulogovan}">
                             <h:form id="login" >
                                 <p:panel id="panel" header="Admin login" style="margin-bottom:10px;">
                                     <p:outputLabel>Username:</p:outputLabel> 
-                                    <p:inputText id="txtIme" value="#{mbAdmin.ime}" style="width: 90%;">
+                                    <p:inputText id="txtIme" value="#{mbAdmin.admin.username}" style="width: 90%;">
                                         <f:validateLength maximum="15" />
                                     </p:inputText><br/><br/>
                                     <p:outputLabel>Password:</p:outputLabel> 
-                                    <p:password id="txtPass" value="#{mbAdmin.pass}" style="width: 90%;">
+                                    <p:password id="txtPass" value="#{mbAdmin.admin.password}" style="width: 90%;">
                                         <f:validateLength maximum="15" />
                                     </p:password><br/><br/>
                                     <p:commandButton value="LOGIN" action="#{mbAdmin.login()}" style="width: 95%" ajax="false"/><br/>

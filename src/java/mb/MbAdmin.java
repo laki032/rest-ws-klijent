@@ -1,10 +1,13 @@
 package mb;
 
+import domain.Admin;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import ws.klijent.kontroler.KontrolerWS;
 
 /**
@@ -15,10 +18,8 @@ import ws.klijent.kontroler.KontrolerWS;
 @SessionScoped
 public class MbAdmin {
 
+    Admin admin;
     Date vremeLogovanja;
-    boolean ulogovan;
-    String ime;
-    String pass;
 
     /**
      * Creates a new instance of MbAdmin
@@ -28,23 +29,8 @@ public class MbAdmin {
 
     @PostConstruct
     public void inicijalizujPodatke() {
-        ulogovan = false;
-    }
-
-    public String getIme() {
-        return ime;
-    }
-
-    public boolean isUlogovan() {
-        return ulogovan;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public void setUlogovan(boolean ulogovan) {
-        this.ulogovan = ulogovan;
+        admin = new Admin();
+        admin.setUlogovan(false);
     }
 
     public String getVremeLogovanja() {
@@ -55,22 +41,33 @@ public class MbAdmin {
         this.vremeLogovanja = vremeLogovanja;
     }
 
-    public String getPass() {
-        return pass;
+    public Admin getAdmin() {
+        return admin;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     public void login() {
-        KontrolerWS.getInstance().login(ime, pass);
-        vremeLogovanja = new Date();
-        ulogovan = true;
+        try {
+            vremeLogovanja = new Date();
+            admin = KontrolerWS.getInstance().login(admin);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
+        }
     }
 
     public void logout() {
-        KontrolerWS.getInstance().logout(ime, pass);
-        ulogovan = false;
+        try {
+            String poruka = KontrolerWS.getInstance().logout(admin);
+            admin = new Admin();
+            admin.setUlogovan(false);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
+        }
+
     }
 }

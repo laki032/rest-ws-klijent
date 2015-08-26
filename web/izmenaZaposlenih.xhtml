@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/template.xhtml">
+
+            <ui:define name="content">
+                <h:form id="izmenaZap" >
+                    <p:growl id="poruke" />
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="Atribut" />
+                        <p:outputLabel value="Stara vrednost" />
+                        <p:outputLabel value="Nova vrednost" />
+
+                        <p:outputLabel value="JMBG:" />
+                        <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.jmbg}" />
+                        <p:inputText  value="#{mbZaposleni.novi.jmbg}" title="JMBG se ne moze menjati" readonly="true" />
+
+                        <p:outputLabel value="Ime i prezime" />
+                        <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.imePrezime}" />
+                        <p:inputText value="#{mbZaposleni.novi.imePrezime}" />
+
+                        <p:outputLabel value="Godina rodjenja:" />
+                        <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.godinaRodjenja}" />
+                        <p:inputText value="#{mbZaposleni.novi.godinaRodjenja}" />
+
+                        <c:if test="#{mbZaposleni.novi.class.simpleName == 'Pilot'}">
+                            <p:outputLabel value="Datum pregleda:" />
+                            <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.datumPregleda}" />
+                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.pilot.datumPregleda}" />
+
+                            <p:outputLabel value="Ocena stanja:" />
+                            <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.ocenaStanja}" />
+                            <p:selectOneRadio id="comboZdrav" value="#{mbZaposleni.novi.ocenaStanja}" required="true" >
+                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbZaposleni.novi.ocenaStanja = true}"  />
+                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbZaposleni.novi.ocenaStanja = false}" />
+                            </p:selectOneRadio>
+                        </c:if>
+                        <c:if test="#{mbZaposleni.novi.class.simpleName == 'Aviomehanicar'}">
+                            <p:outputLabel value="Tip mehanicara:" />
+                            <p:outputLabel value="${mbZaposleni.odabraniZaposleni.tipMehanicara}" />
+                            <p:inputText value="#{mbZaposleni.novi.tipMehanicara}" />
+                        </c:if>
+
+                    </p:panelGrid>
+                    <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbZaposleni.sacuvajIzmenu()}" />
+
+                    <p:separator />
+
+                    <p:outputPanel >
+                        panel za prikaz uloga ili licenci koje zaposleni ima, i dodavanje novih
+                        
+                    </p:outputPanel>
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

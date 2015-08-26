@@ -99,7 +99,7 @@ public class MbAvion {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
         }
         novi = new Avion();
-        return "unosAviona";
+        return "pretragaAviona";
     }
 
     public String pokreniIzmenu(Avion a) {

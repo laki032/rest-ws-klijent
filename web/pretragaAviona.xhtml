@@ -39,11 +39,11 @@
                             </f:facet>
                             <p:outputLabel value="#{a.tipID.naziv}"/>    
                         </p:column>
-                        <p:column rendered="#{mbAdmin.ulogovan}">
+                        <p:column rendered="#{mbAdmin.admin.ulogovan}">
                             <f:facet name="header">Obrisi</f:facet>
                             <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" ajax="false"/>
                         </p:column>
-                        <p:column rendered="#{mbAdmin.ulogovan}">
+                        <p:column rendered="#{mbAdmin.admin.ulogovan}">
                             <f:facet name="header">Izmeni</f:facet>
                             <p:commandButton value="Izmeni" style="width: 100%" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
                         </p:column>

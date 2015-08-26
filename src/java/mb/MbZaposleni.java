@@ -1,7 +1,9 @@
 package mb;
 
 import domain.Aviomehanicar;
+import domain.Licenca;
 import domain.Pilot;
+import domain.Uloga;
 import domain.Zaposleni;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +33,6 @@ public class MbZaposleni {
     boolean ocenaStanjaNovog;
     Date datumNovog;
     Zaposleni odabraniZaposleni; // selektovani zap.
-    boolean izmena = false;
 
     /**
      * Creates a new instance of MbZaposleni
@@ -118,14 +119,6 @@ public class MbZaposleni {
         }
     }
 
-    public boolean isIzmena() {
-        return izmena;
-    }
-
-    public void setIzmena(boolean izmena) {
-        this.izmena = izmena;
-    }
-
     public void dodajNovog() {
         if (tip.equals("Pilot")) {
             ((Pilot) novi).setDatumPregleda(datumNovog);
@@ -164,10 +157,20 @@ public class MbZaposleni {
     }
 
     public String pokreniIzmenu(Zaposleni zap) {
-        novi = zap;
-        izmena = true;
+        odabraniZaposleni = zap;
+        if (odabraniZaposleni instanceof Pilot) {
+            novi = new Pilot(odabraniZaposleni);
+            ((Pilot) novi).setDatumPregleda(((Pilot) odabraniZaposleni).getDatumPregleda());
+            ((Pilot) novi).setOcenaStanja(((Pilot) odabraniZaposleni).getOcenaStanja());
+        } else {
+            novi = new Aviomehanicar(odabraniZaposleni);
+            ((Aviomehanicar) novi).setTipMehanicara(((Aviomehanicar) odabraniZaposleni).getTipMehanicara());
+        }
         return "izmenaZaposlenih";
-        // izmena ce se raditi u drugom panelu gde ce moguce biti da se doda i uloga/licenca
+    }
+
+    public String sacuvajIzmenu() {
+        return "pretragaZaposlenih";
     }
 
     public String obrisi(Zaposleni zap) {
@@ -182,8 +185,16 @@ public class MbZaposleni {
     }
 
     public void zaposleniJeOdabran(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Odabran je zaposleni", "[" + ((Zaposleni) event.getObject()).getJmbg() + "] " + ((Zaposleni) event.getObject()).getImePrezime());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+//        FacesMessage msg = new FacesMessage("Odabran je zaposleni", "[" + ((Zaposleni) event.getObject()).getJmbg() + "] " + ((Zaposleni) event.getObject()).getImePrezime());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+        odabraniZaposleni = (Zaposleni) event.getObject();
+        if (((Zaposleni) event.getObject()) instanceof Pilot) {
+            Pilot p = new Pilot(((Zaposleni) event.getObject()).getJmbg());
+            ((Pilot) odabraniZaposleni).setUlogaList(KontrolerWS.getInstance().vratiListuUlogaZaPilota(p));
+        } else {
+            Aviomehanicar a = new Aviomehanicar(((Zaposleni) event.getObject()).getJmbg());
+            ((Aviomehanicar) odabraniZaposleni).setLicencaList(KontrolerWS.getInstance().vratiListuLicenciZaMehanicara(a));
+        }
     }
 
     public void obrisiSelektovaniRed() {
@@ -198,6 +209,27 @@ public class MbZaposleni {
         } else {
             return ((Aviomehanicar) z).getTipMehanicara();
         }
+    }
+
+    public String vratiUlogeLicence() {
+        StringBuilder sb = new StringBuilder();
+        if (odabraniZaposleni == null) {
+            return "zaposleni nije odabran";
+        }
+        if (odabraniZaposleni instanceof Pilot) {
+            for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
+                sb.append(u.toString());
+                sb.append("\n");
+                sb.append("\n");
+            }
+        } else {
+            for (Licenca l : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
+                sb.append(l.toString());
+                sb.append("\n");
+                sb.append("\n");
+            }
+        }
+        return sb.toString();
     }
 
 }
