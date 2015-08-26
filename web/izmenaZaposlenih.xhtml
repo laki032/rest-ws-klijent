@@ -33,11 +33,13 @@
 
                         <c:if test="#{mbZaposleni.novi.class.simpleName == 'Pilot'}">
                             <p:outputLabel value="Datum pregleda:" />
-                            <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.datumPregleda}" />
+                            <h:outputText value="#{mbZaposleni.odabraniZaposleni.datumPregleda}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
                             <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.pilot.datumPregleda}" />
 
                             <p:outputLabel value="Ocena stanja:" />
-                            <p:outputLabel value="#{mbZaposleni.odabraniZaposleni.ocenaStanja}" />
+                            <h:outputText value="#{mbZaposleni.odabraniZaposleni.ocenaStanja}" />
                             <p:selectOneRadio id="comboZdrav" value="#{mbZaposleni.novi.ocenaStanja}" required="true" >
                                 <f:selectItem itemLabel="Sposoban" itemValue="#{mbZaposleni.novi.ocenaStanja = true}"  />
                                 <f:selectItem itemLabel="Nesposoban" itemValue="#{mbZaposleni.novi.ocenaStanja = false}" />

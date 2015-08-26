@@ -12,7 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import ws.klijent.kontroler.KontrolerWS;
@@ -22,7 +22,7 @@ import ws.klijent.kontroler.KontrolerWS;
  * @author Lazar Vujadinovic
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MbZaposleni {
 
     List<Zaposleni> zaposleni; //lista zaposlenih u bazi
@@ -33,6 +33,7 @@ public class MbZaposleni {
     boolean ocenaStanjaNovog;
     Date datumNovog;
     Zaposleni odabraniZaposleni; // selektovani zap.
+    boolean ul_Ucitane;
 
     /**
      * Creates a new instance of MbZaposleni
@@ -45,6 +46,7 @@ public class MbZaposleni {
         novi = new Zaposleni();
         zaposleni = KontrolerWS.getInstance().vratiZaposlene();
         dodatiZaposleni = new ArrayList<>();
+        ul_Ucitane = false;
     }
 
     public List<Zaposleni> getZaposleni() {
@@ -101,6 +103,14 @@ public class MbZaposleni {
 
     public void setOcenaStanjaNovog(boolean ocenaStanjaNovog) {
         this.ocenaStanjaNovog = ocenaStanjaNovog;
+    }
+
+    public boolean isUl_Ucitane() {
+        return ul_Ucitane;
+    }
+
+    public void setUl_Ucitane(boolean ul_Ucitane) {
+        this.ul_Ucitane = ul_Ucitane;
     }
 
     public void setTipNovogMehanicara(String tipNovogMehanicara) {
@@ -170,6 +180,13 @@ public class MbZaposleni {
     }
 
     public String sacuvajIzmenu() {
+        try {
+            String poruka = KontrolerWS.getInstance().sacuvajIzmenuZaposlenog(novi);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
+            zaposleni = KontrolerWS.getInstance().vratiZaposlene();
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
+        }
         return "pretragaZaposlenih";
     }
 
@@ -195,6 +212,7 @@ public class MbZaposleni {
             Aviomehanicar a = new Aviomehanicar(((Zaposleni) event.getObject()).getJmbg());
             ((Aviomehanicar) odabraniZaposleni).setLicencaList(KontrolerWS.getInstance().vratiListuLicenciZaMehanicara(a));
         }
+        ul_Ucitane = true;
     }
 
     public void obrisiSelektovaniRed() {

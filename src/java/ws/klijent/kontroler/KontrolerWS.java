@@ -113,4 +113,8 @@ public class KontrolerWS {
         return ll;
     }
 
+    public String sacuvajIzmenuZaposlenog(Zaposleni novi) {
+        return wsZap.edit(novi, novi.getJmbg());
+    }
+
 }

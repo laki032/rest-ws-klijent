@@ -61,7 +61,7 @@ public class MbAdmin {
 //        }
     }
 
-    public void logout() {
+    public String logout() {
 //        try {
 //            String poruka = KontrolerWS.getInstance().logout(admin);
 //            admin = new Admin();
@@ -71,5 +71,6 @@ public class MbAdmin {
 //            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
 //        }
         admin.setUlogovan(false);
+        return "index.xhtml";
     }
 }
