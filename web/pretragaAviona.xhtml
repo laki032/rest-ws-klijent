@@ -15,7 +15,7 @@
                 <h:form id="prikazAviona">
                     <p:growl id="msgs" showDetail="true" />
 
-                    <p:dataTable value="#{mbAvion.avioni}" var="a" rows="10" paginator="true" widgetVar="tabela"
+                    <p:dataTable value="#{mbAvion.avioni}" var="a" rows="5" paginator="true" widgetVar="tabela"
                                  selectionMode="single" selection="#{mbAvion.novi}" rowKey="#{a.avionID}" >
                         <p:ajax event="rowSelect" listener="#{mbAvion.avionJeOdabran}" update=":prikazAviona:msgs" />
 
