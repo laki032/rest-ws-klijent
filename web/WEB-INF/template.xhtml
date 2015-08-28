@@ -44,6 +44,7 @@
                     <ui:insert name="right">
                         <c:if test="#{mbAdmin.admin.ulogovan}">
                             <h:form id="logout">
+                                <p:messages id="poruke" />
                                 <p:panel id="panel" header="Ulogovan admin" style="margin-bottom:10px;">
                                     <p:outputLabel><h1>#{mbAdmin.admin.username.toUpperCase()}</h1> </p:outputLabel><br/><br/>
                                     <p:outputLabel>Vreme logovanja:</p:outputLabel><br/><br/>

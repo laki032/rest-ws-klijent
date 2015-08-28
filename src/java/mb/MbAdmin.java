@@ -49,16 +49,17 @@ public class MbAdmin {
         this.admin = admin;
     }
 
-    public void login() {
-        admin.setUlogovan(true);
+    public String login() {
+//        admin.setUlogovan(true);
         vremeLogovanja = new Date();
-//        try {
-//            vremeLogovanja = new Date();
-//            admin = KontrolerWS.getInstance().login(admin);
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
-//        } catch (Exception ex) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
-//        }
+        try {
+            vremeLogovanja = new Date();
+            admin = KontrolerWS.getInstance().login(admin);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
+        }
+        return null;
     }
 
     public String logout() {

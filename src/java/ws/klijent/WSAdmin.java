@@ -34,9 +34,7 @@ public class WSAdmin {
     }
 
     public Admin login(Admin a) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("login");
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(Admin.class);
+        return webTarget.path(java.text.MessageFormat.format("login", (Object) null)).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(a, javax.ws.rs.core.MediaType.APPLICATION_JSON), Admin.class);
     }
 
     public void close() {

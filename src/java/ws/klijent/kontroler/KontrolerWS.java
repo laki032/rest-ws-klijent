@@ -5,14 +5,7 @@
  */
 package ws.klijent.kontroler;
 
-import domain.Admin;
-import domain.Aviomehanicar;
-import domain.Avion;
-import domain.Licenca;
-import domain.Pilot;
-import domain.Tipaviona;
-import domain.Uloga;
-import domain.Zaposleni;
+import domain.*;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
 import ws.klijent.*;
@@ -29,6 +22,8 @@ public class KontrolerWS {
     private KontrolerWS() {
         wsAvio = new WSAvioni();
         wsZap = new WSZaposleni();
+        wsAdmin = new WSAdmin();
+        wsUL = new WSUlogeLicence();
     }
 
     public static KontrolerWS getInstance() {
@@ -80,9 +75,10 @@ public class KontrolerWS {
         wsAvio.remove(a.getAvionID() + "");
     }
 
-    public Admin login(Admin a) {
+    public Admin login(Admin a) throws Exception {
         //ovde puca kod logovanja, ne pozove uopste metodu login webservisa
         a = wsAdmin.login(a);
+        if(a==null) throw new Exception("admin nije ulogovan");
         return a;
     }
 
