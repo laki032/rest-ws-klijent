@@ -1,5 +1,7 @@
 package ws.klijent;
 
+import domain.Zaposleni;
+import java.util.Collection;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
@@ -44,8 +46,9 @@ public class WSZaposleni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String createAll(Object requestEntity) throws ClientErrorException {
-        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    public String createAll(Object[] requestEntity) throws ClientErrorException {
+        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
+                post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
     public <T> T findAll(GenericType<T> responseType) throws ClientErrorException {

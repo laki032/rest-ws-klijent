@@ -8,6 +8,7 @@ import domain.Zaposleni;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -45,7 +46,7 @@ public class MbZaposleni {
     public void inicijalizujPodatke() {
         novi = new Zaposleni();
         zaposleni = KontrolerWS.getInstance().vratiZaposlene();
-        dodatiZaposleni = new ArrayList<>();
+        dodatiZaposleni = new LinkedList<>();
         ul_Ucitane = false;
     }
 
@@ -161,6 +162,7 @@ public class MbZaposleni {
             KontrolerWS.getInstance().sacuvajSveZaposlene(dodatiZaposleni);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", "Zaposleni su sacuvani u bazi podataka"));
         } catch (Exception ex) {
+            dodatiZaposleni = new LinkedList<>();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
         }
         return "unosZaposlenih";
@@ -202,8 +204,6 @@ public class MbZaposleni {
     }
 
     public void zaposleniJeOdabran(SelectEvent event) {
-//        FacesMessage msg = new FacesMessage("Odabran je zaposleni", "[" + ((Zaposleni) event.getObject()).getJmbg() + "] " + ((Zaposleni) event.getObject()).getImePrezime());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
         odabraniZaposleni = (Zaposleni) event.getObject();
         if (((Zaposleni) event.getObject()) instanceof Pilot) {
             Pilot p = new Pilot(((Zaposleni) event.getObject()).getJmbg());

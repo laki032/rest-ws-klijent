@@ -6,7 +6,10 @@
 package ws.klijent.kontroler;
 
 import domain.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.ws.rs.core.GenericType;
 import ws.klijent.*;
 
@@ -96,7 +99,7 @@ public class KontrolerWS {
     }
 
     public void sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) {
-        wsZap.createAll(dodatiZaposleni);
+        wsZap.createAll((Object[]) dodatiZaposleni.toArray());
     }
 
     public List<Uloga> vratiListuUlogaZaPilota(Pilot p) {
