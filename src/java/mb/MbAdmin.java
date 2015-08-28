@@ -50,8 +50,6 @@ public class MbAdmin {
     }
 
     public String login() {
-//        admin.setUlogovan(true);
-        vremeLogovanja = new Date();
         try {
             vremeLogovanja = new Date();
             admin = KontrolerWS.getInstance().login(admin);
@@ -63,14 +61,13 @@ public class MbAdmin {
     }
 
     public String logout() {
-//        try {
-//            String poruka = KontrolerWS.getInstance().logout(admin);
-//            admin = new Admin();
-//            admin.setUlogovan(false);
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
-//        } catch (Exception ex) {
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
-//        }
+        try {
+            String poruka = KontrolerWS.getInstance().logout(admin);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
+        }
+        admin = new Admin();
         admin.setUlogovan(false);
         return "index.xhtml";
     }

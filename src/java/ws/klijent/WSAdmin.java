@@ -28,9 +28,7 @@ public class WSAdmin {
     }
 
     public String logout(Admin a) throws ClientErrorException {
-        WebTarget resource = webTarget;
-        resource = resource.path("logout");
-        return resource.request().get(String.class);
+        return webTarget.path(java.text.MessageFormat.format("logout", (Object) null)).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(a, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
     public Admin login(Admin a) throws ClientErrorException {

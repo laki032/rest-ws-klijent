@@ -52,7 +52,9 @@
                         <p:outputPanel id="dlgPnl" style="text-align:center;">
                             <c:if test="#{mbZaposleni.ul_Ucitane}">
                                 <p:panelGrid rendered="#{not empty mbZaposleni.odabraniZaposleni}" >
-                                    <h:outputText value="#{mbZaposleni.vratiUlogeLicence()}" />
+                                    <ui:repeat value="#{mbZaposleni.vratiUlogeLicence()}" var="x">
+                                        #{x} <br />
+                                    </ui:repeat>
                                 </p:panelGrid>
                             </c:if>
                         </p:outputPanel>

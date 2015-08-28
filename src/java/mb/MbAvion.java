@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import ws.klijent.kontroler.KontrolerWS;
@@ -84,6 +83,7 @@ public class MbAvion {
         try {
             System.out.println("Novi avion: " + novi.getOznaka());
             KontrolerWS.getInstance().sacuvajNoviAvion(novi);
+            avioni = KontrolerWS.getInstance().vratiAvione();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvan avion!!!", "Novi avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
@@ -94,6 +94,7 @@ public class MbAvion {
     public String sacuvajIzmenuAviona(Avion a) {
         try {
             KontrolerWS.getInstance().sacuvajIzmenuAviona(novi);
+            avioni = KontrolerWS.getInstance().vratiAvione();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
@@ -113,6 +114,7 @@ public class MbAvion {
         try {
             System.out.println("Brisanje aviona: " + a.getOznaka());
             KontrolerWS.getInstance().obrisiAvion(a);
+            avioni = KontrolerWS.getInstance().vratiAvione();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan avion!!!", "Avion je obrisan iz baze podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije obrisan!!!", ex.getMessage()));

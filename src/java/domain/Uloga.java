@@ -55,7 +55,7 @@ public class Uloga implements Serializable {
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return "Datuma: " + sdf.format(datum) + ", pilot: " + pilot.getImePrezime() 
-                + ", \nu avionu: " + avion.getOznaka() + ", imao je ulogu: " + nazivUloge;
+                + ", u avionu: " + avion.getOznaka() + ", imao je ulogu: " + nazivUloge;
     }
 
 }

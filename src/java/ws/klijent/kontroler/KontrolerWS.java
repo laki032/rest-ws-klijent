@@ -76,14 +76,18 @@ public class KontrolerWS {
     }
 
     public Admin login(Admin a) throws Exception {
-        //ovde puca kod logovanja, ne pozove uopste metodu login webservisa
         a = wsAdmin.login(a);
-        if(a==null) throw new Exception("admin nije ulogovan");
+        if (a == null) {
+            throw new Exception("admin nije ulogovan");
+        }
         return a;
     }
 
-    public String logout(Admin a) {
+    public String logout(Admin a) throws Exception {
         String odgovor = wsAdmin.logout(a);
+        if (odgovor.startsWith("nije")) {
+            throw new Exception(odgovor);
+        }
         return odgovor;
     }
 

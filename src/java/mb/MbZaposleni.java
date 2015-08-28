@@ -229,25 +229,22 @@ public class MbZaposleni {
         }
     }
 
-    public String vratiUlogeLicence() {
-        StringBuilder sb = new StringBuilder();
+    public List<String> vratiUlogeLicence() {
+        List<String> l = new ArrayList<>();
         if (odabraniZaposleni == null) {
-            return "zaposleni nije odabran";
+            l.add("zaposleni nije odabran");
+            return l;
         }
         if (odabraniZaposleni instanceof Pilot) {
             for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
-                sb.append(u.toString());
-                sb.append("\n");
-                sb.append("\n");
+                l.add(u.toString());
             }
         } else {
-            for (Licenca l : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
-                sb.append(l.toString());
-                sb.append("\n");
-                sb.append("\n");
+            for (Licenca lc : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
+                l.add(lc.toString());
             }
         }
-        return sb.toString();
+        return l;
     }
 
 }
