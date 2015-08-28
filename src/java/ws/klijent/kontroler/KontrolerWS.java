@@ -6,10 +6,7 @@
 package ws.klijent.kontroler;
 
 import domain.*;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.ws.rs.core.GenericType;
 import ws.klijent.*;
 
@@ -98,8 +95,33 @@ public class KontrolerWS {
         wsZap.remove(zap.getJmbg());
     }
 
-    public void sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) {
-        wsZap.createAll((Object[]) dodatiZaposleni.toArray());
+    public String sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) throws Exception {
+        //prebaci listu u array
+        Zaposleni[] lz = new Zaposleni[dodatiZaposleni.size()];
+        for (int i = 0; i < lz.length; i++) {
+            Zaposleni z = dodatiZaposleni.get(i);
+            Zaposleni novi = new Zaposleni(z.getJmbg());
+            novi.setGodinaRodjenja(z.getGodinaRodjenja());
+            novi.setImePrezime(z.getImePrezime());
+            if (z instanceof Pilot) {
+                novi.setPilot(new Pilot(z.getJmbg()));
+                novi.getPilot().setDatumPregleda(((Pilot) z).getDatumPregleda());
+                novi.getPilot().setImePrezime(z.getImePrezime());
+                novi.getPilot().setGodinaRodjenja(z.getGodinaRodjenja());
+                novi.getPilot().setOcenaStanja(((Pilot) z).getOcenaStanja());
+            } else {
+                novi.setAviomehanicar(new Aviomehanicar(z.getJmbg()));
+                novi.getAviomehanicar().setTipMehanicara(((Aviomehanicar) z).getTipMehanicara());
+                novi.getAviomehanicar().setImePrezime(z.getImePrezime());
+                novi.getAviomehanicar().setGodinaRodjenja(z.getGodinaRodjenja());
+            }
+            lz[i] = novi;
+        }
+        String odg = wsZap.createAll(lz);
+        if (odg.startsWith("cuvanje")) {
+            throw new Exception(odg);
+        }
+        return odg;
     }
 
     public List<Uloga> vratiListuUlogaZaPilota(Pilot p) {

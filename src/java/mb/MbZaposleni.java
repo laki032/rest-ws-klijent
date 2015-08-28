@@ -159,12 +159,13 @@ public class MbZaposleni {
     public String sacuvajSve() {
         try {
             System.out.println("Cuvanje liste zaposlenih");
-            KontrolerWS.getInstance().sacuvajSveZaposlene(dodatiZaposleni);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", "Zaposleni su sacuvani u bazi podataka"));
+            String poruka = KontrolerWS.getInstance().sacuvajSveZaposlene(dodatiZaposleni);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
         } catch (Exception ex) {
-            dodatiZaposleni = new LinkedList<>();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
         }
+        dodatiZaposleni = new LinkedList<>();
+        zaposleni = KontrolerWS.getInstance().vratiZaposlene();
         return "unosZaposlenih";
     }
 

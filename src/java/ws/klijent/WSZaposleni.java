@@ -2,6 +2,7 @@ package ws.klijent;
 
 import domain.Zaposleni;
 import java.util.Collection;
+import java.util.List;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.GenericType;
  * @author Lazar Vujadinovic
  */
 public class WSZaposleni {
+
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
@@ -46,8 +48,9 @@ public class WSZaposleni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String createAll(Object[] requestEntity) throws ClientErrorException {
-        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
+    public String createAll(Zaposleni[] requestEntity) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("createAll", (Object) null)).
+                request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
                 post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
@@ -71,5 +74,5 @@ public class WSZaposleni {
     public void close() {
         client.close();
     }
-    
+
 }
