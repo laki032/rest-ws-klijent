@@ -11,13 +11,11 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <h:form id="zaposleni">
-            <h:panelGrid columns="3" >
-                <h:outputLabel value="Zaposleni:" />
-                <h:selectOneMenu id="cmbZaposleni" value="Izaberi zaposlenog">
-                    <f:selectItems value="#{mbZaposleni.zaposleni}" var="zap" itemValue="#{zap}" itemLabel="#{zap.imePrezime}" />
-                </h:selectOneMenu>
-            </h:panelGrid>
-        </h:form>
+        <h:panelGrid columns="3" >
+            <h:outputLabel value="Zaposleni:" />
+            <h:selectOneMenu id="cmbZaposleni" value="Izaberi zaposlenog">
+                <f:selectItems value="#{mbZaposleni.zaposleni}" var="zap" itemValue="#{zap}" itemLabel="#{zap.imePrezime}" />
+            </h:selectOneMenu>
+        </h:panelGrid>
     </cc:implementation>
 </html>

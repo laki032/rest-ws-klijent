@@ -235,14 +235,19 @@ public class MbZaposleni {
         if (odabraniZaposleni == null) {
             l.add("zaposleni nije odabran");
             return l;
-        }
-        if (odabraniZaposleni instanceof Pilot) {
-            for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
-                l.add(u.toString());
-            }
         } else {
-            for (Licenca lc : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
-                l.add(lc.toString());
+            try {
+                if (odabraniZaposleni instanceof Pilot) {
+                    for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
+                        l.add(u.toString());
+                    }
+                } else {
+                    for (Licenca lc : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
+                        l.add(lc.toString());
+                    }
+                }
+            } catch (NullPointerException npe) {
+                l.add("odabrani zaposleni nije nijednom rasporedjen");
             }
         }
         return l;

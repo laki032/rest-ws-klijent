@@ -36,7 +36,7 @@
                             <h:outputText value="#{mbZaposleni.odabraniZaposleni.datumPregleda}" >
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                             </h:outputText>
-                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.pilot.datumPregleda}" />
+                            <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novi.datumPregleda}" />
 
                             <p:outputLabel value="Ocena stanja:" />
                             <h:outputText value="#{mbZaposleni.odabraniZaposleni.ocenaStanja}" />
@@ -53,13 +53,18 @@
 
                     </p:panelGrid>
                     <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbZaposleni.sacuvajIzmenu()}" />
-
-                    <p:separator />
-
+                </h:form>
+                <p:separator />
+                <h:form id="unosUlogaLicenci" >
                     <p:outputPanel >
-                        panel za prikaz uloga ili licenci koje zaposleni ima, i dodavanje novih
-                        
+                        <p:panelGrid rendered="#{not empty mbZaposleni.odabraniZaposleni}" >
+                            <ui:repeat value="#{mbZaposleni.vratiUlogeLicence()}" var="x">
+                                #{x} <br />
+                            </ui:repeat>
+                        </p:panelGrid>
                     </p:outputPanel>
+                    
+                    mala forma za unos novih U/L
                     
                 </h:form>
             </ui:define>

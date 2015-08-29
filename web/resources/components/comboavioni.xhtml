@@ -11,13 +11,11 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <h:form id="avioni">
-            <h:panelGrid columns="3" >
-                <h:outputLabel value="Avioni:" />
-                <h:selectOneMenu id="cmbAvioni" value="Izaberi avion">
-                    <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
-                </h:selectOneMenu>
-            </h:panelGrid>
-        </h:form>
+        <h:panelGrid columns="3" >
+            <h:outputLabel value="Avioni:" />
+            <h:selectOneMenu id="cmbAvioni" value="Izaberi avion">
+                <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
+            </h:selectOneMenu>
+        </h:panelGrid>
     </cc:implementation>
 </html>
