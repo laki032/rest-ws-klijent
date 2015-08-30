@@ -13,6 +13,7 @@ public class Admin implements Serializable {
     private String password;
     private Date lastLogin;
     private boolean ulogovan;
+    private String theme;
 
     public Admin() {
     }
@@ -58,4 +59,12 @@ public class Admin implements Serializable {
         this.ulogovan = ulogovan;
     }
 
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+    
 }

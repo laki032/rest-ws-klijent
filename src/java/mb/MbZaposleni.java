@@ -35,6 +35,8 @@ public class MbZaposleni {
     Date datumNovog;
     Zaposleni odabraniZaposleni; // selektovani zap.
     boolean ul_Ucitane;
+    Uloga novaUloga;
+    Licenca novaLicenca;
 
     /**
      * Creates a new instance of MbZaposleni
@@ -114,6 +116,22 @@ public class MbZaposleni {
         this.ul_Ucitane = ul_Ucitane;
     }
 
+    public Licenca getNovaLicenca() {
+        return novaLicenca;
+    }
+
+    public Uloga getNovaUloga() {
+        return novaUloga;
+    }
+
+    public void setNovaLicenca(Licenca novaLicenca) {
+        this.novaLicenca = novaLicenca;
+    }
+
+    public void setNovaUloga(Uloga novaUloga) {
+        this.novaUloga = novaUloga;
+    }
+
     public void setTipNovogMehanicara(String tipNovogMehanicara) {
         this.tipNovogMehanicara = tipNovogMehanicara;
     }
@@ -175,9 +193,13 @@ public class MbZaposleni {
             novi = new Pilot(odabraniZaposleni);
             ((Pilot) novi).setDatumPregleda(((Pilot) odabraniZaposleni).getDatumPregleda());
             ((Pilot) novi).setOcenaStanja(((Pilot) odabraniZaposleni).getOcenaStanja());
+            novaUloga = new Uloga();
+            novaUloga.setPilot((Pilot)novi);
         } else {
             novi = new Aviomehanicar(odabraniZaposleni);
             ((Aviomehanicar) novi).setTipMehanicara(((Aviomehanicar) odabraniZaposleni).getTipMehanicara());
+            novaLicenca = new Licenca();
+            novaLicenca.setAviomehanicar((Aviomehanicar)novi);
         }
         return "izmenaZaposlenih";
     }
@@ -251,6 +273,22 @@ public class MbZaposleni {
             }
         }
         return l;
+    }
+    
+    public String sacuvajNovuUlogu(){
+        String poruka = KontrolerWS.getInstance().novaUloga(novaUloga);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova uloga", poruka));
+        novaUloga = null;
+        pokreniIzmenu(odabraniZaposleni);
+        return "izmenaZaposlenih";
+    }
+    
+    public String sacuvajNovuLicencu(){
+        String poruka = KontrolerWS.getInstance().novaLicenca(novaLicenca);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova licenca", poruka));
+        novaLicenca = null;
+        pokreniIzmenu(odabraniZaposleni);
+        return "izmenaZaposlenih";
     }
 
 }

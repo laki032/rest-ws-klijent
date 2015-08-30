@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -12,10 +13,10 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <h:panelGrid columns="3" >
-            <h:outputLabel value="Avioni:" />
-            <h:selectOneMenu id="cmbAvioni" value="Izaberi avion">
+            <p:selectOneMenu id="cmbAvioni" value="#{mbZaposleni.novaUloga.avion}" converter="avioCNV" >
+                <f:selectItem itemValue="" itemLabel="Izaberi avion" />
                 <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
-            </h:selectOneMenu>
+            </p:selectOneMenu>
         </h:panelGrid>
     </cc:implementation>
 </html>

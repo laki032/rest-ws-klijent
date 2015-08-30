@@ -18,6 +18,7 @@ public class KontrolerWS {
     private WSAdmin wsAdmin;
     private WSUlogeLicence wsUL;
     private List<Tipaviona> tipovi;
+    private List<Avion> avioni;
 
     private KontrolerWS() {
         wsAvio = new WSAvioni();
@@ -36,7 +37,10 @@ public class KontrolerWS {
     public List<Tipaviona> vratiTipove() {
         GenericType<List<Tipaviona>> gtListaTipova = new GenericType<List<Tipaviona>>() {
         };
+        GenericType<List<Avion>> gtListaAviona = new GenericType<List<Avion>>() {
+        };
         tipovi = wsAvio.findAllTypes(gtListaTipova);
+        avioni = wsAvio.findAll(gtListaAviona);
         return tipovi;
     }
 
@@ -140,6 +144,23 @@ public class KontrolerWS {
 
     public String sacuvajIzmenuZaposlenog(Zaposleni novi) {
         return wsZap.edit(novi, novi.getJmbg());
+    }
+
+    public String novaUloga(Uloga novaUloga) {
+        return wsUL.novaUloga(novaUloga);
+    }
+
+    public String novaLicenca(Licenca novaLicenca) {
+        return wsUL.novaLicenca(novaLicenca);
+    }
+
+    public Avion vratiAvionPoID(int id) {
+        for (Avion a : avioni) {
+            if (a.getAvionID() == id) {
+                return a;
+            }
+        }
+        return null;
     }
 
 }
