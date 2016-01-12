@@ -1,4 +1,4 @@
-package ws.klijent;
+package ws.client;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;

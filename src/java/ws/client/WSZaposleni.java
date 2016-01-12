@@ -1,15 +1,19 @@
-package ws.klijent;
+package ws.client;
 
+import domain.Zaposleni;
+import java.util.Collection;
+import java.util.List;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 
 /**
- * Jersey REST client generated for REST resource:AvionFacadeREST [avioni]<br>
+ * Jersey REST client generated for REST resource:ZaposleniFacadeREST
+ * [zaposleni]<br>
  * USAGE:
  * <pre>
- *        WSAvioni client = new WSAvioni();
+ *        WSZaposleni client = new WSZaposleni();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -17,19 +21,20 @@ import javax.ws.rs.core.GenericType;
  *
  * @author Lazar Vujadinovic
  */
-public class WSAvioni {
+public class WSZaposleni {
+
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
 
-    public WSAvioni() {
+    public WSZaposleni() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
-        webTarget = client.target(BASE_URI).path("avioni");
+        webTarget = client.target(BASE_URI).path("zaposleni");
     }
 
-    public <T> T findAllTypes(GenericType<T> responseType) throws ClientErrorException {
+    public <T> T findAllPilot(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
-        resource = resource.path("tipovi");
+        resource = resource.path("piloti");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -43,12 +48,20 @@ public class WSAvioni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String create(Object requestEntity) throws ClientErrorException {
-        return webTarget.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    public String createAll(Zaposleni[] requestEntity) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("createAll", (Object) null)).
+                request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
+                post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
     public <T> T findAll(GenericType<T> responseType) throws ClientErrorException {
         WebTarget resource = webTarget;
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T findAllAvioMehanicar(GenericType<T> responseType) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        resource = resource.path("mehanicari");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -61,5 +74,5 @@ public class WSAvioni {
     public void close() {
         client.close();
     }
-    
+
 }

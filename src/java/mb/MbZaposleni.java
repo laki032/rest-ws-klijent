@@ -16,7 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
-import ws.klijent.kontroler.KontrolerWS;
+import ws.client.controller.KontrolerWS;
 
 /**
  *
@@ -47,7 +47,7 @@ public class MbZaposleni {
     @PostConstruct
     public void inicijalizujPodatke() {
         novi = new Zaposleni();
-        zaposleni = KontrolerWS.getInstance().vratiZaposlene();
+        zaposleni = KontrolerWS.getInstance().getEmployees();
         dodatiZaposleni = new LinkedList<>();
         ul_Ucitane = false;
     }
@@ -177,13 +177,13 @@ public class MbZaposleni {
     public String sacuvajSve() {
         try {
             System.out.println("Cuvanje liste zaposlenih");
-            String poruka = KontrolerWS.getInstance().sacuvajSveZaposlene(dodatiZaposleni);
+            String poruka = KontrolerWS.getInstance().saveAll(dodatiZaposleni);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
         }
         dodatiZaposleni = new LinkedList<>();
-        zaposleni = KontrolerWS.getInstance().vratiZaposlene();
+        zaposleni = KontrolerWS.getInstance().getEmployees();
         return "unosZaposlenih";
     }
 
@@ -206,9 +206,9 @@ public class MbZaposleni {
 
     public String sacuvajIzmenu() {
         try {
-            String poruka = KontrolerWS.getInstance().sacuvajIzmenuZaposlenog(novi);
+            String poruka = KontrolerWS.getInstance().edit(novi);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
-            zaposleni = KontrolerWS.getInstance().vratiZaposlene();
+            zaposleni = KontrolerWS.getInstance().getEmployees();
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
         }
@@ -218,7 +218,7 @@ public class MbZaposleni {
     public String obrisi(Zaposleni zap) {
         try {
             System.out.println("Brisanje zaposlenog: " + zap.getJmbg());
-            KontrolerWS.getInstance().obrisiZaposlenog(zap);
+            KontrolerWS.getInstance().remove(zap);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan zaposleni!!!", "Zaposleni je obrisan iz baze podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nije obrisan!!!", ex.getMessage()));

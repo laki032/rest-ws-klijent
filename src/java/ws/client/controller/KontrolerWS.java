@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ws.klijent.kontroler;
+package ws.client.controller;
 
 import domain.*;
 import java.util.List;
 import javax.ws.rs.core.GenericType;
-import ws.klijent.*;
+import ws.client.*;
 
 public class KontrolerWS {
 
@@ -34,7 +34,7 @@ public class KontrolerWS {
         return instance;
     }
 
-    public List<Tipaviona> vratiTipove() {
+    public List<Tipaviona> getTypes() {
         GenericType<List<Tipaviona>> gtListaTipova = new GenericType<List<Tipaviona>>() {
         };
         GenericType<List<Avion>> gtListaAviona = new GenericType<List<Avion>>() {
@@ -44,25 +44,25 @@ public class KontrolerWS {
         return tipovi;
     }
 
-    public List<Zaposleni> vratiZaposlene() {
+    public List<Zaposleni> getEmployees() {
         GenericType<List<Zaposleni>> gtListaZaposlenih = new GenericType<List<Zaposleni>>() {
         };
         List<Zaposleni> lz = wsZap.findAll(gtListaZaposlenih);
         return lz;
     }
 
-    public List<Avion> vratiAvione() {
+    public List<Avion> getPlanes() {
         GenericType<List<Avion>> gtListaAviona = new GenericType<List<Avion>>() {
         };
         List<Avion> la = wsAvio.findAll(gtListaAviona);
         return la;
     }
 
-    public void sacuvajNoviAvion(Avion novi) {
-        wsAvio.create(novi);
+    public void create(Avion plane) {
+        wsAvio.create(plane);
     }
 
-    public Tipaviona vratiTipPoID(int id) {
+    public Tipaviona getTypeById(int id) {
         for (Tipaviona t : tipovi) {
             if (t.getTipID() == id) {
                 return t;
@@ -71,11 +71,11 @@ public class KontrolerWS {
         return null;
     }
 
-    public void sacuvajIzmenuAviona(Avion a) {
+    public void edit(Avion a) {
         wsAvio.edit(a, a.getAvionID() + "");
     }
 
-    public void obrisiAvion(Avion a) {
+    public void remove(Avion a) {
         wsAvio.remove(a.getAvionID() + "");
     }
 
@@ -95,12 +95,11 @@ public class KontrolerWS {
         return odgovor;
     }
 
-    public void obrisiZaposlenog(Zaposleni zap) {
+    public void remove(Zaposleni zap) {
         wsZap.remove(zap.getJmbg());
     }
 
-    public String sacuvajSveZaposlene(List<Zaposleni> dodatiZaposleni) throws Exception {
-        //prebaci listu u array
+    public String saveAll(List<Zaposleni> dodatiZaposleni) throws Exception {
         Zaposleni[] lz = new Zaposleni[dodatiZaposleni.size()];
         for (int i = 0; i < lz.length; i++) {
             Zaposleni z = dodatiZaposleni.get(i);
@@ -142,7 +141,7 @@ public class KontrolerWS {
         return ll;
     }
 
-    public String sacuvajIzmenuZaposlenog(Zaposleni novi) {
+    public String edit(Zaposleni novi) {
         return wsZap.edit(novi, novi.getJmbg());
     }
 
@@ -154,7 +153,7 @@ public class KontrolerWS {
         return wsUL.novaLicenca(novaLicenca);
     }
 
-    public Avion vratiAvionPoID(int id) {
+    public Avion getById(int id) {
         for (Avion a : avioni) {
             if (a.getAvionID() == id) {
                 return a;

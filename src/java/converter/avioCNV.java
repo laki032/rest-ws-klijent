@@ -5,7 +5,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import ws.klijent.kontroler.KontrolerWS;
+import ws.client.controller.KontrolerWS;
 
 /**
  *
@@ -18,7 +18,7 @@ public class avioCNV implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.isEmpty()) {
             int id = (int) Long.parseLong(value);
-            Avion a = KontrolerWS.getInstance().vratiAvionPoID(id);
+            Avion a = KontrolerWS.getInstance().getById(id);
             System.out.println("tip konverter:" + a.getOznaka());
             return a;
         }

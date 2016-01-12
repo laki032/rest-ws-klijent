@@ -1,4 +1,4 @@
-package ws.klijent;
+package ws.client;
 
 import domain.Admin;
 import javax.ws.rs.ClientErrorException;

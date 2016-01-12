@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
-import ws.klijent.kontroler.KontrolerWS;
+import ws.client.controller.KontrolerWS;
 
 /**
  *
@@ -34,8 +34,8 @@ public class MbAvion {
 
     @PostConstruct
     public void inicijalizujPodatke() {
-        avioni = KontrolerWS.getInstance().vratiAvione();
-        tipovi = KontrolerWS.getInstance().vratiTipove();
+        avioni = KontrolerWS.getInstance().getPlanes();
+        tipovi = KontrolerWS.getInstance().getTypes();
         krit = "";
     }
 
@@ -82,8 +82,8 @@ public class MbAvion {
     public String sacuvajNoviAvion() {
         try {
             System.out.println("Novi avion: " + novi.getOznaka());
-            KontrolerWS.getInstance().sacuvajNoviAvion(novi);
-            avioni = KontrolerWS.getInstance().vratiAvione();
+            KontrolerWS.getInstance().create(novi);
+            avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvan avion!!!", "Novi avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
@@ -93,8 +93,8 @@ public class MbAvion {
 
     public String sacuvajIzmenuAviona(Avion a) {
         try {
-            KontrolerWS.getInstance().sacuvajIzmenuAviona(novi);
-            avioni = KontrolerWS.getInstance().vratiAvione();
+            KontrolerWS.getInstance().edit(novi);
+            avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
@@ -113,8 +113,8 @@ public class MbAvion {
     public String obrisi(Avion a) {
         try {
             System.out.println("Brisanje aviona: " + a.getOznaka());
-            KontrolerWS.getInstance().obrisiAvion(a);
-            avioni = KontrolerWS.getInstance().vratiAvione();
+            KontrolerWS.getInstance().remove(a);
+            avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan avion!!!", "Avion je obrisan iz baze podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije obrisan!!!", ex.getMessage()));
