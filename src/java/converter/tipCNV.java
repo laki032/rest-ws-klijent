@@ -18,7 +18,7 @@ public class tipCNV implements Converter {
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && !value.isEmpty()) {
             int id = (int) Long.parseLong(value);
-            Tipaviona t = KontrolerWS.getInstance().vratiTipPoID(id);
+            Tipaviona t = KontrolerWS.getInstance().getTypeById(id);
             System.out.println("tip konverter:" + t.getNaziv());
             return t;
         }
