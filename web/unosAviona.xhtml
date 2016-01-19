@@ -5,7 +5,6 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:laki="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:p="http://primefaces.org/ui">
 
     <body>
@@ -38,7 +37,13 @@
                         </p:spinner>
                     </h:panelGrid>
                     <c:if test="#{!mbAvion.izmena}">
-                        <laki:combotipovi />
+                        <h:panelGrid columns="2" >
+                            <p:outputLabel for="cmbTip" value="Tip aviona: "/>
+                            <p:selectOneMenu id="cmbTip" title="Odaberi tip aviona" value="#{mbAvion.novi.tipID}" converter="tipCNV" style="width: 97%; margin-left: 28%">
+                                <f:selectItem itemValue="" itemLabel="Izaberi tip aviona" />
+                                <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
                         <br/>
                         <p:commandButton value="Sacuvaj novi avion" title="Klik za cuvanje aviona" action="#{mbAvion.sacuvajNoviAvion()}" style="width: 35%" ajax="false" />
                     </c:if>

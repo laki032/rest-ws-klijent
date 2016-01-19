@@ -5,7 +5,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:laki="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
@@ -70,7 +69,12 @@
                             <p:outputLabel value="#{mbZaposleni.novi.imePrezime}" />
 
                             <p:outputLabel value="Avion: " />
-                            <laki:comboavioni />
+                            <h:panelGrid columns="3" >
+                                <p:selectOneMenu id="cmbAvioni" value="#{mbZaposleni.novaUloga.avion}" converter="avioCNV" >
+                                    <f:selectItem itemValue="" itemLabel="Izaberi avion" />
+                                    <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
 
                             <p:outputLabel value="Datum: " />
                             <p:calendar pattern="dd/MM/yyyy" value="#{mbZaposleni.novaUloga.datum}"/>

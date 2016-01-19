@@ -1,31 +1,19 @@
 package ws.client;
 
 import domain.Zaposleni;
-import java.util.Collection;
-import java.util.List;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 
 /**
- * Jersey REST client generated for REST resource:ZaposleniFacadeREST
- * [zaposleni]<br>
- * USAGE:
- * <pre>
- *        WSZaposleni client = new WSZaposleni();
- *        Object response = client.XXX(...);
- *        // do whatever with response
- *        client.close();
- * </pre>
- *
  * @author Lazar Vujadinovic
  */
 public class WSZaposleni {
 
-    private WebTarget webTarget;
-    private Client client;
-    private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
+    private final WebTarget webTarget;
+    private final Client client;
+    private static final String BASE_URI = "http://localhost:8080/WS/rest";
 
     public WSZaposleni() {
         client = javax.ws.rs.client.ClientBuilder.newClient();

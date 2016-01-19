@@ -6,21 +6,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 
 /**
- * Jersey REST client generated for REST resource:AvionFacadeREST [avioni]<br>
- * USAGE:
- * <pre>
- *        WSAvioni client = new WSAvioni();
- *        Object response = client.XXX(...);
- *        // do whatever with response
- *        client.close();
- * </pre>
- *
  * @author Lazar Vujadinovic
  */
 public class WSAvioni {
-    private WebTarget webTarget;
-    private Client client;
-    private static final String BASE_URI = "http://localhost:8080/RESTWSAvioKompanija/rest";
+    private final WebTarget webTarget;
+    private final Client client;
+    private static final String BASE_URI = "http://localhost:8080/WS/rest";
 
     public WSAvioni() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
