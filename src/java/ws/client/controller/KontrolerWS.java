@@ -1,22 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ws.client.controller;
 
 import domain.*;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.core.GenericType;
 import ws.client.*;
 
 public class KontrolerWS {
 
     private static KontrolerWS instance;
-    private WSAvioni wsAvio;
-    private WSZaposleni wsZap;
-    private WSAdmin wsAdmin;
-    private WSUlogeLicence wsUL;
+    private final WSAvioni wsAvio;
+    private final WSZaposleni wsZap;
+    private final WSAdmin wsAdmin;
+    private final WSUlogeLicence wsUL;
+    private final Logger log;
     private List<Tipaviona> tipovi;
     private List<Avion> avioni;
 
@@ -25,6 +23,7 @@ public class KontrolerWS {
         wsZap = new WSZaposleni();
         wsAdmin = new WSAdmin();
         wsUL = new WSUlogeLicence();
+        log = Logger.getLogger(KontrolerWS.class.getName());
     }
 
     public static KontrolerWS getInstance() {
@@ -41,6 +40,7 @@ public class KontrolerWS {
         };
         tipovi = wsAvio.findAllTypes(gtListaTipova);
         avioni = wsAvio.findAll(gtListaAviona);
+        log.log(Level.INFO, "getTypes {0}", tipovi);
         return tipovi;
     }
 
@@ -48,6 +48,7 @@ public class KontrolerWS {
         GenericType<List<Zaposleni>> gtListaZaposlenih = new GenericType<List<Zaposleni>>() {
         };
         List<Zaposleni> lz = wsZap.findAll(gtListaZaposlenih);
+        log.log(Level.INFO, "getEmployees {0}", lz);
         return lz;
     }
 
@@ -55,14 +56,17 @@ public class KontrolerWS {
         GenericType<List<Avion>> gtListaAviona = new GenericType<List<Avion>>() {
         };
         List<Avion> la = wsAvio.findAll(gtListaAviona);
+        log.log(Level.INFO, "getPlanes {0}", la);
         return la;
     }
 
     public void create(Avion plane) {
+        log.log(Level.INFO, "create {0}", plane);
         wsAvio.create(plane);
     }
 
     public Tipaviona getTypeById(int id) {
+        log.log(Level.INFO, "getTypeById {0}", id);
         for (Tipaviona t : tipovi) {
             if (t.getTipID() == id) {
                 return t;
@@ -72,30 +76,37 @@ public class KontrolerWS {
     }
 
     public void edit(Avion a) {
+        log.log(Level.INFO, "edit {0}", a);
         wsAvio.edit(a, a.getAvionID() + "");
     }
 
     public void remove(Avion a) {
+        log.log(Level.INFO, "remove {0}", a);
         wsAvio.remove(a.getAvionID() + "");
     }
 
     public Admin login(Admin a) throws Exception {
+        log.log(Level.INFO, "login {0}", a);
         a = wsAdmin.login(a);
         if (a == null) {
+            log.log(Level.INFO, "login failed {0}", a);
             throw new Exception("admin nije ulogovan");
         }
         return a;
     }
 
     public String logout(Admin a) throws Exception {
+        log.log(Level.INFO, "logout {0}", a);
         String odgovor = wsAdmin.logout(a);
         if (odgovor.startsWith("nije")) {
+            log.log(Level.INFO, "logout failed {0}", a);
             throw new Exception(odgovor);
         }
         return odgovor;
     }
 
     public void remove(Zaposleni zap) {
+        log.log(Level.INFO, "remove {0}", zap);
         wsZap.remove(zap.getJmbg());
     }
 
@@ -124,6 +135,8 @@ public class KontrolerWS {
         if (odg.startsWith("cuvanje")) {
             throw new Exception(odg);
         }
+        log.log(Level.INFO, "saveAll list: {0}", dodatiZaposleni);
+        log.log(Level.INFO, "saveAll {0}", odg);
         return odg;
     }
 
@@ -131,6 +144,7 @@ public class KontrolerWS {
         GenericType<List<Uloga>> gtListaUloga = new GenericType<List<Uloga>>() {
         };
         List<Uloga> lu = wsUL.vratiUlogeZaPilota(gtListaUloga, p.getJmbg());
+        log.log(Level.INFO, "vratiListuUlogaZaPilota {0}/{1}", new Object[]{p, lu});
         return lu;
     }
 
@@ -138,22 +152,27 @@ public class KontrolerWS {
         GenericType<List<Licenca>> gtListaLicenci = new GenericType<List<Licenca>>() {
         };
         List<Licenca> ll = wsUL.vratiLicenceZaMehanicara(gtListaLicenci, a.getJmbg());
+        log.log(Level.INFO, "vratiListuUlogaZaPilota {0}/{1}", new Object[]{a, ll});
         return ll;
     }
 
     public String edit(Zaposleni novi) {
+        log.log(Level.INFO, "edit {0}", novi);
         return wsZap.edit(novi, novi.getJmbg());
     }
 
     public String novaUloga(Uloga novaUloga) {
+        log.log(Level.INFO, "novaUloga {0}", novaUloga);
         return wsUL.novaUloga(novaUloga);
     }
 
     public String novaLicenca(Licenca novaLicenca) {
+        log.log(Level.INFO, "novaLicenca {0}", novaLicenca);
         return wsUL.novaLicenca(novaLicenca);
     }
 
     public Avion getById(int id) {
+        log.log(Level.INFO, "getById {0}", id);
         for (Avion a : avioni) {
             if (a.getAvionID() == id) {
                 return a;

@@ -25,15 +25,12 @@ public class MbAvion {
     boolean izmena = false;
     String krit;
 
-    /**
-     * Creates a new instance of MbAvion
-     */
     public MbAvion() {
         novi = new Avion();
     }
 
     @PostConstruct
-    public void inicijalizujPodatke() {
+    public void init() {
         avioni = KontrolerWS.getInstance().getPlanes();
         tipovi = KontrolerWS.getInstance().getTypes();
         krit = "";

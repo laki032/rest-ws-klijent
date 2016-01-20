@@ -21,14 +21,11 @@ public class MbAdmin {
     Admin admin;
     Date vremeLogovanja;
 
-    /**
-     * Creates a new instance of MbAdmin
-     */
     public MbAdmin() {
     }
 
     @PostConstruct
-    public void inicijalizujPodatke() {
+    public void init() {
         admin = new Admin();
         admin.setUlogovan(false);
     }

@@ -38,14 +38,11 @@ public class MbZaposleni {
     Uloga novaUloga;
     Licenca novaLicenca;
 
-    /**
-     * Creates a new instance of MbZaposleni
-     */
     public MbZaposleni() {
     }
 
     @PostConstruct
-    public void inicijalizujPodatke() {
+    public void init() {
         novi = new Zaposleni();
         zaposleni = KontrolerWS.getInstance().getEmployees();
         dodatiZaposleni = new LinkedList<>();
