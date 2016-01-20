@@ -173,7 +173,6 @@ public class MbZaposleni {
 
     public String sacuvajSve() {
         try {
-            System.out.println("Cuvanje liste zaposlenih");
             String poruka = KontrolerWS.getInstance().saveAll(dodatiZaposleni);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
         } catch (Exception ex) {
@@ -214,7 +213,6 @@ public class MbZaposleni {
 
     public String obrisi(Zaposleni zap) {
         try {
-            System.out.println("Brisanje zaposlenog: " + zap.getJmbg());
             KontrolerWS.getInstance().remove(zap);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan zaposleni!!!", "Zaposleni je obrisan iz baze podataka"));
         } catch (Exception ex) {

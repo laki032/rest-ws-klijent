@@ -19,7 +19,6 @@ public class tipCNV implements Converter {
         if (value != null && !value.isEmpty()) {
             int id = (int) Long.parseLong(value);
             Tipaviona t = KontrolerWS.getInstance().getTypeById(id);
-            System.out.println("tip konverter:" + t.getNaziv());
             return t;
         }
         return null;

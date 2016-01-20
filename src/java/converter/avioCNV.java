@@ -19,7 +19,6 @@ public class avioCNV implements Converter {
         if (value != null && !value.isEmpty()) {
             int id = (int) Long.parseLong(value);
             Avion a = KontrolerWS.getInstance().getById(id);
-            System.out.println("tip konverter:" + a.getOznaka());
             return a;
         }
         return null;

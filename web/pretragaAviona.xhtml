@@ -40,7 +40,14 @@
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}">
                             <f:facet name="header">Obrisi</f:facet>
-                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" ajax="false"/>
+                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" ajax="false" >
+                                <!--<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
+                            </p:commandButton>
+
+<!--                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>-->
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}">
                             <f:facet name="header">Izmeni</f:facet>

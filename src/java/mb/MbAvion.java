@@ -3,11 +3,14 @@ package mb;
 import domain.Avion;
 import domain.Tipaviona;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.hibernate.validator.internal.util.logging.Log_$logger;
 import org.primefaces.event.SelectEvent;
 import ws.client.controller.KontrolerWS;
 
@@ -78,7 +81,6 @@ public class MbAvion {
 
     public String sacuvajNoviAvion() {
         try {
-            System.out.println("Novi avion: " + novi.getOznaka());
             KontrolerWS.getInstance().create(novi);
             avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvan avion!!!", "Novi avion je sacuvan u bazi podataka"));
@@ -109,7 +111,6 @@ public class MbAvion {
 
     public String obrisi(Avion a) {
         try {
-            System.out.println("Brisanje aviona: " + a.getOznaka());
             KontrolerWS.getInstance().remove(a);
             avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan avion!!!", "Avion je obrisan iz baze podataka"));
