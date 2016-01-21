@@ -21,19 +21,17 @@ public class MbAvion {
 
     List<Avion> avioni;
     List<Tipaviona> tipovi;
-    Avion novi;
+    Avion avion;
     boolean izmena = false;
-    String krit;
 
     public MbAvion() {
-        novi = new Avion();
+        avion = new Avion();
     }
 
     @PostConstruct
     public void init() {
         avioni = KontrolerWS.getInstance().getPlanes();
         tipovi = KontrolerWS.getInstance().getTypes();
-        krit = "";
     }
 
     public List<Avion> getAvioni() {
@@ -52,12 +50,12 @@ public class MbAvion {
         this.tipovi = tipovi;
     }
 
-    public Avion getNovi() {
-        return novi;
+    public Avion getAvion() {
+        return avion;
     }
 
-    public void setNovi(Avion novi) {
-        this.novi = novi;
+    public void setAvion(Avion avion) {
+        this.avion = avion;
     }
 
     public boolean isIzmena() {
@@ -68,17 +66,9 @@ public class MbAvion {
         this.izmena = izmena;
     }
 
-    public String getKrit() {
-        return krit;
-    }
-
-    public void setKrit(String krit) {
-        this.krit = krit;
-    }
-
     public String sacuvajNoviAvion() {
         try {
-            KontrolerWS.getInstance().create(novi);
+            KontrolerWS.getInstance().create(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvan avion!!!", "Novi avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
@@ -89,19 +79,19 @@ public class MbAvion {
 
     public String sacuvajIzmenuAviona(Avion a) {
         try {
-            KontrolerWS.getInstance().edit(novi);
+            KontrolerWS.getInstance().edit(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
         }
         izmena = false;
-        novi = new Avion();
+        avion = new Avion();
         return "pretragaAviona";
     }
 
     public String pokreniIzmenu(Avion a) {
-        novi = a;
+        avion = a;
         izmena = true;
         return "unosAviona";
     }

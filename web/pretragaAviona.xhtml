@@ -15,7 +15,7 @@
                     <p:growl id="msgs" showDetail="true" />
 
                     <p:dataTable value="#{mbAvion.avioni}" var="a" rows="5" paginator="true" widgetVar="tabela"
-                                 selectionMode="single" selection="#{mbAvion.novi}" rowKey="#{a.avionID}" >
+                                 selectionMode="single" selection="#{mbAvion.avion}" rowKey="#{a.avionID}" >
                         <p:ajax event="rowSelect" listener="#{mbAvion.avionJeOdabran}" update=":prikazAviona:msgs" />
 
                         <p:column style="width: 22%" headerText="Oznaka" sortBy="#{a.oznaka}" filterBy="#{a.oznaka}" footerText="Kriterijum pretrage: sadrzi" filterMatchMode="contains">
