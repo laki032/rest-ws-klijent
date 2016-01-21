@@ -33,36 +33,33 @@
 
                                     <p:outputLabel value="Tip zaposlenog:" />
                                     <p:selectOneRadio id="comboTip" value="#{mbUnosZaposlenih.tip}" required="true" validatorMessage="Morate odabrati tip zaposlenog!" >
-                                        <f:selectItem itemLabel="Avio-mehanicar" itemValue="Avio mehanicar"  />
-                                        <f:selectItem itemLabel="Pilot" itemValue="Pilot" />
+                                        <f:selectItem itemLabel="#{mbUnosZaposlenih.MEHANICAR}" itemValue="#{mbUnosZaposlenih.MEHANICAR}"  />
+                                        <f:selectItem itemLabel="#{mbUnosZaposlenih.PILOT}" itemValue="#{mbUnosZaposlenih.PILOT}" />
                                         <f:ajax execute="@this" render="tip" />
                                     </p:selectOneRadio>
-
                                 </h:panelGrid>
                                 <p:panel id="tip" header="#{mbUnosZaposlenih.tip}" visible="#{mbUnosZaposlenih.tip!=null}" >
                                     <c:if test="#{mbUnosZaposlenih.noviJePilot()}">
                                         <h:panelGrid columns="2">
                                             <p:outputLabel value="Ocena stanja:" />
-                                            <p:selectOneRadio id="comboZdrav" value="#{mbUnosZaposlenih.ocenaStanjaNovog}" required="true" >
-                                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbUnosZaposlenih.ocenaStanjaNovog = true}"  />
-                                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbUnosZaposlenih.ocenaStanjaNovog = false}" />
+                                            <p:selectOneRadio id="comboZdrav" value="#{mbUnosZaposlenih.novi.ocenaStanja}" required="true" >
+                                                <f:selectItem itemLabel="Sposoban" itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = true}"  />
+                                                <f:selectItem itemLabel="Nesposoban" itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = false}" />
                                             </p:selectOneRadio>
 
                                             <p:outputLabel value="Datum pregleda" />
-                                            <p:calendar pattern="dd/MM/yyyy" value="#{mbUnosZaposlenih.datumNovog}"/>
+                                            <p:calendar pattern="dd/MM/yyyy" value="#{mbUnosZaposlenih.novi.datumPregleda}"/>
                                         </h:panelGrid>
                                     </c:if>
                                     <c:if test="#{mbUnosZaposlenih.noviJeMehanicar()}">
                                         <h:panelGrid columns="2">
                                             <p:outputLabel value="Tip mehanicara" />
-                                            <p:inputText value="#{mbUnosZaposlenih.tipNovogMehanicara}" />
+                                            <p:inputText value="#{mbUnosZaposlenih.novi.tipMehanicara}" />
                                         </h:panelGrid>
                                     </c:if>
                                 </p:panel>
-
                                 <br/>
                                 <p:commandButton value="Dodaj novog" icon="ui-icon-plus" ajax="false" action="#{mbUnosZaposlenih.dodajNovog()}" />
-
                             </p:panel>
                         </h:form>
                     </div>
@@ -70,12 +67,9 @@
                     <h:form id="frmUnetiZaposleni">
                         <p:growl id="poruke" />
                         <div align="left" style="float: left;width: 64%;" >
-
                             <p:panel header="Tabela dodatih zaposlenih">
-
                                 <p:dataTable id="tblTabZap" value="#{mbUnosZaposlenih.dodatiZaposleni}" var="zap" selectionMode="single" 
                                              selection="#{mbUnosZaposlenih.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
-
                                     <p:column headerText="Tip">
                                         #{zap.class.simpleName}
                                     </p:column>
@@ -91,20 +85,15 @@
                                     <p:column headerText="Podaci">
                                         <h:outputText value="#{mbUnosZaposlenih.vratiOstalePodatkeOZaposlenom(zap)}" />
                                     </p:column>
-
                                 </p:dataTable>
-
                                 <p:commandButton value="Obrisi" action="#{mbUnosZaposlenih.obrisiSelektovaniRed()}" style="width: 40%; margin-top: 2%" ajax="false"/>
                                 <p:commandButton value="Sacuvaj sve" action="#{mbUnosZaposlenih.sacuvajSve()}" style="width: 40%; margin-top: 2%; margin-left: 19%" ajax="false"/>
-
                             </p:panel>
                         </div>
                     </h:form>
                 </div> 
                 <p:separator />
             </ui:define>
-
         </ui:composition>
-
     </body>
 </html>

@@ -5,7 +5,6 @@ import domain.Pilot;
 import domain.Zaposleni;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,24 +22,29 @@ import ws.client.controller.KontrolerWS;
 @SessionScoped
 public class MbUnosZaposlenih {
 
+    public final String PILOT = "Pilot";
+    public final String MEHANICAR = "Avio mehanicar";
+
+    public String getMEHANICAR() {
+        return MEHANICAR;
+    }
+
+    public String getPILOT() {
+        return PILOT;
+    }
+
     Zaposleni novi;
     Zaposleni odabraniZaposleni;
     String tip; //tip zaposlenog koji se unosi
-    boolean ocenaStanjaNovog;
-    Date datumNovog;
-    String tipNovogMehanicara;
     List<Zaposleni> dodatiZaposleni; //lista dodatih zap. koji treba da se sacuvaju u bazi
 
     public MbUnosZaposlenih() {
     }
-    
+
     @PostConstruct
     public void init() {
         novi = new Zaposleni();
-        tip = "";
-        tipNovogMehanicara = "";
-        datumNovog = new Date();
-        dodatiZaposleni = new ArrayList<>();
+        dodatiZaposleni = new LinkedList<>();
     }
 
     public Zaposleni getNovi() {
@@ -57,38 +61,13 @@ public class MbUnosZaposlenih {
 
     public void setTip(String tip) {
         this.tip = tip;
-        if (tip.equals("Pilot")) {
-            novi = new Pilot(novi);
-            ocenaStanjaNovog = false;
-            datumNovog = new Date();
-        } else {
-            novi = new Aviomehanicar(novi);
-            tipNovogMehanicara = "";
+        switch (tip) {
+            case PILOT:
+                novi = new Pilot(novi);
+                return;
+            case MEHANICAR:
+                novi = new Aviomehanicar(novi);
         }
-    }
-
-    public boolean isOcenaStanjaNovog() {
-        return ocenaStanjaNovog;
-    }
-
-    public void setOcenaStanjaNovog(boolean ocenaStanjaNovog) {
-        this.ocenaStanjaNovog = ocenaStanjaNovog;
-    }
-
-    public Date getDatumNovog() {
-        return datumNovog;
-    }
-
-    public void setDatumNovog(Date datumNovog) {
-        this.datumNovog = datumNovog;
-    }
-
-    public String getTipNovogMehanicara() {
-        return tipNovogMehanicara;
-    }
-
-    public void setTipNovogMehanicara(String tipNovogMehanicara) {
-        this.tipNovogMehanicara = tipNovogMehanicara;
     }
 
     public List<Zaposleni> getDodatiZaposleni() {
@@ -108,29 +87,23 @@ public class MbUnosZaposlenih {
     }
 
     public void dodajNovog() {
-        if (tip.equals("Pilot")) {
-            ((Pilot) novi).setDatumPregleda(datumNovog);
-            ((Pilot) novi).setOcenaStanja(ocenaStanjaNovog);
-        } else {
-            ((Aviomehanicar) novi).setTipMehanicara(tipNovogMehanicara);
-        }
         dodatiZaposleni.add(novi);
         setTip("");
         novi = new Zaposleni();
     }
 
     public boolean noviJeMehanicar() {
-        if (tip == null) {
+        if (tip == null || tip.isEmpty()) {
             return false;
         }
-        return tip.equals("Avio mehanicar") || tip.equals("Avio-mehanicar");
+        return tip.equals(MEHANICAR);
     }
 
     public boolean noviJePilot() {
-        if (tip == null) {
+        if (tip == null || tip.isEmpty()) {
             return false;
         }
-        return tip.equals("Pilot");
+        return tip.equals(PILOT);
     }
 
     public String sacuvajSve() {
@@ -149,13 +122,17 @@ public class MbUnosZaposlenih {
             String datum = new SimpleDateFormat("dd/MM/yyyy").format(((Pilot) z).getDatumPregleda());
             String ocena = ((Pilot) z).getOcenaStanja() ? "sposoban" : "nesposoban";
             return datum + " ocenjen kao " + ocena;
-        } else {
+        }
+        if (z instanceof Aviomehanicar) {
             return ((Aviomehanicar) z).getTipMehanicara();
         }
+        return z.toString();
     }
 
     public void obrisiSelektovaniRed() {
-        dodatiZaposleni.remove(odabraniZaposleni);
+        if (odabraniZaposleni != null) {
+            dodatiZaposleni.remove(odabraniZaposleni);
+        }
     }
 
 }

@@ -13,10 +13,13 @@ public class Aviomehanicar extends Zaposleni implements Serializable {
     private List<Licenca> licencaList;
 
     public Aviomehanicar() {
+        super();
+        tipMehanicara = "";
     }
 
     public Aviomehanicar(String jmbg) {
         super(jmbg);
+        tipMehanicara = "";
     }
 
     public Aviomehanicar(Zaposleni z) {

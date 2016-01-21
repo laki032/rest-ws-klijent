@@ -15,16 +15,20 @@ public class Pilot extends Zaposleni implements Serializable {
     private List<Uloga> ulogaList;
 
     public Pilot() {
+        super();
+        datumPregleda = new Date();
     }
 
     public Pilot(String jmbg) {
         super(jmbg);
+        datumPregleda = new Date();
     }
     
     public Pilot(Zaposleni z) {
         jmbg = z.getJmbg();
         imePrezime = z.getImePrezime();
         godinaRodjenja = z.getGodinaRodjenja();
+        datumPregleda = new Date();
     }
 
     @Override
