@@ -20,6 +20,7 @@ public class MbAdmin {
 
     Admin admin;
     Date vremeLogovanja;
+    String theme;
 
     public MbAdmin() {
     }
@@ -28,6 +29,7 @@ public class MbAdmin {
     public void init() {
         admin = new Admin();
         admin.setUlogovan(false);
+        theme = "excite-bike";
     }
 
     public String getVremeLogovanja() {
@@ -46,6 +48,18 @@ public class MbAdmin {
         this.admin = admin;
     }
 
+    public String getTheme() {
+        if (admin == null || admin.getTheme()== null || admin.getTheme().isEmpty()) {
+            return theme;
+        } else {
+            return admin.getTheme();
+        }
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     public String login() {
         try {
             vremeLogovanja = new Date();
@@ -59,6 +73,7 @@ public class MbAdmin {
 
     public String logout() {
         try {
+            theme = "excite-bike";
             String poruka = KontrolerWS.getInstance().logout(admin);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
         } catch (Exception ex) {
