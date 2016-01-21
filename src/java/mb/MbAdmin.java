@@ -64,6 +64,7 @@ public class MbAdmin {
         try {
             vremeLogovanja = new Date();
             admin = KontrolerWS.getInstance().login(admin);
+            theme = admin.getTheme();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));

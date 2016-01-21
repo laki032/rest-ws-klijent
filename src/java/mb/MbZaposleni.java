@@ -95,14 +95,17 @@ public class MbZaposleni {
             ((Pilot) novi).setDatumPregleda(((Pilot) odabraniZaposleni).getDatumPregleda());
             ((Pilot) novi).setOcenaStanja(((Pilot) odabraniZaposleni).getOcenaStanja());
             novaUloga = new Uloga();
-            novaUloga.setPilot((Pilot)novi);
-        } else {
+            novaUloga.setPilot((Pilot) novi);
+            return "izmenaPilota";
+        }
+        if (odabraniZaposleni instanceof Aviomehanicar) {
             novi = new Aviomehanicar(odabraniZaposleni);
             ((Aviomehanicar) novi).setTipMehanicara(((Aviomehanicar) odabraniZaposleni).getTipMehanicara());
             novaLicenca = new Licenca();
-            novaLicenca.setAviomehanicar((Aviomehanicar)novi);
+            novaLicenca.setAviomehanicar((Aviomehanicar) novi);
+            return "izmenaMehanicara";
         }
-        return "izmenaZaposlenih";
+        return "pretragaZaposlenih";
     }
 
     public String sacuvajIzmenu() {
@@ -160,16 +163,16 @@ public class MbZaposleni {
         }
         return l;
     }
-    
-    public String sacuvajNovuUlogu(){
+
+    public String sacuvajNovuUlogu() {
         String poruka = KontrolerWS.getInstance().novaUloga(novaUloga);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova uloga", poruka));
         novaUloga = null;
         pokreniIzmenu(odabraniZaposleni);
         return "izmenaZaposlenih";
     }
-    
-    public String sacuvajNovuLicencu(){
+
+    public String sacuvajNovuLicencu() {
         String poruka = KontrolerWS.getInstance().novaLicenca(novaLicenca);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova licenca", poruka));
         novaLicenca = null;
