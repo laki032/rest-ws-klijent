@@ -24,18 +24,14 @@ import ws.client.controller.KontrolerWS;
 public class MbZaposleni {
 
     List<Zaposleni> zaposleni; //lista zaposlenih u bazi
-    Zaposleni novi;
     Zaposleni odabraniZaposleni; // selektovani zap.
     boolean ul_Ucitane;
-    Uloga novaUloga;
-    Licenca novaLicenca;
 
     public MbZaposleni() {
     }
 
     @PostConstruct
     public void init() {
-        novi = new Zaposleni();
         zaposleni = KontrolerWS.getInstance().getEmployees();
         ul_Ucitane = false;
     }
@@ -46,14 +42,6 @@ public class MbZaposleni {
 
     public void setZaposleni(List<Zaposleni> zaposleni) {
         this.zaposleni = zaposleni;
-    }
-
-    public Zaposleni getNovi() {
-        return novi;
-    }
-
-    public void setNovi(Zaposleni odabraniZaposleni) {
-        this.novi = odabraniZaposleni;
     }
 
     public Zaposleni getOdabraniZaposleni() {
@@ -70,53 +58,6 @@ public class MbZaposleni {
 
     public void setUl_Ucitane(boolean ul_Ucitane) {
         this.ul_Ucitane = ul_Ucitane;
-    }
-
-    public Licenca getNovaLicenca() {
-        return novaLicenca;
-    }
-
-    public Uloga getNovaUloga() {
-        return novaUloga;
-    }
-
-    public void setNovaLicenca(Licenca novaLicenca) {
-        this.novaLicenca = novaLicenca;
-    }
-
-    public void setNovaUloga(Uloga novaUloga) {
-        this.novaUloga = novaUloga;
-    }
-
-    public String pokreniIzmenu(Zaposleni zap) {
-        odabraniZaposleni = zap;
-        if (odabraniZaposleni instanceof Pilot) {
-            novi = new Pilot(odabraniZaposleni);
-            ((Pilot) novi).setDatumPregleda(((Pilot) odabraniZaposleni).getDatumPregleda());
-            ((Pilot) novi).setOcenaStanja(((Pilot) odabraniZaposleni).getOcenaStanja());
-            novaUloga = new Uloga();
-            novaUloga.setPilot((Pilot) novi);
-            return "izmenaPilota";
-        }
-        if (odabraniZaposleni instanceof Aviomehanicar) {
-            novi = new Aviomehanicar(odabraniZaposleni);
-            ((Aviomehanicar) novi).setTipMehanicara(((Aviomehanicar) odabraniZaposleni).getTipMehanicara());
-            novaLicenca = new Licenca();
-            novaLicenca.setAviomehanicar((Aviomehanicar) novi);
-            return "izmenaMehanicara";
-        }
-        return "pretragaZaposlenih";
-    }
-
-    public String sacuvajIzmenu() {
-        try {
-            String poruka = KontrolerWS.getInstance().edit(novi);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
-            zaposleni = KontrolerWS.getInstance().getEmployees();
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
-        }
-        return "pretragaZaposlenih";
     }
 
     public String obrisi(Zaposleni zap) {
@@ -149,10 +90,12 @@ public class MbZaposleni {
         } else {
             try {
                 if (odabraniZaposleni instanceof Pilot) {
+                    if (((Pilot) odabraniZaposleni).getUlogaList().isEmpty()) throw new NullPointerException();
                     for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
                         l.add(u.toString());
                     }
                 } else {
+                    if (((Aviomehanicar) odabraniZaposleni).getLicencaList().isEmpty()) throw new NullPointerException();
                     for (Licenca lc : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
                         l.add(lc.toString());
                     }
@@ -162,22 +105,6 @@ public class MbZaposleni {
             }
         }
         return l;
-    }
-
-    public String sacuvajNovuUlogu() {
-        String poruka = KontrolerWS.getInstance().novaUloga(novaUloga);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova uloga", poruka));
-        novaUloga = null;
-        pokreniIzmenu(odabraniZaposleni);
-        return "izmenaZaposlenih";
-    }
-
-    public String sacuvajNovuLicencu() {
-        String poruka = KontrolerWS.getInstance().novaLicenca(novaLicenca);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova licenca", poruka));
-        novaLicenca = null;
-        pokreniIzmenu(odabraniZaposleni);
-        return "izmenaZaposlenih";
     }
 
 }

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="izmenaPilota" >
+            <p:growl id="poruke" />
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Atribut" />
+                <p:outputLabel value="Stara vrednost" />
+                <p:outputLabel value="Nova vrednost" />
+
+                <p:outputLabel value="JMBG:" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.jmbg}" />
+                <p:inputText  value="#{mbIzmenaZaposlenih.pilot.jmbg}" title="JMBG se ne moze menjati" readonly="true" />
+
+                <p:outputLabel value="Ime i prezime" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.imePrezime}" />
+                <p:inputText value="#{mbIzmenaZaposlenih.pilot.imePrezime}" />
+
+                <p:outputLabel value="Godina rodjenja:" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.godinaRodjenja}" />
+                <p:inputText value="#{mbIzmenaZaposlenih.pilot.godinaRodjenja}" />
+
+                <p:outputLabel value="Datum pregleda:" />
+                <h:outputText value="#{mbIzmenaZaposlenih.odabraniPilot.datumPregleda}" >
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+                <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.pilot.datumPregleda}" />
+
+                <p:outputLabel value="Ocena stanja:" />
+                <h:outputText value="#{mbIzmenaZaposlenih.odabraniPilot.ocenaStanja}" />
+                <p:selectOneRadio id="comboZdrav" value="#{mbIzmenaZaposlenih.pilot.ocenaStanja}" required="true" >
+                    <f:selectItem itemLabel="Sposoban" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = true}"  />
+                    <f:selectItem itemLabel="Nesposoban" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = false}" />
+                </p:selectOneRadio>
+            </p:panelGrid>
+            <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
+        </h:form>
+        <p:separator />
+        <h:form id="unosUloga" >
+            <p:outputPanel id="prikaz" >
+                <p:panelGrid id="pngPrikaz" rendered="#{not empty mbIzmenaZaposlenih.odabraniPilot}" >
+                    <ui:repeat value="#{mbIzmenaZaposlenih.vratiUloge()}" var="x">
+                        #{x} <br />
+                    </ui:repeat>
+                </p:panelGrid>
+            </p:outputPanel>
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Unos uloga za pilota: " />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.pilot.imePrezime}" />
+
+                <p:outputLabel value="Avion: " />
+                <h:panelGrid columns="3" >
+                    <p:selectOneMenu id="cmbAvioni" value="#{mbIzmenaZaposlenih.novaUloga.avion}" converter="avioCNV" >
+                        <f:selectItem itemValue="" itemLabel="Izaberi avion" />
+                        <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <p:outputLabel value="Datum: " />
+                <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.novaUloga.datum}"/>
+
+                <p:outputLabel value="Naziv uloge: " />
+                <p:inputText value="#{mbIzmenaZaposlenih.novaUloga.nazivUloge}" />
+
+                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuUlogu()}" value="Sacuvaj ulogu" ajax="false" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="./WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="izmenaMeh" >
+            <p:growl id="poruke" />
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Atribut" />
+                <p:outputLabel value="Stara vrednost" />
+                <p:outputLabel value="Nova vrednost" />
+
+                <p:outputLabel value="JMBG:" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.jmbg}" />
+                <p:inputText  value="#{mbIzmenaZaposlenih.mehanicar.jmbg}" title="JMBG se ne moze menjati" readonly="true" />
+
+                <p:outputLabel value="Ime i prezime" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.imePrezime}" />
+                <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.imePrezime}" />
+
+                <p:outputLabel value="Godina rodjenja:" />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.godinaRodjenja}" />
+                <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.godinaRodjenja}" />
+
+                <p:outputLabel value="Tip mehanicara:" />
+                <p:outputLabel value="${mbIzmenaZaposlenih.odabraniMehanicar.tipMehanicara}" />
+                <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.tipMehanicara}" />
+            </p:panelGrid>
+            <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
+        </h:form>
+        <p:separator />
+        <h:form id="unosLicenci" >
+            <p:outputPanel id="prikaz" >
+                <p:panelGrid id="pngPrikaz" rendered="#{not empty mbIzmenaZaposlenih.odabraniMehanicar}" >
+                    <ui:repeat value="#{mbIzmenaZaposlenih.vratiLicence()}" var="x">
+                        #{x} <br />
+                    </ui:repeat>
+                </p:panelGrid>
+            </p:outputPanel>
+            <p:panelGrid columns="2" >
+                <p:outputLabel value="Unos licenci za mehanicara " />
+                <p:outputLabel value="#{mbIzmenaZaposlenih.mehanicar.imePrezime}" />
+
+                <p:outputLabel value="Tip aviona: " />
+                <p:selectOneMenu id="cmbTip" title="Odaberi tip aviona" value="#{mbIzmenaZaposlenih.novaLicenca.tipaviona}" converter="tipCNV" style="width: 97%">
+                    <f:selectItem itemValue="" itemLabel="Izaberi tip aviona" />
+                    <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Datum: " />
+                <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.novaLicenca.datumDobijanja}"/>
+
+                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuLicencu()}" value="Sacuvaj licencu" ajax="false" />
+            </p:panelGrid>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
