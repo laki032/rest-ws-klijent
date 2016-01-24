@@ -9,7 +9,7 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Avio kompanija</title>
+        <title>#{mbTranslator.translate("title")}</title>
     </h:head>
 
     <h:body>
@@ -18,7 +18,10 @@
 
         <div id="top" >
             <ui:insert name="top">
-                
+                <h:form>
+                    <p:commandButton value="Translate to EN" action="#{mbTranslator.translateToEN()}" ajax="false" /><br/>
+                    <p:commandButton value="Translate to SR" action="#{mbTranslator.translateToSR()}" ajax="false" /><br/>
+                </h:form>
             </ui:insert>
         </div>
         <div>
