@@ -19,8 +19,8 @@
         <div id="top" >
             <ui:insert name="top">
                 <h:form>
-                    <p:commandButton value="Translate to EN" action="#{mbTranslator.translateToEN()}" ajax="false" /><br/>
-                    <p:commandButton value="Translate to SR" action="#{mbTranslator.translateToSR()}" ajax="false" /><br/>
+                    <p:commandButton value="English" action="#{mbTranslator.translateToEN()}" ajax="false" style="background: url(../resources/images/en.png); background-size: 100% 100%;" /><br/>
+                    <p:commandButton value="SRPSKI"  action="#{mbTranslator.translateToSR()}" ajax="false" style="background: url(../resources/images/sr.png); background-size: 100% 100%;" /><br/>
                 </h:form>
             </ui:insert>
         </div>
