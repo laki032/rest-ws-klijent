@@ -25,10 +25,12 @@ public class MbTranslator {
 
     private Map<String, String> sr_translations;
     private Map<String, String> en_translations;
-    private final Logger log;
-
+    
+    private static final Logger log = Logger.getLogger(MbTranslator.class.getName());
+    private final String pathSR = "../../../web/resources/translations/sr.properties";
+    private final String pathEN = "../../../web/resources/translations/en.properties";
+    
     public MbTranslator() {
-        log = Logger.getLogger(MbTranslator.class.getName());
     }
 
     @PostConstruct
@@ -39,8 +41,8 @@ public class MbTranslator {
         Properties sr = new Properties();
         Properties en = new Properties();
         try {
-            InputStream inSR = getClass().getClassLoader().getResourceAsStream("../../../web/resources/translations/sr.properties");
-            InputStream inEN = getClass().getClassLoader().getResourceAsStream("../../../web/resources/translations/en.properties");
+            InputStream inSR = getClass().getClassLoader().getResourceAsStream(pathSR);
+            InputStream inEN = getClass().getClassLoader().getResourceAsStream(pathEN);
             sr.load(inSR);
             en.load(inEN);
             inSR.close();

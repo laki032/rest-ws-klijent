@@ -14,7 +14,7 @@ public class KontrolerWS {
     private final WSZaposleni wsZap;
     private final WSAdmin wsAdmin;
     private final WSUlogeLicence wsUL;
-    private final Logger log;
+    private static final Logger log = Logger.getLogger(KontrolerWS.class.getName());
     private List<Tipaviona> tipovi;
     private List<Avion> avioni;
 
@@ -23,7 +23,6 @@ public class KontrolerWS {
         wsZap = new WSZaposleni();
         wsAdmin = new WSAdmin();
         wsUL = new WSUlogeLicence();
-        log = Logger.getLogger(KontrolerWS.class.getName());
     }
 
     public static KontrolerWS getInstance() {
