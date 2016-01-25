@@ -16,42 +16,42 @@
                     <p:growl id="grwPoruke" />
 
                     <h:panelGrid columns="2" >
-                        <p:outputLabel value="#{mbTranslator.translate("planeModel")}:" />
-                        <p:inputText id="txtOznaka" value="#{mbAvion.avion.oznaka}" title="#{mbTranslator.translate("planeModelTitle")}" validatorMessage="#{mbTranslator.translate("planeModelValidatorMessage")}">
+                        <p:outputLabel value='#{mbTranslator.translate("planeModel")}:' />
+                        <p:inputText id="txtOznaka" value="#{mbAvion.avion.oznaka}" title='#{mbTranslator.translate("planeModelTitle")}' validatorMessage='#{mbTranslator.translate("planeModelValidatorMessage")}'>
                             <f:validateLength maximum="30" /> 
                         </p:inputText>
 
-                        <p:outputLabel for="txtGodPr" value="#{mbTranslator.translate("yearProduced")}:" />
-                        <p:spinner id="txtGodPr" value="#{mbAvion.avion.godProizvodnje}" title="#{mbTranslator.translate("yearProducedTitle")}" validatorMessage="#{mbTranslator.translate("yearProducedValidatorMessage")}" >
+                        <p:outputLabel for="txtGodPr" value='#{mbTranslator.translate("yearProduced")}:' />
+                        <p:spinner id="txtGodPr" value="#{mbAvion.avion.godProizvodnje}" title='#{mbTranslator.translate("yearProducedTitle")}' validatorMessage='#{mbTranslator.translate("yearProducedValidatorMessage")}' >
                             <f:validateLongRange maximum="2020" minimum="1990" />
                         </p:spinner>
 
-                        <p:outputLabel for="txtBrput" value="#{mbTranslator.translate("passengers")}:" />
-                        <p:spinner id="txtBrput" value="#{mbAvion.avion.brojPutnika}" title="#{mbTranslator.translate("passengersTitle")}" validatorMessage="#{mbTranslator.translate("passengersValidatorMessage")}" >
+                        <p:outputLabel for="txtBrput" value='#{mbTranslator.translate("passengers")}:' />
+                        <p:spinner id="txtBrput" value="#{mbAvion.avion.brojPutnika}" title='#{mbTranslator.translate("passengersTitle")}' validatorMessage='#{mbTranslator.translate("passengersValidatorMessage")}' >
                             <f:validateLongRange maximum="1000" minimum="0" />
                         </p:spinner>
 
-                        <p:outputLabel for="txtNosivost" value="#{mbTranslator.translate("cargo")}:" />
-                        <p:spinner id="txtNosivost" value="#{mbAvion.avion.nosivost}" title="#{mbTranslator.translate("cargoTitle")}" validatorMessage="#{mbTranslator.translate("cargoValidatorMessage")}" >
+                        <p:outputLabel for="txtNosivost" value='#{mbTranslator.translate("cargo")}:' />
+                        <p:spinner id="txtNosivost" value="#{mbAvion.avion.nosivost}" title='#{mbTranslator.translate("cargoTitle")}' validatorMessage='#{mbTranslator.translate("cargoValidatorMessage")}' >
                             <f:validateLongRange maximum="500" minimum="1" />
                         </p:spinner>
                     </h:panelGrid>
                     <c:if test="#{!mbAvion.izmena}">
                         <h:panelGrid columns="2" >
-                            <p:outputLabel for="cmbTip" value="#{mbTranslator.translate("planeType")}: "/>
-                            <p:selectOneMenu id="cmbTip" title="#{mbTranslator.translate("choosePlaneType")}" value="#{mbAvion.avion.tipID}" converter="tipCNV" style="width: 97%; margin-left: 28%">
-                                <f:selectItem itemValue="" itemLabel="#{mbTranslator.translate("selectPlaneType")}" />
-                                <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{mbTranslator.translate(tip.naziv)}" />
+                            <p:outputLabel for="cmbTip" value='#{mbTranslator.translate("planeType")}: '/>
+                            <p:selectOneMenu id="cmbTip" title='#{mbTranslator.translate("choosePlaneType")}' value="#{mbAvion.avion.tipID}" converter="tipCNV" style="width: 97%; margin-left: 28%">
+                                <f:selectItem itemValue="" itemLabel='#{mbTranslator.translate("selectPlaneType")}' />
+                                <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel='#{mbTranslator.translate(tip.naziv)}' />
                             </p:selectOneMenu>
                         </h:panelGrid>
                         <br/>
-                        <p:commandButton value="#{mbTranslator.translate("saveNewPlane")}" title="#{mbTranslator.translate("saveNewPlaneTitle")}" action="#{mbAvion.sacuvajNoviAvion()}" style="width: 35%" ajax="false" />
+                        <p:commandButton value='#{mbTranslator.translate("saveNewPlane")}' title='#{mbTranslator.translate("saveNewPlaneTitle")}' action="#{mbAvion.sacuvajNoviAvion()}" style="width: 35%" ajax="false" />
                     </c:if>
                     <c:if test="#{mbAvion.izmena}">
-                        <p:outputLabel value="#{mbTranslator.translate("planeType")}: " style="margin-left: 3px"/>
-                        <p:outputLabel value="#{mbAvion.avion.tipID.naziv}" style="margin-left: 7%; margin-bottom: 2%" />
+                        <p:outputLabel value='#{mbTranslator.translate("planeType")}: ' style="margin-left: 3px"/>
+                        <p:outputLabel value='#{mbAvion.avion.tipID.naziv}' style="margin-left: 7%; margin-bottom: 2%" />
                         <br/>
-                        <p:commandButton value="#{mbTranslator.translate("saveEditedPlane")}" title="#{mbTranslator.translate("saveEditedPlaneTitle")}" action="#{mbAvion.sacuvajIzmenuAviona(novi)}" style="width: 35%" ajax="false" />
+                        <p:commandButton value='#{mbTranslator.translate("saveEditedPlane")}' title='#{mbTranslator.translate("saveEditedPlaneTitle")}' action="#{mbAvion.sacuvajIzmenuAviona(novi)}" style="width: 35%" ajax="false" />
                     </c:if>
                 </h:form>
             </ui:define>

@@ -19,24 +19,24 @@
                     <p:dataTable value="#{mbZaposleni.zaposleni}" var="zap" rows="5" paginator="true" widgetVar="tabela"
                                  selectionMode="single" selection="#{mbZaposleni.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
                         <p:ajax event="rowSelect" listener="#{mbZaposleni.zaposleniJeOdabran}" update=":prikazZaposlenih:dlgPnl" oncomplete="PF('dlg').show()" />
-                        <p:column headerText="#{mbTranslator.translate("id")}" style="width: 20%" sortBy="#{zap.jmbg}" filterBy="#{zap.jmbg}" footerText="#{mbTranslator.translate("criteriaContains")}" filterMatchMode="contains">
+                        <p:column headerText='#{mbTranslator.translate("id")}' style="width: 20%" sortBy="#{zap.jmbg}" filterBy="#{zap.jmbg}" footerText='#{mbTranslator.translate("criteriaContains")}' filterMatchMode="contains">
                             <p:outputLabel value="#{zap.jmbg}" />
                         </p:column>
-                        <p:column headerText="#{mbTranslator.translate("name")}" style="width: 15%" sortBy="#{zap.imePrezime}" filterBy="#{zap.imePrezime}" footerText="#{mbTranslator.translate("contains")}" filterMatchMode="contains">
+                        <p:column headerText='#{mbTranslator.translate("name")}' style="width: 15%" sortBy="#{zap.imePrezime}" filterBy="#{zap.imePrezime}" footerText='#{mbTranslator.translate("contains")}' filterMatchMode="contains">
                             <p:outputLabel value="#{zap.imePrezime}" />
                         </p:column>
-                        <p:column headerText="#{mbTranslator.translate("birthYear")}" style="width: 15%" sortBy="#{zap.godinaRodjenja}" >
+                        <p:column headerText='#{mbTranslator.translate("birthYear")}' style="width: 15%" sortBy="#{zap.godinaRodjenja}" >
                             <p:outputLabel value="#{zap.godinaRodjenja}" />
                         </p:column>
-                        <p:column headerText="#{mbTranslator.translate("employeeType")}" sortBy="#{zap.class.simpleName}" filterBy="#{zap.class.simpleName}" footerText="#{mbTranslator.translate("selectedType")}" filterMatchMode="equals">
+                        <p:column headerText='#{mbTranslator.translate("employeeType")}' sortBy="#{zap.class.simpleName}" filterBy="#{zap.class.simpleName}" footerText='#{mbTranslator.translate("selectedType")}' filterMatchMode="equals">
                             <f:facet name="filter">
                                 <p:selectOneButton onchange="PF('tabela').filter()">
-                                    <f:selectItem itemLabel="#{mbTranslator.translate("all")}" itemValue="" />
-                                    <f:selectItem itemLabel="#{mbTranslator.translate("pilots")}" itemValue="Pilot" />
-                                    <f:selectItem itemLabel="#{mbTranslator.translate("mechanics")}" itemValue="Aviomehanicar" />
+                                    <f:selectItem itemLabel='#{mbTranslator.translate("all")}' itemValue="" />
+                                    <f:selectItem itemLabel='#{mbTranslator.translate("pilots")}' itemValue="Pilot" />
+                                    <f:selectItem itemLabel='#{mbTranslator.translate("mechanics")}' itemValue="Aviomehanicar" />
                                 </p:selectOneButton>
                             </f:facet>
-                            <p:outputLabel value="#{mbTranslator.translate(zap.class.simpleName)}" /> 
+                            <p:outputLabel value='#{mbTranslator.translate(zap.class.simpleName)}' /> 
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 5%">
                             <f:facet name="header">#{mbTranslator.translate("remove")}</f:facet>
@@ -44,11 +44,11 @@
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 9%">
                             <f:facet name="header">#{mbTranslator.translate("edit")}</f:facet>
-                            <p:commandButton value="#{mbTranslator.translate("edit")}" style="width: 100%" action="#{mbIzmenaZaposlenih.pokreniIzmenu(zap)}" ajax="false"/>
+                            <p:commandButton value='#{mbTranslator.translate("edit")}' style="width: 100%" action="#{mbIzmenaZaposlenih.pokreniIzmenu(zap)}" ajax="false"/>
                         </p:column>
                     </p:dataTable>
 
-                    <p:dialog header="#{mbTranslator.translate("viewCommitments")}" widgetVar="dlg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:dialog header='#{mbTranslator.translate("viewCommitments")}' widgetVar="dlg" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="dlgPnl" style="text-align:center;">
                             <c:if test="#{mbZaposleni.ul_Ucitane}">
                                 <p:panelGrid rendered="#{not empty mbZaposleni.odabraniZaposleni}" >

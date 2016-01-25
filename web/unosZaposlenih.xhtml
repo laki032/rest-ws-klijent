@@ -14,52 +14,52 @@
                     <div align="left" style="float: left;width: 35%; margin-right: 1%">
                         <h:form id="frmZaposleni">  
                             <p:growl id="grwPoruke" />
-                            <p:panel header="#{mbTranslator.translate("addNewEmployees")}">
+                            <p:panel header='#{mbTranslator.translate("addNewEmployees")}'>
                                 <h:panelGrid id="pnlgZap" columns="2">
-                                    <p:outputLabel value="#{mbTranslator.translate("id")}:" />
-                                    <p:inputText id="txtJMBG" value="#{mbUnosZaposlenih.novi.jmbg}" title="#{mbTranslator.translate("jmbgTitle")}" validatorMessage="#{mbTranslator.translate("jmbgValidatorMessage")}">
+                                    <p:outputLabel value='#{mbTranslator.translate("id")}:' />
+                                    <p:inputText id="txtJMBG" value="#{mbUnosZaposlenih.novi.jmbg}" title='#{mbTranslator.translate("jmbgTitle")}' validatorMessage='#{mbTranslator.translate("jmbgValidatorMessage")}'>
                                         <f:validateLength minimum="13" maximum="13" />
                                     </p:inputText>
 
-                                    <p:outputLabel value="#{mbTranslator.translate("name")}:" />
-                                    <p:inputText id="txtImepr" value="#{mbUnosZaposlenih.novi.imePrezime}" title="#{mbTranslator.translate("nameTitle")}" validatorMessage="#{mbTranslator.translate("nameValidatorMessage")}" >
+                                    <p:outputLabel value='#{mbTranslator.translate("name")}:' />
+                                    <p:inputText id="txtImepr" value="#{mbUnosZaposlenih.novi.imePrezime}" title='#{mbTranslator.translate("nameTitle")}' validatorMessage='#{mbTranslator.translate("nameValidatorMessage")}' >
                                         <f:validateLength minimum="2" />
                                     </p:inputText>
 
-                                    <p:outputLabel value="#{mbTranslator.translate("birthYear")}:" />
-                                    <p:spinner id="txtGodRod" value="#{mbUnosZaposlenih.novi.godinaRodjenja}" validatorMessage="#{mbTranslator.translate("birthYearValidatorMessage")}" >
+                                    <p:outputLabel value='#{mbTranslator.translate("birthYear")}:' />
+                                    <p:spinner id="txtGodRod" value="#{mbUnosZaposlenih.novi.godinaRodjenja}" validatorMessage='#{mbTranslator.translate("birthYearValidatorMessage")}' >
                                         <f:validateLongRange minimum="1950" maximum="2010" />
                                     </p:spinner>
 
-                                    <p:outputLabel value="#{mbTranslator.translate("employeeType")}:" />
-                                    <p:selectOneRadio id="comboTip" value="#{mbUnosZaposlenih.tip}" required="true" validatorMessage="#{mbTranslator.translate("employeeTypeValidatorMessage")}" >
-                                        <f:selectItem itemLabel="#{mbTranslator.translate("MEHANICAR")}" itemValue="#{mbUnosZaposlenih.MEHANICAR}"  />
-                                        <f:selectItem itemLabel="#{mbTranslator.translate("PILOT")}" itemValue="#{mbUnosZaposlenih.PILOT}" />
+                                    <p:outputLabel value='#{mbTranslator.translate("employeeType")}:' />
+                                    <p:selectOneRadio id="comboTip" value="#{mbUnosZaposlenih.tip}" required="true" validatorMessage='#{mbTranslator.translate("employeeTypeValidatorMessage")}' >
+                                        <f:selectItem itemLabel='#{mbTranslator.translate("MEHANICAR")}' itemValue="#{mbUnosZaposlenih.MEHANICAR}"  />
+                                        <f:selectItem itemLabel='#{mbTranslator.translate("PILOT")}' itemValue="#{mbUnosZaposlenih.PILOT}" />
                                         <f:ajax execute="@this" render="tip" />
                                     </p:selectOneRadio>
                                 </h:panelGrid>
                                 <p:panel id="tip" header="#{mbUnosZaposlenih.tip}" visible="#{mbUnosZaposlenih.tip!=null}" >
                                     <c:if test="#{mbUnosZaposlenih.noviJePilot()}">
                                         <h:panelGrid columns="2">
-                                            <p:outputLabel value="#{mbTranslator.translate("mentalState")}:" />
+                                            <p:outputLabel value='#{mbTranslator.translate("mentalState")}:' />
                                             <p:selectOneRadio id="comboZdrav" value="#{mbUnosZaposlenih.novi.ocenaStanja}" required="true" >
-                                                <f:selectItem itemLabel="#{mbTranslator.translate("ok")}" itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = true}"  />
-                                                <f:selectItem itemLabel="#{mbTranslator.translate("idiot")}" itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = false}" />
+                                                <f:selectItem itemLabel='#{mbTranslator.translate("ok")}' itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = true}"  />
+                                                <f:selectItem itemLabel='#{mbTranslator.translate("idiot")}' itemValue="#{mbUnosZaposlenih.novi.ocenaStanja = false}" />
                                             </p:selectOneRadio>
 
-                                            <p:outputLabel value="#{mbTranslator.translate("date")}" />
+                                            <p:outputLabel value='#{mbTranslator.translate("date")}' />
                                             <p:calendar pattern="dd/MM/yyyy" value="#{mbUnosZaposlenih.novi.datumPregleda}"/>
                                         </h:panelGrid>
                                     </c:if>
                                     <c:if test="#{mbUnosZaposlenih.noviJeMehanicar()}">
                                         <h:panelGrid columns="2">
-                                            <p:outputLabel value="#{mbTranslator.translate("mechanicType")}" />
-                                            <p:inputText value="#{mbUnosZaposlenih.novi.tipMehanicara}" />
+                                            <p:outputLabel value='#{mbTranslator.translate("mechanicType")}' />
+                                            <p:inputText value='#{mbUnosZaposlenih.novi.tipMehanicara}' />
                                         </h:panelGrid>
                                     </c:if>
                                 </p:panel>
                                 <br/>
-                                <p:commandButton value="#{mbTranslator.translate("addNewEmployee")}" icon="ui-icon-plus" ajax="false" action="#{mbUnosZaposlenih.dodajNovog()}" />
+                                <p:commandButton value='#{mbTranslator.translate("addNewEmployee")}' icon="ui-icon-plus" ajax="false" action="#{mbUnosZaposlenih.dodajNovog()}" />
                             </p:panel>
                         </h:form>
                     </div>
@@ -67,27 +67,27 @@
                     <h:form id="frmUnetiZaposleni">
                         <p:growl id="poruke" />
                         <div align="left" style="float: left;width: 64%;" >
-                            <p:panel header="#{mbTranslator.translate("createdEmployees")}">
+                            <p:panel header='#{mbTranslator.translate("createdEmployees")}'>
                                 <p:dataTable id="tblTabZap" value="#{mbUnosZaposlenih.dodatiZaposleni}" var="zap" selectionMode="single" 
                                              selection="#{mbUnosZaposlenih.odabraniZaposleni}" rowKey="#{zap.jmbg}" >
-                                    <p:column headerText="#{mbTranslator.translate("employeeType")}">
+                                    <p:column headerText='#{mbTranslator.translate("employeeType")}'>
                                         #{zap.class.simpleName}
                                     </p:column>
-                                    <p:column headerText="#{mbTranslator.translate("id")}">
+                                    <p:column headerText='#{mbTranslator.translate("id")}'>
                                         #{zap.jmbg}
                                     </p:column>
-                                    <p:column headerText=#{mbTranslator.translate("name")}"">
+                                    <p:column headerText='#{mbTranslator.translate("name")}'>
                                         #{zap.imePrezime}
                                     </p:column>
-                                    <p:column headerText="#{mbTranslator.translate("birthYear")}">
+                                    <p:column headerText='#{mbTranslator.translate("birthYear")}'>
                                         #{zap.godinaRodjenja}
                                     </p:column>
-                                    <p:column headerText="#{mbTranslator.translate("employeeData")}">
+                                    <p:column headerText='#{mbTranslator.translate("employeeData")}'>
                                         <h:outputText value="#{mbUnosZaposlenih.vratiOstalePodatkeOZaposlenom(zap)}" />
                                     </p:column>
                                 </p:dataTable>
-                                <p:commandButton value="#{mbTranslator.translate("remove")}" action="#{mbUnosZaposlenih.obrisiSelektovaniRed()}" style="width: 40%; margin-top: 2%" ajax="false"/>
-                                <p:commandButton value="#{mbTranslator.translate("saveAll")}" action="#{mbUnosZaposlenih.sacuvajSve()}" style="width: 40%; margin-top: 2%; margin-left: 19%" ajax="false"/>
+                                <p:commandButton value='#{mbTranslator.translate("remove")}' action="#{mbUnosZaposlenih.obrisiSelektovaniRed()}" style="width: 40%; margin-top: 2%" ajax="false"/>
+                                <p:commandButton value='#{mbTranslator.translate("saveAll")}' action="#{mbUnosZaposlenih.sacuvajSve()}" style="width: 40%; margin-top: 2%; margin-left: 19%" ajax="false"/>
                             </p:panel>
                         </div>
                     </h:form>

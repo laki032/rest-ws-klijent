@@ -29,13 +29,13 @@
                 <ui:insert name="left">
                     <h:form style="width: 95%">
                         <p:menu style="width: 99%">
-                            <p:submenu label="#{mbTranslator.translate("labelAVIONI")}" >
-                                <p:menuitem value="#{mbTranslator.translate("labelUnos")}" action="unosAviona.xhtml" ajax="false" />
-                                <p:menuitem value="#{mbTranslator.translate("labelPretraga")}" action="pretragaAviona.xhtml" ajax="false" />
+                            <p:submenu label='#{mbTranslator.translate("labelAVIONI")}' >
+                                <p:menuitem value='#{mbTranslator.translate("labelUnos")}' action="unosAviona.xhtml" ajax="false" />
+                                <p:menuitem value='#{mbTranslator.translate("labelPretraga")}' action="pretragaAviona.xhtml" ajax="false" />
                             </p:submenu>
-                            <p:submenu label="#{mbTranslator.translate("labelZAPOSLENI")}">
-                                <p:menuitem value="#{mbTranslator.translate("labelUnos")}" action="unosZaposlenih.xhtml" ajax="false" />
-                                <p:menuitem value="#{mbTranslator.translate("labelPretraga")}" action="pretragaZaposlenih.xhtml" ajax="false" />
+                            <p:submenu label='#{mbTranslator.translate("labelZAPOSLENI")}'>
+                                <p:menuitem value='#{mbTranslator.translate("labelUnos")}' action="unosZaposlenih.xhtml" ajax="false" />
+                                <p:menuitem value='#{mbTranslator.translate("labelPretraga")}' action="pretragaZaposlenih.xhtml" ajax="false" />
                             </p:submenu>
                         </p:menu>
                     </h:form>
@@ -48,19 +48,19 @@
                         <c:if test="#{mbAdmin.admin.ulogovan}">
                             <h:form id="logout">
                                 <p:messages id="poruke" />
-                                <p:panel id="panel" header="#{mbTranslator.translate("adminLoggedIn")}" style="margin-bottom:10px;">
+                                <p:panel id="panel" header='#{mbTranslator.translate("adminLoggedIn")}' style="margin-bottom:10px;">
                                     <p:outputLabel><h1>#{mbAdmin.admin.username.toUpperCase()}</h1> </p:outputLabel><br/><br/>
                                     <p:outputLabel>#{mbTranslator.translate("loginTime")}</p:outputLabel><br/><br/>
                                     <p:clock mode="client" pattern="#{mbAdmin.vremeLogovanja}" ></p:clock> <br/><br/>
                                     <p:outputLabel>#{mbTranslator.translate("currentTime")}</p:outputLabel><br/><br/>
                                     <p:clock mode="client" pattern="h:mm:ss"></p:clock><br/><br/>
-                                    <p:commandButton value="#{mbTranslator.translate("LOGOUT")}" action="#{mbAdmin.logout()}" ajax="false" /><br/>
+                                    <p:commandButton value='#{mbTranslator.translate("LOGOUT")}' action="#{mbAdmin.logout()}" ajax="false" /><br/>
                                 </p:panel>
                             </h:form>
                         </c:if>
                         <c:if test="#{!mbAdmin.admin.ulogovan}">
                             <h:form id="login" >
-                                <p:panel id="panel" header="#{mbTranslator.translate("adminLogin")}" style="margin-bottom:10px;">
+                                <p:panel id="panel" header='#{mbTranslator.translate("adminLogin")}' style="margin-bottom:10px;">
                                     <p:outputLabel>#{mbTranslator.translate("username")}</p:outputLabel> 
                                     <p:inputText id="txtIme" value="#{mbAdmin.admin.username}" style="width: 90%;">
                                         <f:validateLength maximum="15" />
@@ -69,7 +69,7 @@
                                     <p:password id="txtPass" value="#{mbAdmin.admin.password}" style="width: 90%;">
                                         <f:validateLength maximum="15" />
                                     </p:password><br/><br/>
-                                    <p:commandButton value="#{mbTranslator.translate("LOGIN")}" action="#{mbAdmin.login()}" style="width: 95%" ajax="false"/><br/>
+                                    <p:commandButton value='#{mbTranslator.translate("LOGIN")}' action="#{mbAdmin.login()}" style="width: 95%" ajax="false"/><br/>
                                 </p:panel>
                             </h:form>
                         </c:if>

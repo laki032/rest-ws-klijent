@@ -21,28 +21,27 @@ public class MbTranslator {
     public enum Language {
         EN, SR
     }
-    private Language language;
+    private static Language language;
 
-    private Map<String, String> sr_translations;
-    private Map<String, String> en_translations;
+    private static Map<String, String> sr_translations;
+    private static Map<String, String> en_translations;
 
     private static final Logger log = Logger.getLogger(MbTranslator.class.getName());
-    private final String pathSR = "../../../web/resources/translations/sr.properties";
-    private final String pathEN = "../../../web/resources/translations/en.properties";
+    private static final String pathSR = "../../../web/resources/translations/sr.properties";
+    private static final String pathEN = "../../../web/resources/translations/en.properties";
 
     public MbTranslator() {
     }
 
-    @PostConstruct
-    public void init() {
+    static {
         language = Language.SR;
         sr_translations = new HashMap<>();
         en_translations = new HashMap<>();
         Properties sr = new Properties();
         Properties en = new Properties();
         try {
-            InputStream inSR = getClass().getClassLoader().getResourceAsStream(pathSR);
-            InputStream inEN = getClass().getClassLoader().getResourceAsStream(pathEN);
+            InputStream inSR = MbTranslator.class.getClassLoader().getResourceAsStream(pathSR);
+            InputStream inEN = MbTranslator.class.getClassLoader().getResourceAsStream(pathEN);
             sr.load(inSR);
             en.load(inEN);
             inSR.close();
