@@ -12,27 +12,27 @@
         <h:form id="izmenaMeh" >
             <p:growl id="poruke" />
             <p:panelGrid columns="3">
-                <p:outputLabel value="Atribut" />
-                <p:outputLabel value="Stara vrednost" />
-                <p:outputLabel value="Nova vrednost" />
+                <p:outputLabel value="#{mbTranslator.translate("attribute")}" />
+                <p:outputLabel value="#{mbTranslator.translate("oldValue")}" />
+                <p:outputLabel value="#{mbTranslator.translate("newValue")}" />
 
-                <p:outputLabel value="JMBG:" />
+                <p:outputLabel value="#{mbTranslator.translate("idd")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.jmbg}" />
-                <p:inputText  value="#{mbIzmenaZaposlenih.mehanicar.jmbg}" title="JMBG se ne moze menjati" readonly="true" />
+                <p:inputText  value="#{mbIzmenaZaposlenih.mehanicar.jmbg}" title="#{mbTranslator.translate("idCannotBeChanged")}" readonly="true" />
 
-                <p:outputLabel value="Ime i prezime" />
+                <p:outputLabel value="#{mbTranslator.translate("name")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.imePrezime}" />
                 <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.imePrezime}" />
 
-                <p:outputLabel value="Godina rodjenja:" />
+                <p:outputLabel value="#{mbTranslator.translate("birthYear")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniMehanicar.godinaRodjenja}" />
                 <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.godinaRodjenja}" />
 
-                <p:outputLabel value="Tip mehanicara:" />
+                <p:outputLabel value="#{mbTranslator.translate("mechanicType")}:" />
                 <p:outputLabel value="${mbIzmenaZaposlenih.odabraniMehanicar.tipMehanicara}" />
                 <p:inputText value="#{mbIzmenaZaposlenih.mehanicar.tipMehanicara}" />
             </p:panelGrid>
-            <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
+            <p:commandButton value="#{mbTranslator.translate("saveEdit")}" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
         </h:form>
         <p:separator />
         <h:form id="unosLicenci" >
@@ -44,19 +44,19 @@
                 </p:panelGrid>
             </p:outputPanel>
             <p:panelGrid columns="2" >
-                <p:outputLabel value="Unos licenci za mehanicara " />
+                <p:outputLabel value="#{mbTranslator.translate("enterMechanicLicense")} " />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.mehanicar.imePrezime}" />
 
-                <p:outputLabel value="Tip aviona: " />
-                <p:selectOneMenu id="cmbTip" title="Odaberi tip aviona" value="#{mbIzmenaZaposlenih.novaLicenca.tipaviona}" converter="tipCNV" style="width: 97%">
-                    <f:selectItem itemValue="" itemLabel="Izaberi tip aviona" />
-                    <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{tip.naziv}" />
+                <p:outputLabel value="#{mbTranslator.translate("planeType")}: " />
+                <p:selectOneMenu id="cmbTip" title="#{mbTranslator.translate("choosePlaneType")}" value="#{mbIzmenaZaposlenih.novaLicenca.tipaviona}" converter="tipCNV" style="width: 97%">
+                    <f:selectItem itemValue="" itemLabel="#{mbTranslator.translate("selectPlaneType")}" />
+                    <f:selectItems value="#{mbAvion.tipovi}" var="tip" itemValue="#{tip}" itemLabel="#{mbTranslator.translate(tip.naziv)}" />
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Datum: " />
+                <p:outputLabel value="#{mbTranslator.translate("roleDate")}: " />
                 <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.novaLicenca.datumDobijanja}"/>
 
-                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuLicencu()}" value="Sacuvaj licencu" ajax="false" />
+                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuLicencu()}" value="#{mbTranslator.translate("saveLicense")}" ajax="false" />
             </p:panelGrid>
         </h:form>
     </ui:define>

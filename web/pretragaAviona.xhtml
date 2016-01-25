@@ -18,40 +18,40 @@
                                  selectionMode="single" selection="#{mbAvion.avion}" rowKey="#{a.avionID}" >
                         <p:ajax event="rowSelect" listener="#{mbAvion.avionJeOdabran}" update=":prikazAviona:msgs" />
 
-                        <p:column style="width: 22%" headerText="Oznaka" sortBy="#{a.oznaka}" filterBy="#{a.oznaka}" footerText="Kriterijum pretrage: sadrzi" filterMatchMode="contains">
+                        <p:column style="width: 22%" headerText="#{mbTranslator.translate("planeModel")}" sortBy="#{a.oznaka}" filterBy="#{a.oznaka}" footerText="#{mbTranslator.translate("criteriaContains")}" filterMatchMode="contains">
                             <p:outputLabel value="#{a.oznaka}"/>
                         </p:column>
-                        <p:column headerText="Godina proizvodnje" sortBy="#{a.godProizvodnje}" >
+                        <p:column headerText="#{mbTranslator.translate("yearProduced")}" sortBy="#{a.godProizvodnje}" >
                             <p:outputLabel value="#{a.godProizvodnje}"/>    
                         </p:column>
-                        <p:column headerText="Broj putnika" sortBy="#{a.brojPutnika}" >
+                        <p:column headerText="#{mbTranslator.translate("passengers")}" sortBy="#{a.brojPutnika}" >
                             <p:outputLabel value="#{a.brojPutnika}"/>   
                         </p:column>
-                        <p:column headerText="Nosivost" sortBy="#{a.nosivost}" >
+                        <p:column headerText="#{mbTranslator.translate("cargo")}" sortBy="#{a.nosivost}" >
                             <p:outputLabel value="#{a.nosivost}"/>   
                         </p:column>
-                        <p:column headerText="Tip" filterBy="#{a.tipID.naziv}" sortBy="#{a.tipID.naziv}" filterMatchMode="in">
+                        <p:column headerText="#{mbTranslator.translate("type")}" filterBy="#{a.tipID.naziv}" sortBy="#{a.tipID.naziv}" filterMatchMode="in">
                             <f:facet name="filter">
-                                <p:selectCheckboxMenu label="Izaberite tip(ove)" onchange="PF('tabela').filter()" panelStyle="width:125px" scrollHeight="150">
+                                <p:selectCheckboxMenu label="#{mbTranslator.translate("chooseType(s)")}" onchange="PF('tabela').filter()" panelStyle="width:125px" scrollHeight="150">
                                     <f:selectItems value="#{mbAvion.tipovi}" />
                                 </p:selectCheckboxMenu>
                             </f:facet>
-                            <p:outputLabel value="#{a.tipID.naziv}"/>    
+                            <p:outputLabel value="#{mbTranslator.translate(a.tipID.naziv)}"/>    
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}">
-                            <f:facet name="header">Obrisi</f:facet>
+                            <f:facet name="header">#{mbTranslator.translate("remove")}</f:facet>
                             <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" ajax="false" >
-                                <!--<p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />-->
+                                <!--<p:confirm header="Confirmation" message="#{mbTranslator.translate("areYouSure")}?" icon="ui-icon-alert" />-->
                             </p:commandButton>
 
 <!--                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                <p:commandButton value="#{mbTranslator.translate("yes")}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="#{mbTranslator.translate("no")}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                             </p:confirmDialog>-->
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}">
-                            <f:facet name="header">Izmeni</f:facet>
-                            <p:commandButton value="Izmeni" style="width: 100%" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
+                            <f:facet name="header">#{mbTranslator.translate("edit")}</f:facet>
+                            <p:commandButton value="#{mbTranslator.translate("edit")}" style="width: 100%" action="#{mbAvion.pokreniIzmenu(a)}" ajax="false"/>
                         </p:column>
 
                     </p:dataTable>

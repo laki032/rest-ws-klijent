@@ -12,36 +12,36 @@
         <h:form id="izmenaPilota" >
             <p:growl id="poruke" />
             <p:panelGrid columns="3">
-                <p:outputLabel value="Atribut" />
-                <p:outputLabel value="Stara vrednost" />
-                <p:outputLabel value="Nova vrednost" />
+                <p:outputLabel value="#{mbTranslator.translate("attribute")}" />
+                <p:outputLabel value="#{mbTranslator.translate("oldValue")}" />
+                <p:outputLabel value="#{mbTranslator.translate("newValue")}" />
 
-                <p:outputLabel value="JMBG:" />
+                <p:outputLabel value="#{mbTranslator.translate("id")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.jmbg}" />
-                <p:inputText  value="#{mbIzmenaZaposlenih.pilot.jmbg}" title="JMBG se ne moze menjati" readonly="true" />
+                <p:inputText  value="#{mbIzmenaZaposlenih.pilot.jmbg}" title="#{mbTranslator.translate("idCannotBeChanged")}" readonly="true" />
 
-                <p:outputLabel value="Ime i prezime" />
+                <p:outputLabel value="#{mbTranslator.translate("name")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.imePrezime}" />
                 <p:inputText value="#{mbIzmenaZaposlenih.pilot.imePrezime}" />
 
-                <p:outputLabel value="Godina rodjenja:" />
+                <p:outputLabel value="#{mbTranslator.translate("birthYear")}:" />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.odabraniPilot.godinaRodjenja}" />
                 <p:inputText value="#{mbIzmenaZaposlenih.pilot.godinaRodjenja}" />
 
-                <p:outputLabel value="Datum pregleda:" />
+                <p:outputLabel value="#{mbTranslator.translate("date")}:" />
                 <h:outputText value="#{mbIzmenaZaposlenih.odabraniPilot.datumPregleda}" >
                     <f:convertDateTime pattern="dd/MM/yyyy" />
                 </h:outputText>
                 <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.pilot.datumPregleda}" />
 
-                <p:outputLabel value="Ocena stanja:" />
+                <p:outputLabel value="#{mbTranslator.translate("mentalState")}:" />
                 <h:outputText value="#{mbIzmenaZaposlenih.odabraniPilot.ocenaStanja}" />
                 <p:selectOneRadio id="comboZdrav" value="#{mbIzmenaZaposlenih.pilot.ocenaStanja}" required="true" >
-                    <f:selectItem itemLabel="Sposoban" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = true}"  />
-                    <f:selectItem itemLabel="Nesposoban" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = false}" />
+                    <f:selectItem itemLabel="#{mbTranslator.translate("ok")}" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = true}"  />
+                    <f:selectItem itemLabel="#{mbTranslator.translate("idiot")}" itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = false}" />
                 </p:selectOneRadio>
             </p:panelGrid>
-            <p:commandButton value="Sacuvaj izmenu" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
+            <p:commandButton value="#{mbTranslator.translate("saveEdit")}" style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
         </h:form>
         <p:separator />
         <h:form id="unosUloga" >
@@ -53,24 +53,24 @@
                 </p:panelGrid>
             </p:outputPanel>
             <p:panelGrid columns="2" >
-                <p:outputLabel value="Unos uloga za pilota: " />
+                <p:outputLabel value="#{mbTranslator.translate("pilotRoles")}: " />
                 <p:outputLabel value="#{mbIzmenaZaposlenih.pilot.imePrezime}" />
 
-                <p:outputLabel value="Avion: " />
+                <p:outputLabel value="#{mbTranslator.translate("plane")}: " />
                 <h:panelGrid columns="3" >
                     <p:selectOneMenu id="cmbAvioni" value="#{mbIzmenaZaposlenih.novaUloga.avion}" converter="avioCNV" >
-                        <f:selectItem itemValue="" itemLabel="Izaberi avion" />
+                        <f:selectItem itemValue="" itemLabel="#{mbTranslator.translate("choosePlane")}" />
                         <f:selectItems value="#{mbAvion.avioni}" var="avion" itemValue="#{avion}" itemLabel="#{avion.oznaka}" />
                     </p:selectOneMenu>
                 </h:panelGrid>
 
-                <p:outputLabel value="Datum: " />
+                <p:outputLabel value="#{mbTranslator.translate("roleDate")}: " />
                 <p:calendar pattern="dd/MM/yyyy" value="#{mbIzmenaZaposlenih.novaUloga.datum}"/>
 
-                <p:outputLabel value="Naziv uloge: " />
+                <p:outputLabel value="#{mbTranslator.translate("roleName")}: " />
                 <p:inputText value="#{mbIzmenaZaposlenih.novaUloga.nazivUloge}" />
 
-                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuUlogu()}" value="Sacuvaj ulogu" ajax="false" />
+                <p:commandButton action="#{mbIzmenaZaposlenih.sacuvajNovuUlogu()}" value="#{mbTranslator.translate("saveRole")}" ajax="false" />
             </p:panelGrid>
         </h:form>
     </ui:define>
