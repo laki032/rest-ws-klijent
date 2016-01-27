@@ -71,9 +71,9 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().create(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PLANE_CREATE_SUCCESS, ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.PLANE_CREATE_SUCCESS), ""));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(ex.getMessage()), ""));
         }
         return null;
     }
@@ -82,9 +82,9 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().edit(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PLANE_EDIT_SUCCESS, ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.PLANE_EDIT_SUCCESS), ""));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(ex.getMessage()), ""));
         }
         izmena = false;
         avion = new Avion();
@@ -101,15 +101,15 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().remove(a);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS,  Constants.PLANE_REMOVE_SUCCESS));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(Constants.PLANE_REMOVE_SUCCESS)));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
         }
         return "pretragaAviona";
     }
 
     public void avionJeOdabran(SelectEvent event) {
-        FacesMessage msg = new FacesMessage(Constants.PLANE_CHOOSEN, "[" + ((Avion) event.getObject()).getAvionID()+ "] " + ((Avion) event.getObject()).getOznaka());
+        FacesMessage msg = new FacesMessage(MbTranslator.translate(Constants.PLANE_CHOOSEN), "[" + ((Avion) event.getObject()).getAvionID() + "] " + ((Avion) event.getObject()).getOznaka());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

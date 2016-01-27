@@ -64,9 +64,9 @@ public class MbZaposleni {
     public String obrisi(Zaposleni zap) {
         try {
             KontrolerWS.getInstance().remove(zap);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, Constants.EMPLOYEE_REMOVE_SUCCESS));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(Constants.EMPLOYEE_REMOVE_SUCCESS)));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
         }
         return "pretragaZaposlenih";
     }
@@ -86,7 +86,7 @@ public class MbZaposleni {
     public List<String> vratiUlogeLicence() {
         List<String> l = new ArrayList<>();
         if (odabraniZaposleni == null) {
-            l.add(Constants.EMPLOYEE_IS_NOT_CHOOSEN);
+            l.add(MbTranslator.translate(Constants.EMPLOYEE_IS_NOT_CHOOSEN));
             return l;
         } else {
             try {
@@ -107,7 +107,7 @@ public class MbZaposleni {
                     }
                 }
             } catch (NullPointerException npe) {
-                l.add(Constants.EMPLOYEE_DOES_NOT_HAVE_ACTIVITY);
+                l.add(MbTranslator.translate(Constants.EMPLOYEE_DOES_NOT_HAVE_ACTIVITY));
             }
         }
         return l;

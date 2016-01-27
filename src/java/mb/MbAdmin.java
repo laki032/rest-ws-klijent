@@ -50,7 +50,7 @@ public class MbAdmin {
     }
 
     public String getTheme() {
-        if (admin == null || admin.getTheme()== null || admin.getTheme().isEmpty()) {
+        if (admin == null || admin.getTheme() == null || admin.getTheme().isEmpty()) {
             return theme;
         } else {
             return admin.getTheme();
@@ -66,9 +66,9 @@ public class MbAdmin {
             vremeLogovanja = new Date();
             admin = KontrolerWS.getInstance().login(admin);
             theme = admin.getTheme();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, Constants.ADMIN_LOGIN_SUCCESS));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(Constants.ADMIN_LOGIN_SUCCESS)));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
         }
         return null;
     }
@@ -77,9 +77,9 @@ public class MbAdmin {
         try {
             theme = "excite-bike";
             String poruka = KontrolerWS.getInstance().logout(admin);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, poruka));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(poruka)));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
         }
         admin = new Admin();
         admin.setUlogovan(false);

@@ -109,19 +109,19 @@ public class MbUnosZaposlenih {
     public String sacuvajSve() {
         try {
             String poruka = KontrolerWS.getInstance().saveAll(dodatiZaposleni);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, poruka));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(poruka)));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
         }
         dodatiZaposleni = new LinkedList<>();
         return "unosZaposlenih";
     }
 
-    public String vratiOstalePodatkeOZaposlenom(Zaposleni z) { //dodaj ovde prevode
+    public String vratiOstalePodatkeOZaposlenom(Zaposleni z) {
         if (z instanceof Pilot) {
             String datum = new SimpleDateFormat("dd/MM/yyyy").format(((Pilot) z).getDatumPregleda());
-            String ocena = ((Pilot) z).getOcenaStanja() ? "sposoban" : "nesposoban";
-            return datum + " ocenjen kao " + ocena;
+            String ocena = ((Pilot) z).getOcenaStanja() ? MbTranslator.translate("ok") : MbTranslator.translate("idiot");
+            return datum + MbTranslator.translate("mentalState") + ": " + ocena;
         }
         if (z instanceof Aviomehanicar) {
             return ((Aviomehanicar) z).getTipMehanicara();

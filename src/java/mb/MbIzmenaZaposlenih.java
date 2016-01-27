@@ -125,13 +125,13 @@ public class MbIzmenaZaposlenih implements Serializable {
             case PILOT:
                 poruka = KontrolerWS.getInstance().edit(pilot);
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(poruka), ""));
         return "pretragaZaposlenih";
     }
 
     public String sacuvajNovuUlogu() {
         String poruka = KontrolerWS.getInstance().novaUloga(novaUloga);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(poruka), ""));
         novaUloga = null;
         pokreniIzmenu(pilot);
         return "izmenaPilota";
@@ -139,7 +139,7 @@ public class MbIzmenaZaposlenih implements Serializable {
 
     public String sacuvajNovuLicencu() {
         String poruka = KontrolerWS.getInstance().novaLicenca(novaLicenca);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(poruka), ""));
         novaLicenca = null;
         pokreniIzmenu(mehanicar);
         return "izmenaMehanicara";
@@ -148,7 +148,7 @@ public class MbIzmenaZaposlenih implements Serializable {
     public List<String> vratiUloge() {
         List<String> l = new ArrayList<>();
         if (odabraniPilot == null) {
-            l.add(Constants.PILOT_IS_NOT_CHOOSEN);
+            l.add(MbTranslator.translate(Constants.PILOT_IS_NOT_CHOOSEN));
             return l;
         } else {
             try {
@@ -159,7 +159,7 @@ public class MbIzmenaZaposlenih implements Serializable {
                     l.add(u.toString());
                 }
             } catch (NullPointerException npe) {
-                l.add(Constants.PILOT_DOES_NOT_HAVE_ACTIVITY);
+                l.add(MbTranslator.translate(Constants.PILOT_DOES_NOT_HAVE_ACTIVITY));
             }
         }
         return l;
@@ -168,7 +168,7 @@ public class MbIzmenaZaposlenih implements Serializable {
     public List<String> vratiLicence() {
         List<String> l = new ArrayList<>();
         if (odabraniMehanicar == null) {
-            l.add(Constants.MECHANIC_IS_NOT_CHOOSEN);
+            l.add(MbTranslator.translate(Constants.MECHANIC_IS_NOT_CHOOSEN));
             return l;
         } else {
             try {
@@ -179,7 +179,7 @@ public class MbIzmenaZaposlenih implements Serializable {
                     l.add(lc.toString());
                 }
             } catch (NullPointerException npe) {
-                l.add(Constants.MECHANIC_DOES_NOT_HAVE_ACTIVITY);
+                l.add(MbTranslator.translate(Constants.MECHANIC_DOES_NOT_HAVE_ACTIVITY));
             }
         }
         return l;
