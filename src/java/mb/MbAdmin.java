@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
 
 /**
@@ -65,9 +66,9 @@ public class MbAdmin {
             vremeLogovanja = new Date();
             admin = KontrolerWS.getInstance().login(admin);
             theme = admin.getTheme();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno ste se ulogovali!", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, Constants.ADMIN_LOGIN_SUCCESS));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Pogresan username i/ili password!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
         }
         return null;
     }
@@ -76,9 +77,9 @@ public class MbAdmin {
         try {
             theme = "excite-bike";
             String poruka = KontrolerWS.getInstance().logout(admin);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, poruka));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Greska pri odjavljivanju!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
         }
         admin = new Admin();
         admin.setUlogovan(false);

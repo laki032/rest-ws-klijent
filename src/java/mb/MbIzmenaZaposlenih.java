@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
 
 /**
@@ -116,25 +117,21 @@ public class MbIzmenaZaposlenih implements Serializable {
     }
 
     public String sacuvajIzmenu() {
-        try {
-            String poruka = "";
-            switch (tip) {
-                case MEHANICAR:
-                    poruka = KontrolerWS.getInstance().edit(mehanicar);
-                    break;
-                case PILOT:
-                    poruka = KontrolerWS.getInstance().edit(pilot);
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nije uspesno izmenjen!!!", ex.getMessage()));
+        String poruka = "";
+        switch (tip) {
+            case MEHANICAR:
+                poruka = KontrolerWS.getInstance().edit(mehanicar);
+                break;
+            case PILOT:
+                poruka = KontrolerWS.getInstance().edit(pilot);
         }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
         return "pretragaZaposlenih";
     }
 
     public String sacuvajNovuUlogu() {
         String poruka = KontrolerWS.getInstance().novaUloga(novaUloga);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova uloga", poruka));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
         novaUloga = null;
         pokreniIzmenu(pilot);
         return "izmenaPilota";
@@ -142,7 +139,7 @@ public class MbIzmenaZaposlenih implements Serializable {
 
     public String sacuvajNovuLicencu() {
         String poruka = KontrolerWS.getInstance().novaLicenca(novaLicenca);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Dodata nova licenca", poruka));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, poruka, ""));
         novaLicenca = null;
         pokreniIzmenu(mehanicar);
         return "izmenaMehanicara";
@@ -151,7 +148,7 @@ public class MbIzmenaZaposlenih implements Serializable {
     public List<String> vratiUloge() {
         List<String> l = new ArrayList<>();
         if (odabraniPilot == null) {
-            l.add("pilot nije odabran");
+            l.add(Constants.PILOT_IS_NOT_CHOOSEN);
             return l;
         } else {
             try {
@@ -162,7 +159,7 @@ public class MbIzmenaZaposlenih implements Serializable {
                     l.add(u.toString());
                 }
             } catch (NullPointerException npe) {
-                l.add("odabrani pilot nije nijednom rasporedjen");
+                l.add(Constants.PILOT_DOES_NOT_HAVE_ACTIVITY);
             }
         }
         return l;
@@ -171,7 +168,7 @@ public class MbIzmenaZaposlenih implements Serializable {
     public List<String> vratiLicence() {
         List<String> l = new ArrayList<>();
         if (odabraniMehanicar == null) {
-            l.add("mehanicar nije odabran");
+            l.add(Constants.MECHANIC_IS_NOT_CHOOSEN);
             return l;
         } else {
             try {
@@ -182,7 +179,7 @@ public class MbIzmenaZaposlenih implements Serializable {
                     l.add(lc.toString());
                 }
             } catch (NullPointerException npe) {
-                l.add("odabrani mehanicar nema nijednu licencu");
+                l.add(Constants.MECHANIC_DOES_NOT_HAVE_ACTIVITY);
             }
         }
         return l;

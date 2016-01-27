@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
 
 /**
@@ -108,15 +109,15 @@ public class MbUnosZaposlenih {
     public String sacuvajSve() {
         try {
             String poruka = KontrolerWS.getInstance().saveAll(dodatiZaposleni);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacija uspesna!!!", poruka));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, poruka));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nisu uspesno sacuvani!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
         }
         dodatiZaposleni = new LinkedList<>();
         return "unosZaposlenih";
     }
 
-    public String vratiOstalePodatkeOZaposlenom(Zaposleni z) {
+    public String vratiOstalePodatkeOZaposlenom(Zaposleni z) { //dodaj ovde prevode
         if (z instanceof Pilot) {
             String datum = new SimpleDateFormat("dd/MM/yyyy").format(((Pilot) z).getDatumPregleda());
             String ocena = ((Pilot) z).getOcenaStanja() ? "sposoban" : "nesposoban";

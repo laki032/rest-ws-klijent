@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
+import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
 
 /**
@@ -70,9 +71,9 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().create(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvan avion!!!", "Novi avion je sacuvan u bazi podataka"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PLANE_CREATE_SUCCESS, ""));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
         }
         return null;
     }
@@ -81,9 +82,9 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().edit(avion);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je sacuvana izmena aviona!!!", "Avion je sacuvan u bazi podataka"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.PLANE_EDIT_SUCCESS, ""));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije uspesno sacuvan!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
         }
         izmena = false;
         avion = new Avion();
@@ -100,15 +101,15 @@ public class MbAvion {
         try {
             KontrolerWS.getInstance().remove(a);
             avioni = KontrolerWS.getInstance().getPlanes();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan avion!!!", "Avion je obrisan iz baze podataka"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS,  Constants.PLANE_REMOVE_SUCCESS));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Avion nije obrisan!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
         }
         return "pretragaAviona";
     }
 
     public void avionJeOdabran(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Odabran je avion", "[" + ((Avion) event.getObject()).getAvionID()+ "] " + ((Avion) event.getObject()).getOznaka());
+        FacesMessage msg = new FacesMessage(Constants.PLANE_CHOOSEN, "[" + ((Avion) event.getObject()).getAvionID()+ "] " + ((Avion) event.getObject()).getOznaka());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

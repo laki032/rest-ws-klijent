@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -76,7 +75,7 @@ public class MbTranslator {
         setLanguage(Language.SR);
     }
 
-    public String translate(String s) {
+    public static String translate(String s) {
         if (s == null) {
             return "";
         }

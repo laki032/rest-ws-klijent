@@ -89,7 +89,7 @@ public class KontrolerWS {
         a = wsAdmin.login(a);
         if (a == null) {
             log.log(Level.INFO, "login failed {0}", a);
-            throw new Exception("admin nije ulogovan");
+            throw new Exception(Constants.ADMIN_LOGIN_FAILURE);
         }
         return a;
     }
@@ -97,7 +97,7 @@ public class KontrolerWS {
     public String logout(Admin a) throws Exception {
         log.log(Level.INFO, "logout {0}", a);
         String odgovor = wsAdmin.logout(a);
-        if (odgovor.startsWith("nije")) {
+        if (odgovor.equals(Constants.ADMIN_LOGOUT_FAILURE)) {
             log.log(Level.INFO, "logout failed {0}", a);
             throw new Exception(odgovor);
         }
@@ -131,7 +131,7 @@ public class KontrolerWS {
             lz[i] = novi;
         }
         String odg = wsZap.createAll(lz);
-        if (odg.startsWith("cuvanje")) {
+        if (odg.equals(Constants.EMPLOYEES_CREATE_FAILURE)) {
             throw new Exception(odg);
         }
         log.log(Level.INFO, "saveAll list: {0}", dodatiZaposleni);

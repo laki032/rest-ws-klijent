@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
+import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
 
 /**
@@ -63,9 +64,9 @@ public class MbZaposleni {
     public String obrisi(Zaposleni zap) {
         try {
             KontrolerWS.getInstance().remove(zap);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspesno je obrisan zaposleni!!!", "Zaposleni je obrisan iz baze podataka"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, Constants.SUCCESS, Constants.EMPLOYEE_REMOVE_SUCCESS));
         } catch (Exception ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Zaposleni nije obrisan!!!", ex.getMessage()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Constants.FAILURE, ex.getMessage()));
         }
         return "pretragaZaposlenih";
     }
@@ -85,23 +86,28 @@ public class MbZaposleni {
     public List<String> vratiUlogeLicence() {
         List<String> l = new ArrayList<>();
         if (odabraniZaposleni == null) {
-            l.add("zaposleni nije odabran");
+            l.add(Constants.EMPLOYEE_IS_NOT_CHOOSEN);
             return l;
         } else {
             try {
                 if (odabraniZaposleni instanceof Pilot) {
-                    if (((Pilot) odabraniZaposleni).getUlogaList().isEmpty()) throw new NullPointerException();
+                    if (((Pilot) odabraniZaposleni).getUlogaList().isEmpty()) {
+                        throw new NullPointerException();
+                    }
                     for (Uloga u : ((Pilot) odabraniZaposleni).getUlogaList()) {
                         l.add(u.toString());
                     }
-                } else {
-                    if (((Aviomehanicar) odabraniZaposleni).getLicencaList().isEmpty()) throw new NullPointerException();
+                }
+                if (odabraniZaposleni instanceof Aviomehanicar) {
+                    if (((Aviomehanicar) odabraniZaposleni).getLicencaList().isEmpty()) {
+                        throw new NullPointerException();
+                    }
                     for (Licenca lc : ((Aviomehanicar) odabraniZaposleni).getLicencaList()) {
                         l.add(lc.toString());
                     }
                 }
             } catch (NullPointerException npe) {
-                l.add("odabrani zaposleni nije nijednom rasporedjen");
+                l.add(Constants.EMPLOYEE_DOES_NOT_HAVE_ACTIVITY);
             }
         }
         return l;
