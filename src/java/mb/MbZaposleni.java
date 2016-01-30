@@ -64,6 +64,7 @@ public class MbZaposleni {
     public String obrisi(Zaposleni zap) {
         try {
             KontrolerWS.getInstance().remove(zap);
+            zaposleni = KontrolerWS.getInstance().getEmployees();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, MbTranslator.translate(Constants.SUCCESS), MbTranslator.translate(Constants.EMPLOYEE_REMOVE_SUCCESS)));
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, MbTranslator.translate(Constants.FAILURE), MbTranslator.translate(ex.getMessage())));
