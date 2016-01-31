@@ -40,7 +40,14 @@
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 5%">
                             <f:facet name="header">#{mbTranslator.translate("remove")}</f:facet>
-                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbZaposleni.obrisi(zap)}" ajax="false"/>
+                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbZaposleni.obrisi(zap)}" >
+                                <p:confirm header="Confirmation" message='#{mbTranslator.translate("areYouSure")}?' icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value='#{mbTranslator.translate("yes")}' type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value='#{mbTranslator.translate("no")}' type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}"  style="width: 9%">
                             <f:facet name="header">#{mbTranslator.translate("edit")}</f:facet>
