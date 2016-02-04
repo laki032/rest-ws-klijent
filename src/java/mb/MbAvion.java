@@ -97,6 +97,12 @@ public class MbAvion {
         return "unosAviona";
     }
 
+    public String pokreniUnos() {
+        avion = new Avion();
+        izmena = false;
+        return "unosAviona";
+    }
+
     public String obrisi(Avion a) {
         try {
             KontrolerWS.getInstance().remove(a);
