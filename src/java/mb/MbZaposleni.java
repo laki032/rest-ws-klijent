@@ -75,10 +75,10 @@ public class MbZaposleni {
     public void zaposleniJeOdabran(SelectEvent event) {
         odabraniZaposleni = (Zaposleni) event.getObject();
         if (((Zaposleni) event.getObject()) instanceof Pilot) {
-            Pilot p = new Pilot(((Zaposleni) event.getObject()).getJmbg());
+            Pilot p = new Pilot(odabraniZaposleni.getJmbg());
             ((Pilot) odabraniZaposleni).setUlogaList(KontrolerWS.getInstance().vratiListuUlogaZaPilota(p));
         } else {
-            Aviomehanicar a = new Aviomehanicar(((Zaposleni) event.getObject()).getJmbg());
+            Aviomehanicar a = new Aviomehanicar(odabraniZaposleni.getJmbg());
             ((Aviomehanicar) odabraniZaposleni).setLicencaList(KontrolerWS.getInstance().vratiListuLicenciZaMehanicara(a));
         }
         ul_Ucitane = true;

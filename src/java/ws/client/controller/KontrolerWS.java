@@ -1,6 +1,7 @@
 package ws.client.controller;
 
 import domain.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ public class KontrolerWS {
     private final WSZaposleni wsZap;
     private final WSAdmin wsAdmin;
     private final WSUlogeLicence wsUL;
-    private static final Logger log = Logger.getLogger(KontrolerWS.class.getName());
+    private static final Logger log = Logger.getLogger("KONTROLER: ");
     private List<Tipaviona> tipovi;
     private List<Avion> avioni;
 
@@ -46,9 +47,40 @@ public class KontrolerWS {
     public List<Zaposleni> getEmployees() {
         GenericType<List<Zaposleni>> gtListaZaposlenih = new GenericType<List<Zaposleni>>() {
         };
+        GenericType<List<Pilot>> gtListaP = new GenericType<List<Pilot>>() {
+        };
+        GenericType<List<Aviomehanicar>> gtListaA = new GenericType<List<Aviomehanicar>>() {
+        };
         List<Zaposleni> lz = wsZap.findAll(gtListaZaposlenih);
+        List<Pilot> lp = wsZap.findAllPilot(gtListaP);
+        List<Aviomehanicar> la = wsZap.findAllAvioMehanicar(gtListaA);
         log.log(Level.INFO, "getEmployees {0}", lz);
-        return lz;
+        log.log(Level.INFO, "getAllPilot {0}", lp);
+        log.log(Level.INFO, "getAllMehanicar {0}", la);
+
+        List<Zaposleni> employees = new ArrayList<>();
+
+        for (Pilot p : lp) {
+            for (Zaposleni z : lz) {
+                if (z.getJmbg().equals(p.getJmbg())) {
+                    p.setImePrezime(z.getImePrezime());
+                    p.setGodinaRodjenja(z.getGodinaRodjenja());
+                    employees.add(p);
+                    break;
+                }
+            }
+        }
+        for (Aviomehanicar a : la) {
+            for (Zaposleni z : lz) {
+                if (z.getJmbg().equals(a.getJmbg())) {
+                    a.setImePrezime(z.getImePrezime());
+                    a.setGodinaRodjenja(z.getGodinaRodjenja());
+                    employees.add(a);
+                    break;
+                }
+            }
+        }
+        return employees;
     }
 
     public List<Avion> getPlanes() {
@@ -151,7 +183,7 @@ public class KontrolerWS {
         GenericType<List<Licenca>> gtListaLicenci = new GenericType<List<Licenca>>() {
         };
         List<Licenca> ll = wsUL.vratiLicenceZaMehanicara(gtListaLicenci, a.getJmbg());
-        log.log(Level.INFO, "vratiListuUlogaZaPilota {0}/{1}", new Object[]{a, ll});
+        log.log(Level.INFO, "vratiListuLicenciZaMehanicara {0}/{1}", new Object[]{a, ll});
         return ll;
     }
 

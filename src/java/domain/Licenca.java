@@ -62,8 +62,7 @@ public class Licenca implements Serializable {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return "Datuma: " + sdf.format(datumDobijanja) + ", mehanicar: " + aviomehanicar.getImePrezime() 
-                + ", dobio je licencu za " + tipaviona.getNaziv()+ " tip aviona";
+        return "Datuma: " + sdf.format(datumDobijanja) + ", dobio je licencu za " + tipaviona.getNaziv()+ " tip aviona";
     }
     
 }
