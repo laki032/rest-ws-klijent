@@ -8,6 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -33,7 +36,6 @@ public class MbTranslator {
     }
 
     static {
-        language = Language.SR;
         sr_translations = new HashMap<>();
         en_translations = new HashMap<>();
         Properties sr = new Properties();
@@ -59,10 +61,33 @@ public class MbTranslator {
             String value = en.getProperty(key);
             en_translations.put(key, value);
         }
+        readLanguage();
     }
 
-    private Object setLanguage(Language l) {
+    /**
+     * reads language from cookie, if there is no one, sets SR as default
+     */
+    private static void readLanguage() {
+        Map<String, Object> cookies = FacesContext.getCurrentInstance().getExternalContext().getRequestCookieMap();
+        Cookie c = (Cookie) cookies.get("lang");
+        String lang = c != null ? (String) c.getValue() : "SR";
+        switch (lang) {
+            case "EN":
+                setLanguage(Language.EN);
+                break;
+            case "SR":
+            default:
+                setLanguage(Language.SR);
+        }
+    }
+
+    private static Object setLanguage(Language l) {
         language = l;
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        Cookie c = new Cookie("lang", l.toString());
+        c.setMaxAge(Integer.MAX_VALUE);
+        c.setPath("/");
+        response.addCookie(c);
         log.log(Level.INFO, "Language changed to: {0}", l.toString());
         return null;
     }
