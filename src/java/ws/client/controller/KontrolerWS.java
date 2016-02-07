@@ -117,6 +117,7 @@ public class KontrolerWS {
     }
 
     public Admin login(Admin a) throws Exception {
+        a.setPassword(Encryptor.encrypt(a.getPassword()));
         log.log(Level.INFO, "login {0}", a);
         a = wsAdmin.login(a);
         if (a == null) {
@@ -127,6 +128,7 @@ public class KontrolerWS {
     }
 
     public String logout(Admin a) throws Exception {
+        a.setPassword(Encryptor.encrypt(a.getPassword()));
         log.log(Level.INFO, "logout {0}", a);
         String odgovor = wsAdmin.logout(a);
         if (odgovor.equals(Constants.ADMIN_LOGOUT_FAILURE)) {
