@@ -72,6 +72,11 @@ public class MbZaposleni {
         return "pretragaZaposlenih";
     }
 
+    public String prebaciNaStranicuZaPretragu() {
+        zaposleni = KontrolerWS.getInstance().getEmployees();
+        return "pretragaZaposlenih";
+    }
+
     public void zaposleniJeOdabran(SelectEvent event) {
         odabraniZaposleni = (Zaposleni) event.getObject();
         if (((Zaposleni) event.getObject()) instanceof Pilot) {

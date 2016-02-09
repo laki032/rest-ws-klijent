@@ -1,5 +1,7 @@
 package ws.client;
 
+import domain.Aviomehanicar;
+import domain.Pilot;
 import domain.Zaposleni;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
@@ -26,8 +28,18 @@ public class WSZaposleni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String edit(Object requestEntity, String id) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("edit/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    public String edit(Zaposleni novi, String id) throws ClientErrorException {
+        if(novi instanceof Pilot) return editPilot(novi, id);
+        if(novi instanceof Aviomehanicar) return editMehanicar(novi, id);
+        return "error";
+    }
+    
+    private String editPilot(Object requestEntity, String id) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("edit/pilot/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    }
+    
+    private String editMehanicar(Object requestEntity, String id) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("edit/mehanicar/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
     public <T> T find(GenericType<T> responseType, String id) throws ClientErrorException {

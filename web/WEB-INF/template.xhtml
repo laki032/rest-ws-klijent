@@ -35,7 +35,7 @@
                             </p:submenu>
                             <p:submenu label='#{mbTranslator.translate("labelZAPOSLENI")}'>
                                 <p:menuitem value='#{mbTranslator.translate("labelUnos")}' action="unosZaposlenih.xhtml" ajax="false" />
-                                <p:menuitem value='#{mbTranslator.translate("labelPretraga")}' action="pretragaZaposlenih.xhtml" ajax="false" />
+                                <p:menuitem value='#{mbTranslator.translate("labelPretraga")}' action="#{mbZaposleni.prebaciNaStranicuZaPretragu()}" ajax="false" />
                             </p:submenu>
                         </p:menu>
                     </h:form>
