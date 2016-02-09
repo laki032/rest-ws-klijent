@@ -14,7 +14,7 @@
                 <h:form id="prikazAviona">
                     <p:growl id="msgs" showDetail="true" />
 
-                    <p:dataTable value="#{mbAvion.avioni}" var="a" rows="5" paginator="true" widgetVar="tabela"
+                    <p:dataTable value="#{mbAvion.avioni}" var="a" rows="5" paginator="true" widgetVar="tabela" id="tabela"
                                  selectionMode="single" selection="#{mbAvion.avion}" rowKey="#{a.avionID}" >
                         <p:ajax event="rowSelect" listener="#{mbAvion.avionJeOdabran}" update=":prikazAviona:msgs" />
 
@@ -40,7 +40,7 @@
                         </p:column>
                         <p:column rendered="#{mbAdmin.admin.ulogovan}">
                             <f:facet name="header">#{mbTranslator.translate("remove")}</f:facet>
-                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" >
+                            <p:commandButton icon="ui-icon-minus" style="width: 100%" action="#{mbAvion.obrisi(a)}" update=":prikazAviona:msgs :prikazAviona:tabela" >
                                 <p:confirm header="Confirmation" message='#{mbTranslator.translate("areYouSure")}?' icon="ui-icon-alert" />
                             </p:commandButton>
 
