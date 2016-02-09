@@ -191,7 +191,7 @@ public class KontrolerWS {
 
     public String edit(Zaposleni novi) {
         log.log(Level.INFO, "edit {0}", novi);
-        return wsZap.edit(novi, novi.getJmbg());
+        return wsZap.edit(novi);
     }
 
     public String novaUloga(Uloga novaUloga) {

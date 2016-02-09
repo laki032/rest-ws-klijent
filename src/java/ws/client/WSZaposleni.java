@@ -28,18 +28,26 @@ public class WSZaposleni {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
-    public String edit(Zaposleni novi, String id) throws ClientErrorException {
-        if(novi instanceof Pilot) return editPilot(novi, id);
-        if(novi instanceof Aviomehanicar) return editMehanicar(novi, id);
+    public String edit(Zaposleni novi) throws ClientErrorException {
+        if (novi instanceof Pilot) {
+            return editPilot(novi);
+        }
+        if (novi instanceof Aviomehanicar) {
+            return editMehanicar(novi);
+        }
         return "error";
     }
-    
-    private String editPilot(Object requestEntity, String id) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("edit/pilot/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+
+    private String editPilot(Object requestEntity) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("edit/pilot", (Object) null)).
+                request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
+                post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
-    
-    private String editMehanicar(Object requestEntity, String id) throws ClientErrorException {
-        return webTarget.path(java.text.MessageFormat.format("edit/mehanicar/{0}", new Object[]{id})).request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+
+    private String editMehanicar(Object requestEntity) throws ClientErrorException {
+        return webTarget.path(java.text.MessageFormat.format("edit/mehanicar", (Object) null)).
+                request(javax.ws.rs.core.MediaType.APPLICATION_JSON).
+                post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
     }
 
     public <T> T find(GenericType<T> responseType, String id) throws ClientErrorException {

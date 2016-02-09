@@ -5,13 +5,13 @@ import domain.Licenca;
 import domain.Pilot;
 import domain.Uloga;
 import domain.Zaposleni;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import ws.client.Constants;
 import ws.client.controller.KontrolerWS;
@@ -43,6 +43,10 @@ public class MbIzmenaZaposlenih implements Serializable {
     public void init() {
         novaUloga = new Uloga();
         novaLicenca = new Licenca();
+        pilot = new Pilot();
+        odabraniPilot = new Pilot();
+        mehanicar = new Aviomehanicar();
+        odabraniMehanicar = new Aviomehanicar();
     }
 
     public Uloga getNovaUloga() {

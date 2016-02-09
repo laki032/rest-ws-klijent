@@ -41,7 +41,7 @@
                     <f:selectItem itemLabel='#{mbTranslator.translate("idiot")}' itemValue="#{mbIzmenaZaposlenih.pilot.ocenaStanja = false}" />
                 </p:selectOneRadio>
             </p:panelGrid>
-            <p:commandButton value='#{mbTranslator.translate("saveEdit")}' style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" />
+            <p:commandButton value='#{mbTranslator.translate("saveEdit")}' style="width: 46%" action="#{mbIzmenaZaposlenih.sacuvajIzmenu()}" ajax="false" />
         </h:form>
         <p:separator />
         <h:form id="unosUloga" >
