@@ -108,7 +108,7 @@ public class KontrolerWS {
 
     public void edit(Avion a) {
         log.log(Level.INFO, "edit {0}", a);
-        wsAvio.edit(a, a.getAvionID() + "");
+        wsAvio.edit(a);
     }
 
     public void remove(Avion a) {
